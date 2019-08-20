@@ -13,11 +13,11 @@
       </div>
     </el-dialog>
 
-    <el-dialog title="文章图集" :visible.sync="dialogPic" width="1230px" custom-class="dialogpic">
+    <el-dialog title="文章图集" :visible.sync="dialogPic" width="960px" custom-class="dialogpic">
       <carouselspic :images="article.images"></carouselspic>
     </el-dialog>
 
-    <el-dialog title="文章课件" :visible.sync="dialogPpt" width="1230px" custom-class="dialogppt">
+    <el-dialog title="文章课件" :visible.sync="dialogPpt" width="1200px" custom-class="dialogppt">
       <carouselsppt :info="info_ppt"></carouselsppt>
     </el-dialog>
 
@@ -254,16 +254,16 @@ export default {
 }
 //dialog
 .dialogvideo {
-  background-image: url(../assets/images/bg_video.jpg);
-  overflow: hidden;
-  background-size: cover;
-  background-position: center center;
+  background-image: url(../assets/images/zmdbg.jpg);
+  background-size:100% 100%;
 }
 .dialogppt {
-  background: url(../assets/images/bg_ppt.jpg);
+  background: url(../assets/images/zmdbg.jpg);
+  background-size:100% 100%;
 }
 .dialogpic {
-  background: url(../assets/images/bg_pic.jpg);
+  background: url(../assets/images/zmdbg.jpg);
+  background-size:100% 100%;
 }
 .el-dialog__title {
   line-height: 24px;
@@ -589,7 +589,7 @@ img {
         .index-book-collect {
           background-color: #fff;
           border-radius: 2px;
-          margin-bottom: 1.5rem;
+          margin-bottom: 20px;
           overflow: hidden;
           .header {
             height: 45px;
