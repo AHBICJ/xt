@@ -1,0 +1,44 @@
+*{
+    padding: 0;
+    margin:0;
+}
+html,body,#app{
+    height: 100%;
+    width: 100%;
+}
+
+@font-face{
+     font-family: 'FZQK'; 
+     src: url('../assets/fonts/FZQKBYSJW.TTF');
+}
+
+body {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Arial,sans-serif;
+    font-size: 16px;
+}
+
+
+ul,ol,li{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+:root{
+    /* --main-color:#E0B969;
+    --main-color-hover:#e6c787; */
+    --main-color:#daac4d;
+    --main-color:#e1bd71;
+}
+
+/* 锁定滚动  */
+.u-overflowHidden {
+    overflow: hidden !important;
+}
+
