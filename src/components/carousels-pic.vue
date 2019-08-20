@@ -1,5 +1,5 @@
 <template>
-  <el-carousel :interval="100000" height="568px">
+  <el-carousel :interval="100000" height="500px">
     <el-carousel-item v-for="item in images" :key="item.id">
       <div ref="height" class="imgbox" :style="{backgroundImage:'url('+item.photo_address+')'}"></div>
     </el-carousel-item>

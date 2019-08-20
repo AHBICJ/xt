@@ -9,7 +9,7 @@
     
     <el-row type="flex" class="row-bg" justify="center">
       <el-col :xs="24" :sm="20" :md="16" :lg="14">
-        <el-tabs v-model="activeName" stretch=true>          
+        <el-tabs v-model="activeName" :stretch="true">          
           <el-tab-pane
             v-for="category in categories"
             :key="category.id"
