@@ -68,8 +68,8 @@ export default {
     }
   },
   methods: {
-    initComment() {
-      this.commentId = this.$route.params.id || 1;
+    initComment(id) {
+      this.commentId = id || 1;
       getComment({ article_id: this.commentId }).then(
         res => (this.comments = res.data)
       );
@@ -96,13 +96,12 @@ export default {
     }
   },
   created() {
-    this.initComment();
+    this.initComment(this.$route.params.id);
   },
-  watch:{
-    '$route.params.id':function(){
-      this.initComment();
-    }
-  }
+  beforeRouteUpdate(to, from, next) {
+    this.initComment(to.params.id);
+    next();
+  },
 };
 </script>
 
