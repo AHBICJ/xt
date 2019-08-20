@@ -82,8 +82,8 @@ export default {
     };
   },
   methods: {
-    initCity() {
-      this.cityId = this.$route.params.id || 1;
+    initCity(id) {
+      this.cityId = id || 1;
       if (this.cityId <= 0 || this.cityId > 11) {
         this.$router.replace("/404");
       }
@@ -94,10 +94,11 @@ export default {
     }
   },
   created() {
-    this.initCity();
+    this.initCity(this.$route.params.id);
   },
-  beforeRouteUpdate() {
-    this.initCity();
+  beforeRouteUpdate(to, from, next) {
+    this.initCity(to.params.id);
+    next();
   }
 };
 </script>

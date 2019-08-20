@@ -214,17 +214,18 @@ export default {
   },
   mounted() {},
   created() {
-    this.initArticle();
+    this.initArticle(this.$route.params.id);
   },
-  beforeRouteUpdate() {
-    this.initArticle();
+  beforeRouteUpdate(to, from, next) {
+    this.initArticle(to.params.id);
+    next();
   },
   methods: {
     enabledialogvideo() {
       this.dialogVideo = true;
     },
-    initArticle() {
-      this.articleId = this.$route.params.id || 1;
+    initArticle(id) {
+      this.articleId = id || 1;
       getArticle({ aricle_id: this.articleId }).then(res => {
         this.article = res.data;
         this.playerOptions.sources[0].src = this.article.viedo;
