@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="homepage_slick">
     <div class="slick">
       <div
         v-for="(item,idx) in options.items"
@@ -53,7 +53,7 @@ export default {
 };
 </script>
 <style lang="scss">
-.container {
+.homepage_slick {
   height: 100%;
   width: 100%;
   .slick,
