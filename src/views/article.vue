@@ -288,7 +288,7 @@ export default {
 }
 //dialog
 .dialogvideo {
-  background-image: url(../assets/images/bg_video.jpg);
+  background-image: url(../assets/images/bg1.jpg);
   overflow: hidden;
   background-size: cover;
   background-position: center center;
@@ -623,7 +623,7 @@ img {
         .index-book-collect {
           background-color: #fff;
           border-radius: 2px;
-          margin-bottom: 1.5rem;
+          margin-bottom: 20px;
           overflow: hidden;
           .header {
             height: 45px;
