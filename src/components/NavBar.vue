@@ -2,8 +2,8 @@
   <div class="nav" :class="['nav',{'collapsed':options.collapsed},{'nothome':!options.isHome}]">
     <div class="nav-title-bigcon">
       <div class="nav-title-container">
-        <div class="logoandtitle" @click="$router.push('/')">
-          <div class="mainlogoandtitle">
+        <div class="logoandtitle">
+          <router-link class="mainlogoandtitle" to="/">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               data-name="Layer 1"
@@ -36,14 +36,14 @@
               />
             </svg>
             <h1 class="nav-title">{{nav_title}}</h1>
-          </div>
-          <div
+          </router-link>
+          <router-link
             class="extendtitle"
             v-if="!options.isHome"
-            @click="$router.push(cities[options.cityid-1].path)"
+            :to="cities[options.cityid-1].path"
           >
             <h1>&nbsp;|&nbsp;{{cities[options.cityid-1].name}}</h1>
-          </div>
+          </router-link>
         </div>
         <div class="loginGroup" v-if="!user">
           <router-link to="/login" class="btnLogin">登&nbsp;&nbsp;录</router-link>
@@ -63,6 +63,7 @@
 </template>
 <script>
 export default {
+  
   data() {
     return {
       user: this.$store.user,
@@ -136,6 +137,7 @@ export default {
           display: flex;
           align-items: center;
           height: 64px;
+          cursor: pointer;
           h1 {
             font-family: "FZQK";
             color: white;
@@ -144,6 +146,7 @@ export default {
         }
         .extendtitle:hover {
           h1 {
+            color: var(--main-color)
           }
         }
         .mainlogoandtitle {
@@ -244,12 +247,78 @@ export default {
     }
   }
 }
+
+.nothome {
+  margin-bottom: 20px;
+  position: relative;
+  background-color: #fff;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  .nav-title-bigcon {
+    border-bottom: 1px solid #f1f1f1;
+    .nav-title-container {
+      .logoandtitle {
+        .extendtitle h1 {
+          color: var(--main-color);
+        }
+        .extendtitle:hover h1 {
+          color: var(--main-color-hover);
+        }
+        .mainlogoandtitle {
+          .nav-logo .logo_basic {
+            fill: var(--main-color);
+          }
+          h1 {
+            color: var(--main-color);
+          }
+        }
+        .mainlogoandtitle:hover {
+          .logo_basic {
+            fill: var(--main-color-hover);
+          }
+          h1 {
+            color: var(--main-color-hover);
+          }
+        }
+      }
+      .loginGroup {
+        .btnLogin {
+          color: var(--main-color);
+        }
+
+        .btnRegister {
+          color: var(--main-color);
+          border: 1px solid var(--main-color);
+        }
+        .btnLogin:hover {
+          color: var(--main-color-hover);
+        }
+        .btnRegister:hover {
+          color: var(--main-color-hover);
+          border-color: var(--main-color-hover);
+        }
+      }
+      .loginedGroup {
+        display: inline-block;
+      }
+    }
+  }
+  .nav-item {
+    .cities {
+      a {
+        color: var(--main-color);
+      }
+      a:hover {
+        color: var(--main-color-hover);
+        border-bottom: 4px solid var(--main-color-hover);
+      }
+    }
+  }
+}
+
 .collapsed {
   height: 65px;
-  position: relative;
-  margin-bottom: 20px;
-}
-.nothome {
-  background-color: #fff;
+  .nav-title-bigcon {
+    border-bottom: none;
+  }
 }
 </style>

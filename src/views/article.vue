@@ -1,6 +1,6 @@
 <template>
   <div class="article_big">
-    <!-- <nav-bar/> -->
+    <nav-bar :options="navbarOptions"/>
     <!-- dialog -->
     <el-dialog title="文章视频" :visible.sync="dialogVideo" custom-class="dialogvideo">
       <div class="look">
@@ -136,7 +136,7 @@ import carouselsppt from "@/components/carousels-ppt.vue";
 import carouselspic from "@/components/carousels-pic.vue";
 import sidebar1 from "@/components/sidebar1.vue";
 import sidebar2 from "@/components/sidebar2.vue";
-// import NavBar from "@/components/NavBar.vue";
+import NavBar from "@/components/NavBar.vue";
 export default {
   // name: "in-video",
   props: {
@@ -147,30 +147,17 @@ export default {
   },
   data() {
     return {
+      navbarOptions: {
+        ishome: false,
+        isclassroom: false,
+        collapsed: true,
+        cityid: -1,
+        shortTilte:true,
+      },
       info_pic: {
         items: []
       },
-      // {
-      //   articleid: 2,
-      //   imgsrc:
-      //     "http://www.ihchina.cn/Uploads/Picture/2019/08/08/s5d4b7636a4e84.jpg"
-      // },
-      // {
-      //   articleid: 3,
-      //   imgsrc:
-      //     "http://www.ihchina.cn/Uploads/Picture/2019/08/06/s5d493cf91fd64.jpg"
-      // },
-      // {
-      //   articleid: 4,
-      //   imgsrc:
-      //     "http://www.ihchina.cn/Uploads/Picture/2019/08/08/s5d4b7636a4e84.jpg"
-      // },
-      // {
-      //   articleid: 5,
-      //   imgsrc:
-      //     "http://www.ihchina.cn/Uploads/Picture/2019/08/06/s5d493cf91fd64.jpg"
-      // }
-
+      
       info_ppt: {
         items: [
           {
@@ -196,7 +183,6 @@ export default {
         ]
       },
       playerOptions: {
-        // videojs options
         language: "cn",
         height: 517.5,
         playbackRates: [0.7, 1.0, 1.5, 2.0],
@@ -212,44 +198,25 @@ export default {
       dialogVideo: false,
       articleId: 1,
       article: {},
-      // title:
-      // city:
-      // author:
-      // content:
-      // tag:
-      // pptTitle:
-      // pptImg:
-      // pptTag:
+      // title: city: author: content: tag: pptTitle: pptImg: pptTag:
       comment_info: {
         items: []
       },
-      // {
-      //   userid:
-      //   username:
-      //   userplace:
-      //   time:
-      //   comment:
-      //   userimg:
-      //   like:
-      // }
+      // { userid: username: userplace: time: comment: userimg: like: }
       slide_info1: {
         items: []
       },
       slide_info2: {
         items: []
       }
-      // {
-      //   title: "鲁迅故居",
-      //   like: 20,
-      //   comment: 32
-      // },
+      // { title: "鲁迅故居", like: 20, comment: 32 },
     };
   },
   mounted() {},
   created() {
     this.initArticle();
   },
-  beforeRouteUpdate(){
+  beforeRouteUpdate() {
     this.initArticle();
   },
   methods: {
@@ -261,7 +228,7 @@ export default {
       getArticle({ aricle_id: this.articleId }).then(res => {
         this.article = res.data;
         this.playerOptions.sources[0].src = this.article.viedo;
-        // bavbar option
+        this.navbarOptions.cityid=res.data.city_id;
       });
     }
   },
@@ -272,9 +239,8 @@ export default {
     carouselspic,
     sidebar1,
     sidebar2,
-    // NavBar
-  },
-  
+    NavBar
+  }
 };
 </script>
 

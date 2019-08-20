@@ -1,27 +1,27 @@
 <template>
   <div class="city">
+    <nav-bar :options="navbarOptions" />
     <el-row type="flex" class="row-bg" justify="center">
       <el-col :xs="24" :sm="20" :md="16" :lg="14">
         <Carousel></Carousel>
       </el-col>
     </el-row>
     <!--  -->
-    
+
     <el-row type="flex" class="row-bg" justify="center">
       <el-col :xs="24" :sm="20" :md="16" :lg="14">
-        <el-tabs v-model="activeName" stretch=true>          
+        <el-tabs v-model="activeName" :stretch="true">
           <el-tab-pane
             v-for="category in categories"
             :key="category.id"
             :label="category.name"
             :name="category.name"
           >
-            <article-panel  :categoryId="category.id" :cityId="cityId" />
+            <article-panel :categoryId="category.id" :cityId="cityId" />
           </el-tab-pane>
         </el-tabs>
       </el-col>
     </el-row>
-   
   </div>
 </template>
 
@@ -58,29 +58,46 @@
 <script>
 import Carousel from "@/components/MyCarousel.vue";
 import ArticlePanel from "@/components/ArticlePanel.vue";
-import {getCategories} from "@/api/toGet";
+import { getCategories } from "@/api/toGet";
+import NavBar from "@/components/NavBar.vue";
 export default {
   name: "tabs",
   components: {
     ArticlePanel,
-    Carousel
+    Carousel,
+    NavBar
   },
   data() {
     return {
+      navbarOptions: {
+        ishome: false,
+        isclassroom: false,
+        collapsed: false,
+        cityid: -1,
+        shortTilte: true
+      },
       activeName: "风俗民情",
-      cityId :1,
-      categories: [],
-    }
+      cityId: 1,
+      categories: []
+    };
   },
   methods: {
-
-  },
-  created(){
-    this.cityId= this.$route.params.id || 1
-    if (this.cityId<=0 || this.cityId>11){
-      this.$router.replace('/404');
+    initCity() {
+      this.cityId = this.$route.params.id || 1;
+      if (this.cityId <= 0 || this.cityId > 11) {
+        this.$router.replace("/404");
+      }
+      this.navbarOptions.cityid=this.cityId;
+      getCategories({ city_id: this.cityId }).then(
+        res => (this.categories = res.data)
+      );
     }
-    getCategories({city_id:this.cityId}).then(res=>this.categories=res.data);
+  },
+  created() {
+    this.initCity();
+  },
+  beforeRouteUpdate() {
+    this.initCity();
   }
 };
 </script>
