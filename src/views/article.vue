@@ -18,7 +18,7 @@
     </el-dialog>
 
     <el-dialog title="文章课件" :visible.sync="dialogPpt" width="1200px" custom-class="dialogppt">
-      <carouselsppt :info="info_ppt"></carouselsppt>
+      <carouselsppt :pptimages="article.ppt.short_photos"></carouselsppt>
     </el-dialog>
 
     <!-- 整体 -->
@@ -57,18 +57,18 @@
                   <a href class="avatar-link">
                     <div
                       class="lazy avatar avatar loaded"
-                      :style="{backgroundImage: 'url(' + article.pptImg + ')' }"
+                      :style="{backgroundImage: 'url(' + this.$imgaddress(this.article.ppt.photo) + ')' }"
                     ></div>
                   </a>
                   <!-- 课件标题 -->
                   <div class="author-info-box">
                     <div class="profile-box">
-                      <a href class="username username ellipsis">{{article.pptTitle}}</a>
+                      <a href class="username username ellipsis">{{article.ppt?article.ppt.title:""}}</a>
                       <!-- <span class="position ellipsis">绍兴 | 传统技艺</span> -->
                     </div>
                     <div class="meta-box">
                       <a href class="posts">
-                        <span class="count post-count">{{article.city}} | {{article.pptTag}}</span>
+                        <span class="count post-count">{{article.city}} | {{article.ppt.tag}}</span>
                       </a>
                     </div>
                   </div>
@@ -77,7 +77,7 @@
                     class="follow-button2 follow"
                     @click.prevent="dialogPpt= true"
                   >预览</el-button>
-                  <el-button type="button" class="follow-button follow" @click.prevent>下载</el-button>
+                  <el-button type="button" class="follow-button follow" @click.prevent="downppt">下载</el-button>
                   <!-- <button ></button> -->
                   <!-- <button class="follow-button follow">下载</button> -->
                 </div>
@@ -156,32 +156,15 @@ export default {
       },
       info_pic: {
         items: []
-      },
-      
+      },    
       info_ppt: {
-        items: [
-          {
-            articleid: 2,
-            imgsrc:
-              "http://www.ihchina.cn/Uploads/Picture/2019/08/08/s5d4b7636a4e84.jpg"
-          },
-          {
-            articleid: 3,
-            imgsrc:
-              "http://www.ihchina.cn/Uploads/Picture/2019/08/06/s5d493cf91fd64.jpg"
-          },
-          {
-            articleid: 4,
-            imgsrc:
-              "http://www.ihchina.cn/Uploads/Picture/2019/08/08/s5d4b7636a4e84.jpg"
-          },
-          {
-            articleid: 5,
-            imgsrc:
-              "http://www.ihchina.cn/Uploads/Picture/2019/08/06/s5d493cf91fd64.jpg"
-          }
-        ]
+        items: []
       },
+          // {
+          //   articleid: 2,
+          //   imgsrc:
+          //     "http://www.ihchina.cn/Uploads/Picture/2019/08/08/s5d4b7636a4e84.jpg"
+          // }        
       playerOptions: {
         language: "cn",
         height: 517.5,
@@ -212,7 +195,15 @@ export default {
       // { title: "鲁迅故居", like: 20, comment: 32 },
     };
   },
-  mounted() {},
+  // computed:{
+  //   pptimages(){
+  //     if (this.article.ppt){
+  //       return JSON.parse(this.article.ppt.short_photos)
+  //     }
+      
+  //     return []
+  //   }
+  // },
   created() {
     this.initArticle(this.$route.params.id);
   },
@@ -231,6 +222,9 @@ export default {
         this.playerOptions.sources[0].src = this.article.viedo;
         this.navbarOptions.cityid=res.data.city_id;
       });
+    },
+    downppt(){
+      window.open(this.$imgaddress(this.article.ppt.file),'_blank')
     }
   },
   components: {

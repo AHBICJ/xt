@@ -1,7 +1,7 @@
 <template>
-  <el-carousel :interval="100000" type="card" height="300px">
-    <el-carousel-item v-for="item in info.items" :key="item.id">
-      <div ref="height" class="imgbox" :style="{backgroundImage:'url('+item.imgsrc+')'}"></div>
+  <el-carousel :interval="100000" type="card" height="360px">
+    <el-carousel-item v-for="item in items" :key="item">
+      <div ref="height" class="imgbox" :style="{backgroundImage:'url('+ imgaddress(item)+')'}"></div>
     </el-carousel-item>
   </el-carousel>
 </template>
@@ -21,17 +21,28 @@
 export default {
   data() {
     return {
-      // bannerHeight: 1000,
-      // screenWidth: 1920
     };
+  },
+  computed:{
+    items(){
+      return JSON.parse(this.pptimages)
+    }
   },
   name: "carouselsppt",
   props: {
-    info: {
-      type: Object,
-      default: () => ({})
+    pptimages: {
+      type: String
     }
   },
-  methods: {}
+  methods: {
+  imgaddress(image) {
+  if (!image) return "null"
+  if (image.toString().startsWith("http")) {
+    return image
+  } else {
+    return process.env.VUE_APP_CDN + image
+  }
+}
+  }
 };
 </script>
