@@ -1,7 +1,7 @@
 <template>
   <el-card :body-style="{ padding: '0px' }" shadow="hover" class="articleCard">
     <router-link :to="'/article/'+id">
-      <div class="imgBox" :style="{backgroundImage:'url('+imgSrc+')'}"></div>
+      <div class="imgBox" :style="{backgroundImage:'url('+imgaddress(imgSrc)+')'}"></div>
       <div style="padding: 14px;">
         <span>{{title}}</span>
         <el-tag type="warning" v-if="havePpt">课件</el-tag>
@@ -94,6 +94,16 @@ export default {
       date: this.ArticleInfo.date,
       havePpt: true
     };
+  },
+  methods:{
+    imgaddress(image) {
+      if (!image) return "null"
+      if (image.toString().startsWith("http")) {
+        return image
+      } else {
+        return process.env.VUE_APP_CDN + image
+      }
+    }
   },
   computed: {
     havePic() {

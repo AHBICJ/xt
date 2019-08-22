@@ -13,7 +13,7 @@
         <router-link :to="`/article/`+item.id" class="item" v-for="item in articles" :key="item.id">
           <div class="poster">
             <div class="lazy thumb poster-img">
-              <img :src="item.imgSrc" alt />
+              <img :src="imgaddress(item.imgSrc)" alt />
             </div>
           </div>
           <div class="content-text">
@@ -44,20 +44,33 @@ export default {
     }
   },
   methods: {
-    initSidebar1(id) {
-      this.articleId = id || 1;
+    initSidebar1() {
+      this.articleId = this.$route.params.id || 1;
       getSidebar1({ article_id: this.articleId }).then(
         res => (this.articles = res.data)
       );
+    },
+    imgaddress(image) {
+      if (!image) return "null";
+      if (image.toString().startsWith("http")) {
+        return image;
+      } else {
+        return process.env.VUE_APP_CDN + image;
+      }
     }
   },
   created() {
-    this.initSidebar1(this.$route.params.id);
+    this.initSidebar1();
   },
-  beforeRouteUpdate(to, from, next) {
-    this.initSidebar1(to.params.id);
-    next();
+  watch: {
+    $route() {
+      this.initSidebar1();
+    }
   }
+  // beforeRouteUpdate(to, from, next) {
+  //   this.initSidebar1(to.params.id);
+  //   next();
+  // }
 };
 </script>
 
