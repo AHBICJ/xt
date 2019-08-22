@@ -1,6 +1,6 @@
 <template>
   <div class="article_big">
-    <nav-bar :options="navbarOptions"/>
+    <nav-bar :options="navbarOptions" />
     <!-- dialog -->
     <el-dialog title="文章视频" :visible.sync="dialogVideo" custom-class="dialogvideo">
       <div class="look">
@@ -9,7 +9,11 @@
           ref="videoPlayer"
           :options="playerOptions"
           :playsinline="true"
+          v-if="haveVideo"
         ></video-player>
+        <div class="article_attention" v-else>
+          <p>该篇文章尚未添加视频，快去看看别的内容吧~</p>
+        </div>
       </div>
     </el-dialog>
 
@@ -63,12 +67,19 @@
                   <!-- 课件标题 -->
                   <div class="author-info-box">
                     <div class="profile-box">
-                      <a href class="username username ellipsis" @click.prevent="dialogPpt= true">{{article.ppt?article.ppt.title:""}}</a>
+                      <a
+                        href
+                        class="username username ellipsis"
+                        @click.prevent="dialogPpt= true"
+                      >{{article.ppt?article.ppt.title:""}}</a>
                       <!-- <span class="position ellipsis">绍兴 | 传统技艺</span> -->
                     </div>
                     <div class="meta-box">
                       <a href class="posts">
-                        <span class="count post-count" @click.prevent="dialogPpt= true">{{article.city}} | {{ppt?ppt.tag:''}}</span>
+                        <span
+                          class="count post-count"
+                          @click.prevent="dialogPpt= true"
+                        >{{article.city}} | {{ppt?ppt.tag:''}}</span>
                       </a>
                     </div>
                   </div>
@@ -102,7 +113,7 @@
             </div>
           </div>
 
-          <div class="panel-btn show2" @click="dialogPic= true" >
+          <div class="panel-btn show2" @click="dialogPic= true">
             <div class="show">
               <el-button type="text">赏</el-button>
             </div>
@@ -152,21 +163,20 @@ export default {
         isclassroom: false,
         collapsed: true,
         cityid: -1,
-        shortTilte:true,
-        
+        shortTilte: true
       },
-      ppt:{},
+      ppt: {},
       info_pic: {
         items: []
-      },    
+      },
       info_ppt: {
         items: []
       },
-          // {
-          //   articleid: 2,
-          //   imgsrc:
-          //     "http://www.ihchina.cn/Uploads/Picture/2019/08/08/s5d4b7636a4e84.jpg"
-          // }        
+      // {
+      //   articleid: 2,
+      //   imgsrc:
+      //     "http://www.ihchina.cn/Uploads/Picture/2019/08/08/s5d4b7636a4e84.jpg"
+      // }
       playerOptions: {
         language: "cn",
         height: 517.5,
@@ -202,7 +212,7 @@ export default {
   //     if (this.article.ppt){
   //       return JSON.parse(this.article.ppt.short_photos)
   //     }
-      
+
   //     return []
   //   }
   // },
@@ -222,12 +232,12 @@ export default {
       getArticle({ aricle_id: this.articleId }).then(res => {
         this.article = res.data;
         this.playerOptions.sources[0].src = this.article.viedo;
-        this.navbarOptions.cityid=res.data.city_id;
-        this.ppt= res.data.ppt
+        this.navbarOptions.cityid = res.data.city_id;
+        this.ppt = res.data.ppt;
       });
     },
-    downppt(){
-      window.open(this.$imgaddress(this.article.ppt.file),'_blank')
+    downppt() {
+      window.open(this.$imgaddress(this.article.ppt.file), "_blank");
     }
   },
   components: {
@@ -238,6 +248,11 @@ export default {
     sidebar1,
     sidebar2,
     NavBar
+  },
+  computed: {
+    haveVideo() {
+      return this.article.video!= null;
+    }
   }
 };
 </script>
@@ -253,15 +268,15 @@ export default {
 //dialog
 .dialogvideo {
   background-image: url(../assets/images/zmdbg.jpg);
-  background-size:100% 100%;
+  background-size: 100% 100%;
 }
 .dialogppt {
   background: url(../assets/images/zmdbg.jpg);
-  background-size:100% 100%;
+  background-size: 100% 100%;
 }
 .dialogpic {
   background: url(../assets/images/zmdbg.jpg);
-  background-size:100% 100%;
+  background-size: 100% 100%;
 }
 .el-dialog__title {
   line-height: 24px;
@@ -326,7 +341,13 @@ img {
   width: 100%;
   min-height: 100%;
   background: url(../assets/images/BG5.png);
-
+.article_attention p {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 16px;
+  text-align: center;
+  color: #ddd;
+  margin-bottom: 20px;
+}
   //大整体
   .container {
     position: relative;
