@@ -12,6 +12,7 @@
     "core-js": "^2.6.5",
     "element-ui": "^2.4.5",
     "jquery": "^3.4.1",
+    "js-md5": "^0.7.3",
     "slick-carousel": "^1.8.1",
     "vue": "^2.6.10",
     "vue-fullpage.js": "^0.1.4",

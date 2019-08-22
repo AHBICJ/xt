@@ -60,7 +60,7 @@
 
 <script>
 import { checkCode } from "@/api/login";
-
+import { Message } from 'element-ui'
 export default {
   name: "userlogin",
   components: {},
@@ -111,8 +111,13 @@ export default {
               this.fullscreenLoading = false;
               this.$router.replace({ path: "/" });
             })
-            .catch(() => {
+            .catch(err => {
               this.fullscreenLoading = false;
+              Message({
+                message: err.message,
+                type: "error",
+                duration: 4 * 1000
+              });
             });
         }
       });

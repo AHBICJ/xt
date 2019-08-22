@@ -45,12 +45,12 @@
             <h1>&nbsp;|&nbsp;{{cities[options.cityid-1].name}}</h1>
           </router-link>
         </div>
-        <div class="loginGroup" v-if="!user">
+        <div class="loginGroup" v-if="!login">
           <router-link to="/login" class="btnLogin">登&nbsp;&nbsp;录</router-link>
           <router-link to="/register" class="btnRegister">注&nbsp;&nbsp;册</router-link>
         </div>
         <div class="loginedGroup" v-else>
-          <el-avatar :size="50" :src="circleUrl"></el-avatar>
+          <el-avatar :size="50" :src="avatar"></el-avatar>
         </div>
       </div>
     </div>
@@ -62,11 +62,13 @@
   </div>
 </template>
 <script>
+import { userinfo } from "@/api/login";
+
 export default {
-  
   data() {
     return {
-      user: this.$store.user,
+      login: false,
+      user: null,
       cities: [
         { name: "杭州", path: "/city/1" },
         { name: "宁波", path: "/city/2" },
@@ -100,10 +102,31 @@ export default {
   computed: {
     nav_title() {
       return this.options.shortTilte ? "浙里" : "浙里文化";
+    },
+    
+    avatar(){
+      return '/images/'+this.user.photo;
     }
   },
   methods: {
-    // handleExtendTitleClick(){}
+    checkAndSetLoginState() {
+      userinfo({})
+        .then(() => {
+          this.login=true;
+          this.user=this.$store.state.user
+        })
+        .catch(() => {
+          localStorage.removeItem('user');
+          this.login=false;
+          this.user=null;
+        });
+    }
+  },
+  created(){
+    this.checkAndSetLoginState();
+  },
+  watch:{
+    '$route':'checkAndSetLoginState'
   }
 };
 </script>
@@ -146,7 +169,7 @@ export default {
         }
         .extendtitle:hover {
           h1 {
-            color: var(--main-color)
+            color: var(--main-color);
           }
         }
         .mainlogoandtitle {
@@ -216,6 +239,7 @@ export default {
       }
       .loginedGroup {
         display: inline-block;
+        margin-right: 10px;
       }
     }
   }
