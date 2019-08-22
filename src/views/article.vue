@@ -17,8 +17,8 @@
       <carouselspic :images="article.images"></carouselspic>
     </el-dialog>
 
-    <el-dialog title="文章课件" :visible.sync="dialogPpt" width="1200px" custom-class="dialogppt">
-      <carouselsppt :pptimages="article.ppt.short_photos"></carouselsppt>
+    <el-dialog title="文章课件" :visible.sync="dialogPpt" width="1280px" custom-class="dialogppt">
+      <carouselsppt :pptimages="ppt?ppt.short_photos:''"></carouselsppt>
     </el-dialog>
 
     <!-- 整体 -->
@@ -44,31 +44,31 @@
             <div class="tag-list">
               <a href class="item">
                 <div class="lazy thumb tag-icon loaded"></div>
-                <div class="tag-title">{{article.city}} | {{article.tag}}</div>
+                <div class="tag-title">{{article.city}} | {{ppt?ppt.tag:''}}</div>
               </a>
             </div>
           </div>
           <!-- 课件内容 -->
-          <a href class>
+          <div>
             <div class="footer-author-block">
               <div class="author">
                 <div class="author-info-block">
                   <!-- 课件图片 -->
-                  <a href class="avatar-link">
+                  <a href class="avatar-link" @click.prevent="dialogPpt= true">
                     <div
                       class="lazy avatar avatar loaded"
-                      :style="{backgroundImage: 'url(' + this.$imgaddress(this.article.ppt.photo) + ')' }"
+                      :style="{backgroundImage: 'url(' + this.$imgaddress(ppt?ppt.photo:'') + ')' }"
                     ></div>
                   </a>
                   <!-- 课件标题 -->
                   <div class="author-info-box">
                     <div class="profile-box">
-                      <a href class="username username ellipsis">{{article.ppt?article.ppt.title:""}}</a>
+                      <a href class="username username ellipsis" @click.prevent="dialogPpt= true">{{article.ppt?article.ppt.title:""}}</a>
                       <!-- <span class="position ellipsis">绍兴 | 传统技艺</span> -->
                     </div>
                     <div class="meta-box">
                       <a href class="posts">
-                        <span class="count post-count">{{article.city}} | {{article.ppt.tag}}</span>
+                        <span class="count post-count" @click.prevent="dialogPpt= true">{{article.city}} | {{ppt?ppt.tag:''}}</span>
                       </a>
                     </div>
                   </div>
@@ -83,7 +83,7 @@
                 </div>
               </div>
             </div>
-          </a>
+          </div>
         </div>
         <!-- 评论 -->
         <comment :comment_info="comment_info" />
@@ -102,7 +102,7 @@
             </div>
           </div>
 
-          <div class="panel-btn show2" @click="dialogPic= true">
+          <div class="panel-btn show2" @click="dialogPic= true" >
             <div class="show">
               <el-button type="text">赏</el-button>
             </div>
@@ -153,7 +153,9 @@ export default {
         collapsed: true,
         cityid: -1,
         shortTilte:true,
+        
       },
+      ppt:{},
       info_pic: {
         items: []
       },    
@@ -221,6 +223,7 @@ export default {
         this.article = res.data;
         this.playerOptions.sources[0].src = this.article.viedo;
         this.navbarOptions.cityid=res.data.city_id;
+        this.ppt= res.data.ppt
       });
     },
     downppt(){

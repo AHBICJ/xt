@@ -41,19 +41,24 @@ export default {
     }
   },
   methods: {
-    initSidebar2(id) {
-      this.articleId = id || 1;
+    initSidebar2() {
+      this.articleId = this.$route.params.id || 1;
       getSidebar2({ article_id: this.articleId }).then(
         res => (this.articles = res.data)
       );
     }
   },
   created() {
-    this.initSidebar2(this.$route.params.id);
+    this.initSidebar2();
   },
-  beforeRouteUpdate(to, from, next) {
-    this.initSidebar2(to.params.id);
-    next();
+  // beforeRouteUpdate(to, from, next) {
+  //   this.initSidebar2(to.params.id);
+  //   next();
+  // }
+  watch: {
+    $route() {
+      this.initSidebar2();
+    }
   }
 };
 </script>
