@@ -279,10 +279,12 @@ a {
         border-left: 1px solid #ccc;
       }
       .cur {
-        color: #9a2929;
+        color:var(--main-color);
+        // color: #9a2929;
       }
       .cur::before {
-        border-left: 1px solid #9a2929;
+        // border-left: 1px solid #9a2929;
+        border-left: 1px solid var(--main-color);
       }
       .cur .txt::before {
         background-position: left bottom;

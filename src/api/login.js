@@ -8,6 +8,13 @@ export function login(datas) {
   })
 }
 
+export function logout() {
+  return request({
+    url: '/auth/login',
+    method: 'post',
+  })
+}
+
 export function register(datas) {
   return request({
     url: '/auth/register',
@@ -29,5 +36,20 @@ export function userinfo(datas) {
     url: '/auth/userinfo',
     method: 'get',
     data: datas
+  })
+}
+
+export function getVCode(){
+  return request({
+    url: '/auth/get_vcode',
+    method: 'get'
+  })
+}
+
+export function checkCode(datas){
+  return request({
+    url: '/auth/check_code',
+    method: 'post',
+    data:datas
   })
 }

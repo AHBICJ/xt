@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Message } from 'element-ui'
+// import { Message } from 'element-ui'
 // import store from '@/store'
 // import { getToken } from '@/utils/auth'
 
@@ -17,24 +17,23 @@ service.interceptors.response.use(
   response => {
     const res = response.data
     if (res.code !== 200) {
-      Message({
-        message: res.msg,
-        type: 'error',
-        duration: 4 * 1000
-      })
-
-      return Promise.reject('error')
+      // Message({
+      //   message: res.msg,
+      //   type: 'error',
+      //   duration: 4 * 1000
+      // })
+      return Promise.reject(Error(res.msg))
     } else {
       return response.data
     }
   },
   error => {
-    //   console.log('err' + error)
-    Message({
-      message: '未正常响应',
-      type: 'error',
-      duration: 4 * 1000
-    })
+    // console.log('err' + error)
+    // Message({
+    //   message: '未正常响应',
+    //   type: 'error',
+    //   duration: 4 * 1000
+    // })
     return Promise.reject(error)
   }
 )
