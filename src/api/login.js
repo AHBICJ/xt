@@ -31,3 +31,18 @@ export function userinfo(datas) {
     data: datas
   })
 }
+
+export function getVCode(){
+  return request({
+    url: '/auth/get_vcode',
+    method: 'get'
+  })
+}
+
+export function checkCode(datas){
+  return request({
+    url: '/auth/check_code',
+    method: 'post',
+    data:datas
+  })
+}
