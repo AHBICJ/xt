@@ -10,7 +10,7 @@
       </div>
       <div class="section"><div>123</div></div>
       <div class="section"><z-j-map/></div>
-      <div class="section"><div>789</div></div>
+      <div class="section fp-auto-height"><div style="height:600px;">789</div></div>
     </full-page>
   </div>
 </template>
@@ -24,7 +24,7 @@ import Slick from "@/components/Slick";
 import PicList from "@/components/PicList";
 import NavBar from "@/components/NavBar";
 import ZJMap from "@/components/ZJMap";
-
+import "@/styles/fullpage.css";
 export default {
   data() {
     return {
