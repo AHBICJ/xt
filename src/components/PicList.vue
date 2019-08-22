@@ -318,6 +318,7 @@ a {
       top: 0;
       bottom: 0;
       left: 75%;
+      width: 1em;
       .link {
         position: relative;
         padding: 35px 4px;

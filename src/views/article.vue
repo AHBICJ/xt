@@ -149,20 +149,14 @@ import sidebar1 from "@/components/sidebar1.vue";
 import sidebar2 from "@/components/sidebar2.vue";
 import NavBar from "@/components/NavBar.vue";
 export default {
-  // name: "in-video",
-  props: {
-    source: {
-      type: String,
-      default: ""
-    }
-  },
+
   data() {
     return {
       navbarOptions: {
-        ishome: false,
-        isclassroom: false,
+        isHome: false,
+        isClassroom: false,
         collapsed: true,
-        cityid: -1,
+        cityId: -1,
         shortTilte: true
       },
       ppt: {},
@@ -230,9 +224,9 @@ export default {
     initArticle(id) {
       this.articleId = id || 1;
       getArticle({ aricle_id: this.articleId }).then(res => {
+        this.navbarOptions.cityId = res.data.city_id;
         this.article = res.data;
         this.playerOptions.sources[0].src = this.article.viedo;
-        this.navbarOptions.cityid = res.data.city_id;
         this.ppt = res.data.ppt;
       });
     },

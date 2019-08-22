@@ -40,9 +40,9 @@
           <router-link
             class="extendtitle"
             v-if="!options.isHome"
-            :to="cities[options.cityid-1].path"
+            :to="cities[options.cityId-1].path"
           >
-            <h1>&nbsp;|&nbsp;{{cities[options.cityid-1].name}}</h1>
+            <h1>&nbsp;|&nbsp;{{cities[options.cityId-1].name}}</h1>
           </router-link>
         </div>
         <div class="loginGroup" v-if="!login">
@@ -93,7 +93,7 @@ export default {
           isHome: true,
           isClassroom: false,
           collapsed: false,
-          cityid: 12,
+          cityId: 12,
           shortTilte: false
         };
       }
@@ -103,10 +103,10 @@ export default {
     nav_title() {
       return this.options.shortTilte ? "浙里" : "浙里文化";
     },
-    
     avatar(){
       return '/images/'+this.user.photo;
-    }
+    },
+
   },
   methods: {
     checkAndSetLoginState() {

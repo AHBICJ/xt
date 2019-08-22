@@ -16,7 +16,7 @@ export default new Router({
     {
       path: '/article/:id',
       name: 'article',
-      component: () => import('./views/article.vue')
+      component: () => import('./views/Article.vue')
     },
     {
       path: '/city/:id',
@@ -28,6 +28,11 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: () => import('./views/login')
+    },
+    {
+      path: '/user',
+      name: 'user',
+      component: () => import('./views/User.vue')
     },
   ]
 })
