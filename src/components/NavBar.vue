@@ -45,12 +45,32 @@
             <h1>&nbsp;|&nbsp;{{cities[options.cityId-1].name}}</h1>
           </router-link>
         </div>
-        <div class="loginGroup" v-if="!login">
-          <router-link to="/login" class="btnLogin">登&nbsp;&nbsp;录</router-link>
-          <router-link to="/register" class="btnRegister">注&nbsp;&nbsp;册</router-link>
-        </div>
-        <div class="loginedGroup" v-else>
-          <el-avatar :size="50" :src="avatar"></el-avatar>
+        <div class="otherAndUser">
+          <el-input
+            size="small"
+            class="my-nav-search"
+            placeholder="请输入搜索内容"
+            v-model="input4"
+            style="          .el-input__inner {
+            background-color: transparent;
+          }"
+          >
+            <i slot="prefix" class="el-input__icon el-icon-search"></i>
+          </el-input>
+          <i class="el-icon-message-solid my-nav-message"></i>
+          <div class="loginGroup" v-if="!login">
+            <router-link to="/login" class="btnLogin">登&nbsp;&nbsp;录</router-link>
+            <router-link to="/register" class="btnRegister">注&nbsp;&nbsp;册</router-link>
+          </div>
+          <div class="loginedGroup" v-else>
+            <el-dropdown trigger="click">
+              <el-avatar class="el-dropdown-link" ref="popupbutton" :size="38" :src="avatar"></el-avatar>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>个人中心</el-dropdown-item>
+                <el-dropdown-item divided>注销</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </div>
         </div>
       </div>
     </div>
@@ -103,33 +123,41 @@ export default {
     nav_title() {
       return this.options.shortTilte ? "浙里" : "浙里文化";
     },
-    avatar(){
-      return '/images/'+this.user.photo;
-    },
-
+    avatar() {
+      return "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png";
+      // return '/images/'+this.user.photo;
+    }
   },
   methods: {
     checkAndSetLoginState() {
       userinfo({})
         .then(() => {
-          this.login=true;
-          this.user=this.$store.state.user
+          this.login = true;
+          this.user = this.$store.state.user;
         })
         .catch(() => {
-          localStorage.removeItem('user');
-          this.login=false;
-          this.user=null;
+          localStorage.removeItem("user");
+          this.login = false;
+          this.user = null;
         });
     }
   },
-  created(){
+  created() {
     this.checkAndSetLoginState();
   },
-  watch:{
-    '$route':'checkAndSetLoginState'
+  watch: {
+    $route: "checkAndSetLoginState"
   }
 };
 </script>
+<style lang="scss">
+.my-nav-search .el-input__inner {
+  background-color: transparent;
+}
+.my-nav-search .el-input__inner:hover {
+  border-color: var(--main-color-hover);
+}
+</style>
 <style lang="scss" scoped>
 .nav {
   // position: fixed;
@@ -146,6 +174,7 @@ export default {
     height: 64px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     .nav-title-container {
+      position: relative;
       margin: auto;
       width: 1120px;
       display: flex;
@@ -204,42 +233,69 @@ export default {
           }
         }
       }
-
-      .loginGroup {
-        display: inline-block;
-        .btnLogin {
+      .otherAndUser {
+        display: flex;
+        align-items: center;
+        height: 64px;
+        .my-nav-search {
+          width: 180px;
+          margin-right: 20px;
+          .el-input__inner {
+            background-color: transparent;
+          }
+        }
+        .my-nav-message {
+          height: 25px;
+          width: 25px;
+          color: #c0c4cc;
+          font-size: 22px;
+          margin-right: 18px;
+          line-height: 25px;
+          cursor: pointer;
+        }
+        .my-nav-message:hover {
+          color: var(--main-color-hover);
+        }
+        .loginGroup {
           display: inline-block;
-          font-family: "FZQK";
-          color: white;
-          height: 37px;
-          line-height: 37px;
-          transition: color 0.2s;
-        }
+          .btnLogin {
+            display: inline-block;
+            font-family: "FZQK";
+            color: white;
+            height: 37px;
+            line-height: 37px;
+            transition: color 0.2s;
+          }
 
-        .btnRegister {
-          display: inline-block;
-          font-family: "FZQK";
-          color: white;
-          height: 35px;
-          line-height: 35px;
-          padding: 0 16px;
-          border: 1px solid white;
-          border-radius: 4px;
-          margin-left: 20px;
-          margin-right: 10px;
-          transition: color 0.2s, border 0.2s;
+          .btnRegister {
+            display: inline-block;
+            font-family: "FZQK";
+            color: white;
+            height: 35px;
+            line-height: 35px;
+            padding: 0 16px;
+            border: 1px solid white;
+            border-radius: 4px;
+            margin-left: 20px;
+            margin-right: 10px;
+            transition: color 0.2s, border 0.2s;
+          }
+          .btnLogin:hover {
+            color: var(--main-color);
+          }
+          .btnRegister:hover {
+            color: var(--main-color);
+            border-color: var(--main-color);
+          }
         }
-        .btnLogin:hover {
-          color: var(--main-color);
+        .loginedGroup {
+          display: flex;
+          align-items: center;
+          margin-right: 14px;
+          .el-avatar {
+            cursor: pointer;
+          }
         }
-        .btnRegister:hover {
-          color: var(--main-color);
-          border-color: var(--main-color);
-        }
-      }
-      .loginedGroup {
-        display: inline-block;
-        margin-right: 10px;
       }
     }
   }
@@ -304,25 +360,24 @@ export default {
           }
         }
       }
-      .loginGroup {
-        .btnLogin {
-          color: var(--main-color);
-        }
+      .otherAndUser {
+        .loginGroup {
+          .btnLogin {
+            color: var(--main-color);
+          }
 
-        .btnRegister {
-          color: var(--main-color);
-          border: 1px solid var(--main-color);
+          .btnRegister {
+            color: var(--main-color);
+            border: 1px solid var(--main-color);
+          }
+          .btnLogin:hover {
+            color: var(--main-color-hover);
+          }
+          .btnRegister:hover {
+            color: var(--main-color-hover);
+            border-color: var(--main-color-hover);
+          }
         }
-        .btnLogin:hover {
-          color: var(--main-color-hover);
-        }
-        .btnRegister:hover {
-          color: var(--main-color-hover);
-          border-color: var(--main-color-hover);
-        }
-      }
-      .loginedGroup {
-        display: inline-block;
       }
     }
   }

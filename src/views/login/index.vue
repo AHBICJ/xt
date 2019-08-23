@@ -30,7 +30,7 @@ export default {
   data() {
     return {
       activeName: "login",
-      vcodeSrc: process.env.VUE_APP_API + "/auth/VerifyCode/"
+      vcodeSrc: process.env.VUE_APP_API + "/auth/VerifyCode/?"
     };
   },
   created() {},
