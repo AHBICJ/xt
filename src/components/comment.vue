@@ -35,7 +35,7 @@
       <div class="form-box">
         <div class="input-box">
           <div class="auth-card">
-            <el-input v-model="newcomment"></el-input>
+            <el-input v-model="newcomment" @keyup.enter.native="addcomment"></el-input>
           </div>
           <!---->
         </div>

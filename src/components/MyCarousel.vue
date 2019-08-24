@@ -1,12 +1,32 @@
 <template>
-  <el-carousel :interval="5000" >
-    <el-carousel-item v-for="item in 4" :key="item">
-      <h3>{{ item }}</h3>
+  <el-carousel :interval="5000" height="300px">
+    <el-carousel-item v-for="item in lanterns" :key="item.photo">
+      <!-- <el-image :src="$imgaddress(item.photo)" :fit="fits[1]"></el-image> -->
+      <div ref="height" class="imgbox-city" :style="{backgroundImage:'url('+$imgaddress(item.photo)+')'}"></div>
     </el-carousel-item>
   </el-carousel>
 </template>
 
-<style>
+<script>
+export default {
+  props:['lanterns'],
+  data(){
+    return {
+      fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
+    }
+  }
+}
+</script>
+<style lang="scss">
+.imgbox-city{
+  height: 100%;
+  overflow: hidden;
+  background-position: center center;
+  background: no-repeat;
+  background-position: 50% 50%;
+}
+</style>
+<style lang="scss" scoped>
   .el-carousel__item h3 {
     color: #475669;
     font-size: 18px;

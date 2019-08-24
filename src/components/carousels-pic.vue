@@ -2,7 +2,7 @@
   <div v-if="havePic">
     <el-carousel :interval="100000" height="480px">
       <el-carousel-item v-for="item in images" :key="item.id">
-        <div ref="height" class="imgbox" :style="{backgroundImage:'url('+item.photo_address+')'}"></div>
+        <div ref="height" class="imgbox" :style="{backgroundImage:'url('+$imgaddress(item.photo_address)+')'}"></div>
       </el-carousel-item>
     </el-carousel>
   </div>
