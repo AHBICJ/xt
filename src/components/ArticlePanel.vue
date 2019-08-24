@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row :gutter="10" style="padding:0 10px; min-height:700px;">
-      <el-col v-for="a in articles" :key="a.id" :xs="12" :sm="8" :lg="6">
+      <el-col v-for="a in articles" :key="a.id" :xs="12" :sm="6" :lg="6">
         <router-link :to="`/article/`+ a.id">
         <article-card class="myCard" :article-info="a"></article-card>
         </router-link>

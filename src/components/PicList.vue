@@ -148,9 +148,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-div {
-  box-sizing: border-box;
-}
 a {
   color: inherit;
   text-decoration: none;

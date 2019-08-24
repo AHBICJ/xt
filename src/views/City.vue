@@ -1,84 +1,51 @@
 <template>
   <div class="city">
     <nav-bar :options="navbarOptions" />
-    <el-row type="flex" class="row-bg" justify="center">
-      <el-col :xs="24" :sm="20" :md="16" :lg="14">
-        <Carousel :lanterns="lanterns"></Carousel>
-      </el-col>
-    </el-row>
-    <!--  -->
-    <div class="city_tab">
-      <el-row type="flex" class="row-bg" justify="center">
-        <el-col :xs="24" :sm="20" :md="16" :lg="14">
-          <el-tabs v-model="activeName" :stretch="true">
-            <el-tab-pane
-              v-for="category in categories"
-              :key="category.id"
-              :label="category.name"
-              :name="category.name"
-            >
-              <article-panel :categoryId="category.id" :cityId="cityId" />
-            </el-tab-pane>
-          </el-tabs>
-        </el-col>
-      </el-row>
+    <div class="city-mid-con">
+      <Carousel :lanterns="lanterns"></Carousel>
+      <el-tabs v-model="activeName" :stretch="true" class="city-con">
+        <el-tab-pane
+          v-for="category in categories"
+          :key="category.id"
+          :label="category.name"
+          :name="category.name"
+        >
+          <article-panel :categoryId="category.id" :cityId="cityId" />
+        </el-tab-pane>
+      </el-tabs>
     </div>
   </div>
 </template>
 <style lang="scss">
-.el-tabs__item {
-  font-size: 15px;
-  padding: 0;
-}
-.city_tab {
-  // .is-active {
-  //   background: url(../assets/images/tabbg11.jpg);
-  //   background-size: 100% 100%;
-  // }
-  // .MM {
-  //   width: 100%;
-  //   // background: url(../assets/images/MM1.png) no-repeat;
-  //   background: url(../assets/images/MM1.png);
-  //   background-size: 100% 100%;
-  // }
-  .el-tabs__nav-wrap {
-    width: 100%;
-    // background: url(../assets/images/TT1.png) no-repeat;
-    background: url(../assets/images/tabTT3.png);
-    background-size: 100% 100%;
+.city .city-mid-con {
+  .el-tabs__item {
+    height: 45px;
+    line-height: 45px;
+    font-size: 16px;
+    padding: 0;
+    transition: letter-spacing ease-in-out 0.1s;
+  }
+  .el-tabs__item.is-active{
+    letter-spacing: 0.5em;
+    margin-right: -0.5em;
+  }
+  .el-tabs__active-bar {
+    height: 3px;
   }
 }
 </style>
-<style scoped>
+<style lang="scss" scoped>
 .city {
   width: 100%;
   min-height: 100%;
-  /* position: fixed; */
   background: url(../assets/images/BG4.png);
 }
-.el-col {
-  border-radius: 4px;
-  background-color: #f9fafc;
-}
-.bg-purple-dark {
-  background: #99a9bf;
-}
-.bg-purple {
-  background: #d3dce6;
-}
-.bg-purple-light {
-  background: #e5e9f2;
-}
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-}
-.row-bg {
-  padding: 10px 0;
-  /* background-color: #f9fafc; */
-}
-.el-tabs__item {
-  font-size: 16px;
+.city-mid-con {
+  width: 1120px;
+  margin: 0 auto;
+  .city-con {
+    background-color: #f9fafc;
+  }
 }
 </style>
 
