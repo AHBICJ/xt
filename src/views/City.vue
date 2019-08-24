@@ -115,7 +115,7 @@ export default {
       if (this.cityId <= 0 || this.cityId > 11) {
         this.$router.replace("/404");
       }
-      this.navbarOptions.cityid = this.cityId;
+      this.navbarOptions.cityId = this.cityId;
       getCategories({ city_id: this.cityId }).then(
         res => (this.categories = res.data)
       );

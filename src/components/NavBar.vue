@@ -40,9 +40,9 @@
           <router-link
             class="extendtitle"
             v-if="!options.isHome"
-            :to="cities[options.cityId-1].path"
+            :to="cities[options.cityId-1]?cities[options.cityId-1].path:''"
           >
-            <h1>&nbsp;|&nbsp;{{cities[options.cityId-1].name}}</h1>
+            <h1>&nbsp;|&nbsp;{{cities[options.cityId-1]?cities[options.cityId-1].name:''}}</h1>
           </router-link>
         </div>
         <div class="otherAndUser">
