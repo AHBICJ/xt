@@ -30,9 +30,21 @@
   font-size: 15px;
   padding: 0;
 }
-.city_tab{
-  .is-active {
-    background: url(../assets/images/tabbg11.jpg);
+.city_tab {
+  // .is-active {
+  //   background: url(../assets/images/tabbg11.jpg);
+  //   background-size: 100% 100%;
+  // }
+  // .MM {
+  //   width: 100%;
+  //   // background: url(../assets/images/MM1.png) no-repeat;
+  //   background: url(../assets/images/MM1.png);
+  //   background-size: 100% 100%;
+  // }
+  .el-tabs__nav-wrap {
+    width: 100%;
+    // background: url(../assets/images/TT1.png) no-repeat;
+    background: url(../assets/images/tabTT3.png);
     background-size: 100% 100%;
   }
 }
