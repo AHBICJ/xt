@@ -60,11 +60,11 @@ export default new Router({
       path: '/tealook/:id',
       name: 'tealook',
       component: () => import('./views/tealook.vue')
-    },
+    } ,
     {
-      path: '/login',
-      name: 'login',
-      component: () => import('./views/login')
+      path: '/chooseclass',
+      name: 'chooseclass',
+      component: () => import('./views/chooseclass.vue')
     }
   ]
 })
