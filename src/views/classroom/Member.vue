@@ -5,14 +5,14 @@
         <h2>老师</h2>
       </div>
       <div class="list">
-        <img src="../assets/images/tx1.png" alt />
+        <img src="@/assets/images/tx1.png" alt />
         <p>孔孟荀墨</p>
       </div>
       <div class="text mt50">
         <h2>同学们</h2>
       </div>
       <div class="list"  v-for="item in stu" :key="item">
-        <img src="../assets/images/tx4.png" alt />
+        <img src="@/assets/images/tx4.png" alt />
         <p>{{item}}</p>
       </div>
       <el-pagination

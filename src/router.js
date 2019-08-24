@@ -22,7 +22,7 @@ export default new Router({
       path: '/city/:id',
       name: 'city',
       component: () => import('./views/City.vue')
-      
+
     },
     {
       path: '/login',
@@ -34,37 +34,35 @@ export default new Router({
       name: 'user',
       component: () => import('./views/User.vue')
     },
-    
     {
-      path: '/circle',
-      name: 'circle',
-      component: () => import('./views/circle.vue')  
+      path: '/classroom',
+      name: 'classroom', 
+      meta: { requiresAuth: true },
+      component: () => import('./views/Classroom.vue'),
+      children: [
+        {
+          path: 'intro/:id',
+          name:'intro',
+          component: ()=>import('./views/classroom/Intro.vue'),
+        },
+        {
+          path: '/member',
+          name: 'member',
+          component: () => import('./views/classroom/Member.vue')
+        },
+        {
+          path: '/task',
+          name: 'task',
+          component: () => import('./views/classroom/Task.vue'),
+          children:[{
+            path: '/:id',
+            name: 'taskdetail',
+            component: () => import('./views/taskDetail')
+          }
+          ]
+        },
+      ]
     },
-    {
-      path: '/intro',
-      name: 'intro',
-      component: () => import('./views/intro.vue')  
-    },
-    {
-      path: '/list',
-      name: 'list',
-      component: () => import('./views/list.vue')  
-    }
-    ,
-    {
-      path: '/homework/:id',
-      name: 'homework',
-      component: () => import('./views/homework.vue')  
-    },
-    {
-      path: '/tealook/:id',
-      name: 'tealook',
-      component: () => import('./views/tealook.vue')
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: () => import('./views/login')
-    }
+
   ]
 })

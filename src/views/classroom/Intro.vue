@@ -8,7 +8,7 @@
         <p> <span>创建时间：</span>2019/8/24</p>
         <p> <span>班级人数：</span>30</p>
       </div>
-      <img src="../assets/images/1.png" alt />
+      <img src="@/assets/images/1.png" alt />
     </div>
     <classright />
   </div>
