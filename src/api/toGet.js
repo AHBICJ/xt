@@ -48,3 +48,11 @@ export function getCategories(datas){
     params:datas
   })
 }
+
+export function getLanterns(datas){
+  return request({
+    url: '/api/Lantern',
+    method: 'get',
+    params:datas
+  })
+}
