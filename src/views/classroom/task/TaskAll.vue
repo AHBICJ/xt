@@ -1,6 +1,5 @@
 <template>
   <div class="article_big">
-    <nav-bar :options="navbarOptions" />
     <div class="content">
       <div class="left">
         <task v-for="task in tasks" :task="task" :key="task.id" :teachername="classinfo.series" />
@@ -96,7 +95,6 @@ import task from "@/components/task.vue";
 import { create_task } from "@/api/toPost.js";
 import { room_tasks } from "@/api/toGet";
 import { get_classroom_info } from "@/api/toGet";
-import NavBar from "@/components/NavBar.vue";
 export default {
   data() {
     return {
@@ -184,7 +182,6 @@ export default {
   // },
   components: {
     task,
-    NavBar
   },
   created() {
     this.get_tasks();
