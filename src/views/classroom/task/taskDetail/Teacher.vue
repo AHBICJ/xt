@@ -2,19 +2,19 @@
   <div class="content">
     <div class="left">
       <div class="stu" @click="get_homework_detail()">
-        <img src="../assets/images/tx4.png" alt />
+        <img src="@/assets/images/tx4.png" alt />
         <p>林津民</p>
       </div>
       <div class="stu">
-        <img src="../assets/images/tx5.png" alt />
+        <img src="@/assets/images/tx5.png" alt />
         <p>学生名字</p>
       </div>
       <div class="stu">
-        <img src="../assets/images/tx4.png" alt />
+        <img src="@/assets/images/tx4.png" alt />
         <p>学生名字</p>
       </div>
       <div class="stu">
-        <img src="../assets/images/tx5.png" alt />
+        <img src="@/assets/images/tx5.png" alt />
         <p>学生名字</p>
       </div>
     </div>

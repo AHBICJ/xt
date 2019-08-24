@@ -38,26 +38,39 @@ export default new Router({
       path: '/classroom',
       name: 'classroom', 
       meta: { requiresAuth: true },
-      component: () => import('./views/Classroom.vue'),
+      component: () => import('./views/classroom'),
       children: [
         {
-          path: 'intro/:id',
+          path:"",
+          name:"index",
+          component: () => import('./views/classroom/Classroom.vue'),
+        }
+        ,
+        {
+          path: ':id/intro',
           name:'intro',
+          alias: ':id',
           component: ()=>import('./views/classroom/Intro.vue'),
         },
         {
-          path: '/member',
+          path: ':id/member',
           name: 'member',
           component: () => import('./views/classroom/Member.vue')
         },
         {
-          path: '/task',
-          name: 'task',
-          component: () => import('./views/classroom/Task.vue'),
-          children:[{
-            path: '/:id',
+          path: ':id/task',
+          name: 'taskindex',
+          component: () => import('./views/classroom/task'),
+          children:[
+            {
+              path: "",
+              name:"alltask",
+              component: () => import('./views/classroom/task/TaskAll.vue')
+            },
+            {
+            path: ':taskid',
             name: 'taskdetail',
-            component: () => import('./views/taskDetail')
+            component: () => import('./views/classroom/task/taskDetail')
           }
           ]
         },

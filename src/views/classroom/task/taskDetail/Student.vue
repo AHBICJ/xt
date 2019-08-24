@@ -6,7 +6,7 @@
     <div class="txt">
       <h1>{{taskinfo.name}}</h1>
       <div class="myrow">
-        <img src="../assets/images/tx4.png" alt="">
+        <img src="@/assets/images/tx4.png" alt="">
         <p>学生名字 截止于 {{taskinfo.star_time}}</p>
       </div>
       <p style="margin-bottom:20px;" >作业内容:{{taskinfo.desc}}</p>
