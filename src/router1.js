@@ -21,20 +21,8 @@ export default new Router({
     {
       path: '/city/:id',
       name: 'city',
-      component: () => import('./views/City.vue')
-      
+      component: () => import('./views/City.vue')  
     },
-    {
-      path: '/login',
-      name: 'login',
-      component: () => import('./views/login')
-    },
-    {
-      path: '/user',
-      name: 'user',
-      component: () => import('./views/User.vue')
-    },
-    
     {
       path: '/circle',
       name: 'circle',
@@ -65,6 +53,11 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: () => import('./views/login')
-    }
+    },
+    {
+      path: '/user',
+      name: 'user',
+      component: () => import('./views/User.vue')
+    },
   ]
 })

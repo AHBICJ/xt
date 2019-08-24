@@ -7,3 +7,27 @@ export function postComment(datas){
       data:datas
     })
   }
+  export function create_task(data){
+    return request({
+      url: '/api/create_task',
+      method: 'post',
+      data
+    })
+  }
+  
+  
+  export function submit_home(data){
+    return request({
+      url: '/api/submit_homework',
+      method: 'post',
+      data
+    })
+  }
+  
+  export function mark_score(data){
+    return request({
+      url: '/api/mark_score',
+      method: 'post',
+      data
+    })
+  }

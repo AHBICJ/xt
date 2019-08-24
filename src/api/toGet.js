@@ -56,3 +56,35 @@ export function getLanterns(datas){
     params:datas
   })
 }
+
+
+export function task_detail(data){
+  return request({
+    url: '/api/task_detail',
+    method: 'get',
+    params:data
+  })
+}
+
+export function room_tasks(data){
+  return request({
+    url: '/api/room_tasks',
+    method: 'get',
+    params:data
+  })
+}
+
+export function get_classroom_info(data){
+  return request({
+    url: '/api/get_classroom_info',
+    method: 'get',
+    params:data
+  })
+}
+export function get_homework(data){
+  return request({
+    url: '/api/get_homework',
+    method: 'get',
+    params:data
+  })
+}
