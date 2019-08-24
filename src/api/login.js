@@ -10,7 +10,7 @@ export function login(datas) {
 
 export function logout() {
   return request({
-    url: '/auth/login',
+    url: '/auth/logout',
     method: 'post',
   })
 }

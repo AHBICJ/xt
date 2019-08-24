@@ -46,15 +46,7 @@
           </router-link>
         </div>
         <div class="otherAndUser">
-          <el-input
-            size="small"
-            class="my-nav-search"
-            placeholder="请输入搜索内容"
-            v-model="input4"
-            style="          .el-input__inner {
-            background-color: transparent;
-          }"
-          >
+          <el-input size="small" class="my-nav-search" placeholder="请输入搜索内容" v-model="navinput">
             <i slot="prefix" class="el-input__icon el-icon-search"></i>
           </el-input>
           <i class="el-icon-message-solid my-nav-message"></i>
@@ -66,8 +58,10 @@
             <el-dropdown trigger="click">
               <el-avatar class="el-dropdown-link" ref="popupbutton" :size="38" :src="avatar"></el-avatar>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>个人中心</el-dropdown-item>
-                <el-dropdown-item divided>注销</el-dropdown-item>
+                <el-dropdown-item>
+                  <router-link to="/user">个人中心</router-link>
+                </el-dropdown-item>
+                <el-dropdown-item divided @click.native="handleLogout">注销</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </div>
@@ -89,6 +83,7 @@ export default {
     return {
       login: false,
       user: null,
+      navinput: "",
       cities: [
         { name: "杭州", path: "/city/1" },
         { name: "宁波", path: "/city/2" },
@@ -140,6 +135,15 @@ export default {
           this.login = false;
           this.user = null;
         });
+    },
+    handleLogout() {
+      this.$store
+        .dispatch("Logout")
+        .then(() => {
+          this.login = false;
+          this.user = null;
+        })
+        .catch(() => {});
     }
   },
   created() {
