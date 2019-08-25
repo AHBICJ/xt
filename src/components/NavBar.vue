@@ -76,7 +76,7 @@
   </div>
 </template>
 <script>
-import { userinfo } from "@/api/login";
+import { islogin } from "@/api/login";
 
 export default {
   data() {
@@ -125,16 +125,19 @@ export default {
   },
   methods: {
     checkAndSetLoginState() {
-      userinfo({})
-        .then(() => {
-          this.login = true;
-          this.user = this.$store.state.user;
+      islogin({})
+        .then(res => {
+          if (res.data) {
+            this.login = true;
+            this.user = this.$store.state.user;
+          } else {
+            localStorage.removeItem("user");
+            this.$store.commit("LOGOUT");
+            this.login = false;
+            this.user = null;
+          }
         })
-        .catch(() => {
-          localStorage.removeItem("user");
-          this.login = false;
-          this.user = null;
-        });
+        .catch(() => {});
     },
     handleLogout() {
       this.$store
@@ -142,6 +145,8 @@ export default {
         .then(() => {
           this.login = false;
           this.user = null;
+          if (this.$route.fullPath.indexOf("classroom") != -1)
+            this.$router.push("/");
         })
         .catch(() => {});
     }

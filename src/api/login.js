@@ -53,3 +53,10 @@ export function checkCode(datas){
     data:datas
   })
 }
+
+export function islogin(){
+  return request({
+    url: '/auth/islogin',
+    method: 'get',
+  })
+}

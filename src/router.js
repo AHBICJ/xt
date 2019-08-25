@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
+import store from '@/store'
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -36,21 +36,20 @@ export default new Router({
     },
     {
       path: '/classroom',
-      name: 'classroom', 
       meta: { requiresAuth: true },
       component: () => import('./views/classroom'),
       children: [
         {
-          path:"",
-          name:"index",
+          path: "",
+          name: "classroom",
           component: () => import('./views/classroom/Classroom.vue'),
         }
         ,
         {
           path: ':id/intro',
-          name:'intro',
+          name: 'intro',
           alias: ':id',
-          component: ()=>import('./views/classroom/Intro.vue'),
+          component: () => import('./views/classroom/Intro.vue'),
         },
         {
           path: ':id/member',
@@ -59,22 +58,36 @@ export default new Router({
         },
         {
           path: ':id/task',
-          name: 'taskindex',
           component: () => import('./views/classroom/task'),
-          children:[
+          children: [
             {
               path: "",
-              name:"alltask",
+              name: "task",
               component: () => import('./views/classroom/task/TaskAll.vue')
             },
             {
-            path: ':taskid',
-            name: 'taskdetail',
-            component: () => import('./views/classroom/task/taskDetail')
-          }
+              path: ':taskid',
+              name: 'taskdetail',
+              component: () => import('./views/classroom/task/taskDetail')
+            }
           ]
         },
       ]
     },
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.islogin) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    }
+    else next();
+  }
+  else next();
+})
+
+export default router;

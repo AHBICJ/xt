@@ -60,7 +60,7 @@
 
 <script>
 import { checkCode } from "@/api/login";
-import { Message } from 'element-ui'
+import { Message } from "element-ui";
 export default {
   name: "userlogin",
   components: {},
@@ -109,7 +109,9 @@ export default {
             .dispatch("Login", this.loginForm)
             .then(() => {
               this.fullscreenLoading = false;
-              this.$router.replace({ path: "/" });
+              this.$router.replace({
+                path: this.$route.query.redirect || "/"
+              });
             })
             .catch(err => {
               this.fullscreenLoading = false;

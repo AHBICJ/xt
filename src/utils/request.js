@@ -1,4 +1,5 @@
 import axios from 'axios'
+import router from "@/router.js";
 // import { Message } from 'element-ui'
 // import store from '@/store'
 // import { getToken } from '@/utils/auth'
@@ -16,12 +17,20 @@ const service = axios.create({
 service.interceptors.response.use(
   response => {
     const res = response.data
+
     if (res.code !== 200) {
       // Message({
       //   message: res.msg,
       //   type: 'error',
       //   duration: 4 * 1000
       // })
+      if (res.code ==201){
+        router.push({
+          path: "/login",
+          query: {redirect: router.currentRoute.fullPath}
+        });
+      }
+
       return Promise.reject(Error(res.msg))
     } else {
       return response.data

@@ -6,7 +6,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user: localStorage.getItem('user') || {}
+    user: localStorage.getItem('user') || {},
+  },
+  getters:{
+    islogin(state){
+      return JSON.stringify(state.user) == "{}"
+    }
   },
   mutations: {
     LOGIN(state, user) {
