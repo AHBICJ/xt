@@ -12,7 +12,7 @@
       </div>
     </div>
     <transition @enter="enter" @after-enter="afterEnter" @leave="leave" @after-leave="afterLeave">
-      <div class="collapse" v-if="show">
+      <div class="collapse" v-show="show">
         <div class="middle">
           <h2>{{task.name}}</h2>
           <router-link :to=" myrole=='admin'?'/tealook/'+ task.id :'/homework/'+ task.id  ">
@@ -24,9 +24,6 @@
             <img :src=" qaq + item " alt />
             <p>{{task.desc}}</p>
           </div>
-          <p class="state">
-            <span>状态</span> ：未完成
-          </p>
         </div>
       </div>
     </transition>
@@ -106,6 +103,7 @@ p {
     flex-wrap: wrap;
     justify-content: flex-start;
     border-bottom: 1px solid #e0e0e0;
+    cursor: pointer;
     .topone {
       background-color: var(--main-color);
       width: 58px;
@@ -178,17 +176,11 @@ p {
       overflow: auto;
       margin-left: 19px;
       text-align: left;
+      margin-bottom: 20px;
       img {
         width: 105px;
         height: 100%;
         margin-right: 10px;
-      }
-    }
-    .state {
-      margin-left: 620px;
-      margin-top: 10px;
-      span {
-        color: var(--main-color);
       }
     }
   }
