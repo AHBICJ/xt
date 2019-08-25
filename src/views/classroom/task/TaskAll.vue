@@ -2,7 +2,6 @@
   <div class="article_big">
     <div class="content">
       <div class="left">
-        <task v-for="task in tasks" :task="task" :key="task.id" :teachername="classinfo.series" />
         <el-row>
           <el-button
             type="warning"
@@ -14,6 +13,7 @@
             添加新任务
           </el-button>
         </el-row>
+        <task v-for="task in tasks" :task="task" :key="task.id" :teachername="classinfo.series" />
       </div>
       <div class="right">
         <div class="message">
@@ -181,7 +181,7 @@ export default {
   //   }
   // },
   components: {
-    task,
+    task
   },
   created() {
     this.get_tasks();
@@ -193,7 +193,19 @@ export default {
 .article_big {
   width: 100%;
   min-height: 100%;
-  // background: url(../assets/images/BG5.png);
+  .add {
+    margin-bottom: 10px;
+    border-radius: 20px;
+    i {
+      transform: scale(1.4);
+      padding-right: 10px;
+      margin-left: -10px;
+    }
+  }
+  .add:hover {
+    box-shadow: 0 1px 2px 0 rgba(194, 100, 1, 0.3),
+      0 2px 6px 2px rgba(194, 100, 1, 0.15);
+  }
 }
 .content {
   display: flex;
@@ -202,21 +214,12 @@ export default {
   justify-content: flex-start;
   margin: 0 auto;
   width: 993px;
-  margin-top: 50px;
   .left {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: flex-start;
-    .add {
-      margin-left: 630px;
-      i {
-        transform: scale(1.4);
-        padding-right: 10px;
-        margin-left: -10px;
-      }
-    }
   }
   .right {
     display: flex;
