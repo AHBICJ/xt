@@ -7,6 +7,8 @@
       <div class="toptwo">
         <img src="../assets/images/tx3.png" alt />
         <p>{{task.name}}</p>
+      </div>
+      <div class="topthree">
         <p class="state">截止{{endtate(task.star_time)}}</p>
         <i class="el-icon-more"></i>
       </div>
@@ -121,6 +123,7 @@ p {
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
+      width: 200px;
       justify-content: flex-start;
       img {
         margin-top: 5px;
@@ -129,12 +132,23 @@ p {
         height: 35px;
         border-radius: 50%;
       }
+    }
+    .topthree {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 300px;
+      justify-content: flex-start;
+      margin-top: 10px;
+      margin-left: 180px;
       .state {
-        margin-left: 330px;
+        width: 200px;
       }
       i {
         padding-top: 14px;
-        padding-left: 20px;
+        padding-left: 10px;
+        width: 25px;
+        height: 25px;
         transform: scale(1.6);
       }
     }
