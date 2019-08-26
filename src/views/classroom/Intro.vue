@@ -26,7 +26,7 @@
           </div>
         </div>
         <!-- 具体任务栏 -->
-        <taskcard />
+        <taskcard v-for="task in tasks" :task="task" :key="task.id" />
       </div>
     </div>
   </div>
@@ -34,15 +34,53 @@
 
 <script>
 import taskcard from "@/components/TaskCard.vue";
+import { room_tasks, get_classroom_info } from "@/api/toGet";
 export default {
   data() {
-    return {};
+    return {
+      tasks: [],
+      room_id: 1,
+      classinfo: {}
+    };
   },
   computed: {
     avatar() {
       return "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png";
       // return '/images/'+this.user.photo;
     }
+  },
+  methods: {
+    get_tasks() {
+      let datas = { room_id: this.room_id };
+      room_tasks(datas)
+        .then(res => {
+          this.tasks = res.data;
+          for (var i = 0; i < this.tasks.length; i++)
+            this.tasks[i].photo = JSON.parse(this.tasks[i].photo);
+        })
+        .catch(() => {
+          this.$message({
+            message: "请求错误",
+            type: "error"
+          });
+        });
+    },
+    get_room() {
+      get_classroom_info({ room_id: this.room_id })
+        .then(res => {
+          this.classinfo = res.data;
+        })
+        .catch(() => {
+          this.$message({
+            message: "请求错误",
+            type: "error"
+          });
+        });
+    }
+  },
+  created() {
+    this.get_tasks();
+    this.get_room();
   },
   components: {
     classright,

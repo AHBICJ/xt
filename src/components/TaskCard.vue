@@ -1,7 +1,7 @@
 <template>
   <div class="classmessage">
     <!-- 标题 -->
-    <div class="message_title">
+    <div class="message_title" @click="show=!show">
       <div class="title_pic">
         <svg viewBox="0 0 24 24" focusable="false" width="24" height="24">
           <path d="M7 15h7v2H7zm0-4h10v2H7zm0-4h10v2H7z" />
@@ -10,7 +10,7 @@
           />
         </svg>
       </div>
-      <div class="title_name">这是今天布置的任务哦</div>
+      <div class="title_name">{{task.name}}</div>
       <div class="title_btn">
         <div class="btnbox">
           <span class="btn">
@@ -24,69 +24,103 @@
       </div>
     </div>
     <!-- 介绍以及资源 -->
-    <div class="message_content">
-      <div class="content_intro">
-        <div class="intro_left">
-          <div class="intro_time">
-            <span class="taskdate">2019.09.01 10:20</span>
+    <transition @enter="enter" @after-enter="afterEnter" @leave="leave" @after-leave="afterLeave">
+      <div class="collapse" v-show="show">
+        <div class="message_content">
+          <div class="content_intro">
+            <div class="intro_left">
+              <div class="intro_time">
+                <span class="taskdate">{{task.star_time}}</span>
+              </div>
+              <div class="intro_word">
+                <span>{{task.desc}}</span>
+              </div>
+            </div>
+            <div class="intro_right">
+              <div class="turn">
+                <div class="num">0</div>
+                <div class="word">已上交</div>
+              </div>
+              <div class="turn">
+                <div class="num">0</div>
+                <div class="word">分发</div>
+              </div>
+            </div>
           </div>
-          <div class="intro_word">
-            <span>完成相关乡土文化作业。</span>
-          </div>
-        </div>
-        <div class="intro_right">
-          <div class="turn">
-            <div class="num">0</div>
-            <div class="word">已上交</div>
-          </div>
-          <div class="turn">
-            <div class="num">0</div>
-            <div class="word">哈哈</div>
+          <!-- 资源 -->
+          <div class="content_means">
+            <div class="meansBox_out">
+              <div class="meansBox">
+                <a href class="means">
+                  <div class="means_pic">
+                    <img
+                      src="https://www.google.com/webpagethumbnail?c=66&s=105:70&f=0&d=http://baidu.com&a=AIYkKU9eC8yaoGhLEOqmz9bXNUGtShtQQw"
+                      alt
+                    />
+                  </div>
+                  <div class="means_title">
+                    <div class="means_titleword">百度一下，你就知道</div>
+                  </div>
+                </a>
+              </div>
+              <div class="meansBox">
+                <a href class="means">
+                  <div class="means_pic">
+                    <img
+                      src="https://www.google.com/webpagethumbnail?c=66&s=105:70&f=0&d=http://baidu.com&a=AIYkKU9eC8yaoGhLEOqmz9bXNUGtShtQQw"
+                      alt
+                    />
+                  </div>
+                  <div class="means_title">
+                    <div class="means_titleword">百度一下，你就知道</div>
+                  </div>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <!-- 资源 -->
-      <div class="content_means">
-        <div class="meansBox_out">
-          <div class="meansBox">
-            <a href class="means">
-              <div class="means_pic">
-                <img
-                  src="https://www.google.com/webpagethumbnail?c=66&s=105:70&f=0&d=http://baidu.com&a=AIYkKU9eC8yaoGhLEOqmz9bXNUGtShtQQw"
-                  alt
-                />
-              </div>
-              <div class="means_title">
-                <div class="means_titleword">百度一下，你就知道</div>
-              </div>
-            </a>
-          </div>
-          <div class="meansBox">
-            <a href="" class="means">
-              <div class="means_pic">
-                <img
-                  src="https://www.google.com/webpagethumbnail?c=66&s=105:70&f=0&d=http://baidu.com&a=AIYkKU9eC8yaoGhLEOqmz9bXNUGtShtQQw"
-                  alt
-                />
-              </div>
-              <div class="means_title">
-                <div class="means_titleword">百度一下，你就知道</div>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+    </transition>
   </div>
 </template>
 <script>
 export default {
   data() {
-    return {};
+    return {
+      show: false,
+      task:[],
+    };
+  },
+  props: ["task"],
+  methods: {
+    enter(el) {
+      el.style.height = "auto";
+      // noinspection JSSuspiciousNameCombination
+      let endWidth = window.getComputedStyle(el).height;
+      el.style.height = "0px";
+      el.offsetHeight; // force repaint
+      // noinspection JSSuspiciousNameCombination
+      el.style.height = endWidth;
+    },
+    afterEnter(el) {
+      el.style.height = null;
+    },
+    leave(el) {
+      el.style.height = window.getComputedStyle(el).height;
+      el.offsetHeight; // force repaint
+      el.style.height = "0px";
+    },
+    afterLeave(el) {
+      el.style.height = null;
+    }
   }
 };
 </script>
 <style lang="scss" scoped>
+.collapse {
+  transition: height 0.3s ease-in-out;
+  overflow: hidden;
+}
 .classmessage {
   background-color: #fff;
   border: 1px solid #dadce0;
@@ -284,9 +318,9 @@ export default {
               }
             }
             &:hover {
-                .means_titleword{
-              color: var(--main-color);
-                }
+              .means_titleword {
+                color: var(--main-color);
+              }
             }
           }
         }
