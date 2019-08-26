@@ -68,7 +68,7 @@ export default {};
     border-radius: 8px;
     text-align: left;
     padding: 25px;
-    margin-top: 20px;
+    margin-top: 24px;
     .title {
       font-size: 16px;
       font-weight: bold;
