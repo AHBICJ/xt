@@ -73,7 +73,7 @@ const router = new Router({
           ]
         },
       ]
-    },
+    }
   ]
 })
 
