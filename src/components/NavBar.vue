@@ -61,7 +61,7 @@
                 <el-dropdown-item>
                   <router-link to="/user">个人中心</router-link>
                 </el-dropdown-item>
-                <el-dropdown-item divided @click.native="handleLogout">注销</el-dropdown-item>
+                <el-dropdown-item divided @click.native="handleLogout">登出</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </div>

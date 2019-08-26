@@ -8,9 +8,9 @@ export default new Vuex.Store({
   state: {
     user: localStorage.getItem('user') || {},
   },
-  getters:{
-    islogin(state){
-      return JSON.stringify(state.user) == "{}"
+  getters: {
+    islogin(state) {
+      return JSON.stringify(state.user) != "{}"
     }
   },
   mutations: {
@@ -30,24 +30,34 @@ export default new Vuex.Store({
         passwd: md5(userInfo.password),
         code_text: userInfo.code
       }
+      
+      // function getUserInfo() {
+      //   return new Promise((resolve, reject) => {
+      //     // request中写了拦截器 只有200的能到这里 错误或者其他code 都被拒绝
+      //     userinfo({}).then(res => {
+      //       commit('LOGIN', res.data);
+      //       resolve();
+      //     }).catch(err => reject(err));
+      //   })
+      // }
 
-      function getUserInfo() {
-        return new Promise((resolve, reject) => {
-          // request中写了拦截器 只有200的能到这里 错误或者其他code 都被拒绝
-          userinfo({}).then(res => {
-            commit('LOGIN', res.data);
-            resolve();
-          }).catch(err => reject(err));
-        })
-      }
+      // return new Promise((resolve, reject) => {
+      //   login(data).then(() => {
+      //     getUserInfo().then(resolve())
+      //       .catch(err => reject(err))
+      //   }).catch(err => reject(err));
+      // })
+      
 
+      
       return new Promise((resolve, reject) => {
-        login(data).then(() => {
-          getUserInfo().then(resolve())
-            .catch(err => reject(err))
-        }).catch(err => reject(err));
+        login(data).then(res => {
+          commit('LOGIN', res.data);
+          resolve();
+        }
+        ).catch(err => reject(err));
       })
-
+      
     },
     Logout({ commit }) {
       return new Promise((resolve, reject) => {
