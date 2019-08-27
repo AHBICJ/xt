@@ -8,7 +8,7 @@
         <el-tag type="danger" v-if="havePic">图集</el-tag>
         <el-tag type="success" v-if="haveVideo">视频</el-tag>
         <div class="bottom clearfix">
-          <span class="article_date">2018-02-31</span>
+          <span class="article_date">{{createTime}}</span>
           <el-button type="text" class="button">查看详情</el-button>
         </div>
       </div>
@@ -91,7 +91,6 @@ export default {
       likeNum: this.ArticleInfo.likeNum || 0,
       title: this.ArticleInfo.title || "",
       imgSrc: this.ArticleInfo.imgSrc,
-      date: this.ArticleInfo.date,
       havePpt: true
     };
   },
@@ -111,6 +110,9 @@ export default {
     },
     haveVideo() {
       return this.ArticleInfo.viedo != null;
+    },
+    createTime(){
+      return this.ArticleInfo.create_time=="None"?"2019-08-26":this.ArticleInfo.create_time;
     }
   },
   props: {

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import md5 from 'js-md5'
-import { login, userinfo, logout } from '@/api/login'
+import { login, logout } from '@/api/login'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -47,8 +47,6 @@ export default new Vuex.Store({
       //       .catch(err => reject(err))
       //   }).catch(err => reject(err));
       // })
-      
-
       
       return new Promise((resolve, reject) => {
         login(data).then(res => {

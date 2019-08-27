@@ -39,6 +39,7 @@
   width: 100%;
   min-height: 100%;
   background: url(../assets/images/BG4.png);
+  background-attachment: fixed;
 }
 .city-mid-con {
   width: 1120px;
