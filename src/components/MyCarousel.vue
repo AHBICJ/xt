@@ -2,7 +2,7 @@
   <el-carousel :interval="5000" height="300px">
     <el-carousel-item v-for="item in lanterns" :key="item.photo">
       <!-- <el-image :src="$imgaddress(item.photo)" :fit="fits[1]"></el-image> -->
-      <div ref="height" class="imgbox-city" :style="{backgroundImage:'url('+$imgaddress(item.photo)+')'}"></div>
+      <router-link :to="'/article/'+item.article_id"><div ref="height" class="imgbox-city" :style="{backgroundImage:'url('+$imgaddress(item.photo)+')'}"></div></router-link>
     </el-carousel-item>
   </el-carousel>
 </template>
@@ -21,9 +21,9 @@ export default {
 .imgbox-city{
   height: 100%;
   overflow: hidden;
-  background-position: center center;
-  background: no-repeat;
-  background-position: 50% 50%;
+  background-repeat: no-repeat !important;  
+  background-size: cover !important;
+  background-position: center center !important;
 }
 </style>
 <style lang="scss" scoped>
