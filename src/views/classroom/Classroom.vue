@@ -12,17 +12,86 @@
         </el-select>
       </div>
       <div class="classroomJoin">
-        <el-button type="warning" plain>
+        <!-- 加入班级dialog -->
+        <el-dialog title="加入班级" :visible.sync="dialogJoin">
+          <el-form ref="form" :model="form" label-width="100px" class="myform">
+            <el-form-item label="班级码">
+              <el-input v-model="form.ma"></el-input>
+            </el-form-item>
+          </el-form>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogJoin = false">取 消</el-button>
+            <el-button type="primary" @click.native="submit_classroom">确 定</el-button>
+          </span>
+        </el-dialog>
+        <!-- 创建班级dialog -->
+        <el-dialog title="创建班级" :visible.sync="dialogCreate">
+          <div class="create">
+            <el-form ref="form" :model="form" label-width="100px" class="myform">
+              <el-form-item label="班级名字">
+                <el-input v-model="form.title"></el-input>
+              </el-form-item>
+              <el-form-item label="班级介绍">
+                <el-input type="textarea" v-model="form.intro"></el-input>
+              </el-form-item>
+              <div class="myrow">
+                <el-upload
+                  class="upload-demo"
+                  :action="uploadAddr"
+                  multiple
+                  :limit="3"
+                  :on-success="getimg"
+                  list-type="picture"
+                >
+                  <el-form-item label="班级图片">
+                    <el-button size="small" type="primary" class="mybutton ml35">
+                      <i class="el-icon-plus"></i>
+                    </el-button>
+                  </el-form-item>
+                </el-upload>
+              </div>
+            </el-form>
+          </div>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogCreate = false">取 消</el-button>
+            <el-button type="primary" @click.native="submit_classroom">确 定</el-button>
+          </span>
+        </el-dialog>
+        <!-- 加入班级按钮 -->
+        <el-button type="warning" plain @click="dialogJoin = true">
           <i class="el-icon-plus"></i>
           <span>加入班级</span>
         </el-button>
+        <!-- 创建班级按钮 -->
+        <el-button
+          type="warning"
+          plain
+          @click="dialogCreate = true"
+          v-show="myrole=='admin'? true:false"
+        >
+          <i class="el-icon-plus"></i>
+          <span>创建班级</span>
+        </el-button>
       </div>
     </div>
+    <!-- 班级卡片 -->
     <div class="classes">
-      <card v-for="o in 6" :key="o" />
+      <card v-for="c in classrooms" :key="c.id" :classrooms="c" />
     </div>
+    <!-- 分页 -->
     <div class="block">
-      <el-pagination background layout="prev, pager, next" :total="50"></el-pagination>
+      <el-row type="flex" class="row-bg" justify="center">
+        <el-col :xs="12" :sm="8" :lg="6">
+          <el-pagination
+            background
+            layout="prev, pager, next"
+            :current-page.sync="page"
+            :page-size="pagenum"
+            :total="total"
+            @current-change="getClassrooms()"
+          ></el-pagination>
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
@@ -37,8 +106,6 @@
           border: none;
           padding: 0;
           font-size: 20px;
-          font-family: "Courier New", Courier, monospace;
-          font-weight: bold;
           color: var(--main-color);
         }
         .el-select__caret {
@@ -46,10 +113,25 @@
         }
       }
     }
+    .classroomJoin {
+      .el-dialog {
+        width: 500px;
+      }
+      .el-dialog__body {
+        padding: 10px 20px 0 20px;
+      }
+      .el-input {
+        width: 300px;
+      }
+    }
   }
 }
 </style>
 <style lang="scss" scoped >
+.el-pagination {
+  margin: 30px 0 30px;
+  text-align: center;
+}
 .content {
   position: relative;
   margin: 0 auto;
@@ -60,7 +142,7 @@
     border-bottom: 1px solid var(--main-color);
     justify-content: space-between;
     margin-bottom: 10px;
-    padding:0 16px;
+    padding: 0 16px;
     display: flex;
     -webkit-flex-direction: row;
     flex-direction: row;
@@ -80,6 +162,36 @@
       color: var(--main-color);
       .el-button {
         padding: 10px 16px;
+      }
+    }
+    .create {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      p {
+        margin-left: 32px;
+        span {
+          color: var(--main-color);
+          margin-left: 10px;
+        }
+      }
+      .myform {
+        margin-top: 25px;
+      }
+      .myrow {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        .mybutton {
+          width: 45px;
+          height: 30px;
+          margin-right: 20px;
+        }
+        // .ml35 {
+        //   margin-left: 35px;
+        // }
       }
     }
   }
@@ -114,6 +226,8 @@
 
 <script>
 import Card from "@/components/ClassroomCard.vue";
+import { getClassroomList } from "@/api/toGet";
+import { create_classroom } from "@/api/toPost.js";
 export default {
   data() {
     return {
@@ -135,8 +249,60 @@ export default {
           label: "2017-2018学年"
         }
       ],
-      value: "全部学年"
+      value: "全部学年",
+      classrooms: [],
+      page: 1,
+      pagenum: 12,
+      totalPage: 1,
+      dialogJoin: false,
+      dialogCreate: false,
+      form: {
+        title: "",
+        intro: "",
+        picimg: ""
+      },
+      myrole: JSON.parse(this.$store.state.user).role
     };
+  },
+  methods: {
+    getClassrooms() {
+      let prams = {
+        page: this.page,
+        pagenum: this.pagenum
+      };
+      getClassroomList(prams).then(res => {
+        this.classrooms = res.data.myclass;
+        // this.totalPage = res.totalpage;
+      });
+    },
+    getimg(response) {
+      this.form.picimg = response.data[0];
+    },
+    submit_classroom() {
+      let datas = {
+        room_name: this.form.title,
+        description: this.form.intro,
+        photo: this.form.picimg
+      };
+      create_classroom(datas)
+        .then(res => {this.classrooms.push(res.data);
+        this.form.title= '';
+        this.form.intro= '';
+        this.form.picimg=''})
+        .catch(() => {});
+      this.dialogCreate = false;
+    }
+  },
+  created() {
+    this.getClassrooms();
+  },
+  computed: {
+    total() {
+      return this.pagenum * this.totalPage;
+    },
+    uploadAddr(){
+      return process.env.VUE_APP_API + "/upload"
+    }
   },
   components: {
     Card

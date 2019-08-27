@@ -14,7 +14,13 @@ export function postComment(datas){
       data
     })
   }
-  
+  export function create_classroom(data){
+    return request({
+      url: '/api/create_classroom',
+      method: 'post',
+      data
+    })
+  }
   
   export function submit_home(data){
     return request({
