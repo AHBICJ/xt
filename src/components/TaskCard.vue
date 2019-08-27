@@ -84,7 +84,7 @@ export default {
   data() {
     return {
       show: true,
-      task:[],
+      // task:[],
     };
   },
   props: ["task"],
