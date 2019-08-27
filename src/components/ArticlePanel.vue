@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-row :gutter="10" style="padding:0 10px; min-height:700px;">
+    <el-row :gutter="10" style="padding:0 10px; min-height:555px;">
       <el-col v-for="a in articles" :key="a.id" :xs="12" :sm="6" :lg="6">
         <router-link :to="`/article/`+ a.id">
         <article-card class="myCard" :article-info="a"></article-card>
@@ -58,7 +58,7 @@ export default {
 <style lang="scss" scoped>
 /* 分页 */
 .el-pagination {
-  margin: 30px 0 30px;
+  margin: 5px 0 30px;
   text-align: center;
 }
 .el-tabs__header{
