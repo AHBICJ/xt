@@ -23,12 +23,12 @@
         :total="100"
       ></el-pagination>
     </div>
-    <classright />
+    <classroom-left />
   </div>
 </template>
 
 <script>
-import classright from "@/components/classright.vue";
+import ClassroomLeft from "@/components/ClassroomLeft.vue";
 export default {
   data(){
     return {
@@ -36,7 +36,7 @@ export default {
     }
   },
   components: {
-    classright
+    ClassroomLeft
   }
 };
 </script>
