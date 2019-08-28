@@ -25,12 +25,13 @@
 import Vue from "vue";
 import VueFullPage from "vue-fullpage.js";
 Vue.use(VueFullPage);
-import { getCities } from "@/api/toGet";
 import Slick from "@/components/Slick";
 import PicList from "@/components/PicList";
 import NavBar from "@/components/NavBar";
 import ZJMap from "@/components/ZJMap";
 import "@/styles/fullpage.css";
+import { getLanterns } from "@/api/toGet";
+
 export default {
   data() {
     return {
@@ -43,23 +44,7 @@ export default {
       cities: [],
       options: {},
       slickOptions: {
-        items: [
-          {
-            imgSrc:
-              "http://www.ihchina.cn/Uploads/Picture/2019/08/08/s5d4b7636a4e84.jpg",
-            path: "/article/15"
-          },
-          {
-            imgSrc:
-              "http://www.ihchina.cn/Uploads/Picture/2019/08/06/s5d493cf91fd64.jpg",
-            path: "/city/4"
-          },
-          {
-            imgSrc:
-              "http://www.ihchina.cn/Uploads/Picture/2019/08/12/s5d50bd51f129e.jpg",
-            path: "/article/15"
-          }
-        ],
+        items:[],
         autoplay: true,
         arrows: false,
         dots: true,
@@ -71,13 +56,22 @@ export default {
       }
     };
   },
-  methods: {
-    get_city() {
-      getCities().then(res => (this.cities = [...res.data]));
-    }
-  },
   created() {
-    // this.get_city();
+    this.getSlickItems();
+  },
+  methods: {
+    getSlickItems() {
+      getLanterns({ city_id: 14 })
+        .then(res => {
+          this.slickOptions.items = res.data;
+        })
+        .catch(error => {
+          this.$message({
+            message: "获取轮播图异常:" + error.msg,
+            type: "error"
+          });
+        });
+    }
   },
   components: {
     Slick,

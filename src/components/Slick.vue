@@ -2,11 +2,11 @@
   <div class="homepage_slick">
     <div class="slick">
       <div
-        v-for="(item,idx) in options.items"
-        :key="idx"
-        :style="{backgroundImage:'url('+item.imgSrc+')'}"
+        v-for="item in options.items"
+        :key="item.photo"
+        :style="{backgroundImage:'url('+imgAddress(item.photo)+')'}"
         class="item"
-        @click="$router.push(item.path)"
+        @click="$router.push({path:'/article/'+item.article_id})"
       ></div>
     </div>
   </div>
@@ -14,6 +14,7 @@
 
 <script>
 import $ from "jquery";
+import Address from "@/mixin/Address";
 
 import "slick-carousel";
 import "slick-carousel/slick/slick.css";
@@ -34,12 +35,19 @@ export default {
       }
     }
   },
+  mixins: [Address],
   mounted: function() {
     this.create();
   },
-  // destroyed: function() {
-  //   $(".slick").slick("unslick");
-  // },
+  beforeUpdate() {
+    this.destroy();
+  },
+  updated() {
+    this.$nextTick(()=>this.create());
+  },
+  destroyed(){
+    this.destroy();
+  },
   methods: {
     create: function() {
       const $slick = $(".slick");
