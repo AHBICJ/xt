@@ -117,17 +117,17 @@ export default {
         0 2px 6px 2px rgba(60, 64, 67, 0.149);
       border-radius: 9px;
       overflow: hidden;
-      padding: 24px;
+      padding:12px 24px;
+      background-color: #fff;
       .myrow {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: flex-start;
         span {
-          margin-left: 120px;
+          margin-left: 132px;
           font-size: 14px;
-          color: #007fff;
-          margin-top: 5px;
+          color: var(--main-color);
         }
         p {
           font-size: 18px;

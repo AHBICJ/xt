@@ -149,7 +149,6 @@ import sidebar1 from "@/components/sidebar1.vue";
 import sidebar2 from "@/components/sidebar2.vue";
 import NavBar from "@/components/NavBar.vue";
 export default {
-
   data() {
     return {
       navbarOptions: {
@@ -245,44 +244,46 @@ export default {
   },
   computed: {
     haveVideo() {
-      return this.article.video!= null;
+      return this.article.video != null;
     }
   }
 };
 </script>
 
 <style lang="scss">
-// v-html 样式相冲
-.article-content p {
-  text-indent: 2em;
-  text-align: justify;
-  line-height: inherit;
-  margin-bottom: 15px;
-}
-//dialog
-.dialogvideo {
-  background-image: url(../assets/images/zmdbg.jpg);
-  background-size: 100% 100%;
-}
-.dialogppt {
-  background: url(../assets/images/zmdbg.jpg);
-  background-size: 100% 100%;
-}
-.dialogpic {
-  background: url(../assets/images/zmdbg.jpg);
-  background-size: 100% 100%;
-}
-.el-dialog__title {
-  line-height: 24px;
-  font-size: 20px;
-  font-family: "Courier New", Courier, monospace;
-  font-weight: bold;
-  color: #ddd;
-  border-left: 6px solid #ddd;
-  padding-left: 10px;
-}
-.el-dialog__headerbtn .el-dialog__close {
-  color: #ddd;
+.article_big {
+  // v-html 样式相冲
+  .article-content p {
+    text-indent: 2em;
+    text-align: justify;
+    line-height: inherit;
+    margin-bottom: 15px;
+  }
+  //dialog
+  .dialogvideo {
+    background-image: url(../assets/images/zmdbg.jpg);
+    background-size: 100% 100%;
+  }
+  .dialogppt {
+    background: url(../assets/images/zmdbg.jpg);
+    background-size: 100% 100%;
+  }
+  .dialogpic {
+    background: url(../assets/images/zmdbg.jpg);
+    background-size: 100% 100%;
+  }
+  .el-dialog__title {
+    line-height: 24px;
+    font-size: 20px;
+    font-family: "Courier New", Courier, monospace;
+    font-weight: bold;
+    color: #ddd;
+    border-left: 6px solid #ddd;
+    padding-left: 10px;
+  }
+  .el-dialog__headerbtn .el-dialog__close {
+    color: #ddd;
+  }
 }
 </style>
 <style lang="scss" scoped>
@@ -335,13 +336,13 @@ img {
   width: 100%;
   min-height: 100%;
   background: url(../assets/images/BG5.png);
-.article_attention p {
-  font-family: "Courier New", Courier, monospace;
-  font-size: 16px;
-  text-align: center;
-  color: #ddd;
-  margin-bottom: 20px;
-}
+  .article_attention p {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 16px;
+    text-align: center;
+    color: #ddd;
+    margin-bottom: 20px;
+  }
   //大整体
   .container {
     position: relative;
