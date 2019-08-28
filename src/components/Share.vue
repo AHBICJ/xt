@@ -14,7 +14,7 @@
           <div class="myrow">
             <el-upload
               class="upload-demo"
-              action="http://192.168.123.182:5000/upload"
+              :action="upload_api"
               multiple
               :limit="3"
               :file-list="fileList"
@@ -73,7 +73,8 @@ export default {
       },
       picList: [],
       fileList: [],
-      flag1: false
+      flag1: false,
+      upload_api:process.env.VUE_APP_CDN
     };
   },
   computed:{
