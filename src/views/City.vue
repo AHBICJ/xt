@@ -93,7 +93,7 @@ export default {
         })
         .catch(error => {
           this.$message({
-            message: "获取轮播图异常" + error,
+            message: "获取轮播图异常:" + error.msg,
             type: "error"
           });
         });
