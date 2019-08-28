@@ -1,7 +1,7 @@
 <template>
   <div class="classintroMain">
     <div class="classintroTop">
-      <class-top/>
+      <class-top :classinfo="classinfo" />
     </div>
     <!-- 左边通知栏 -->
     <div class="classintroLeft">
@@ -10,7 +10,7 @@
     <!-- 右边具体任务栏 -->
     <div class="classintroRight">
       <!-- 第一行分享栏 -->
-      <share/>
+      <share />
       <!-- 具体任务栏 -->
       <taskcard v-for="task in tasks" :task="task" :key="task.id" />
     </div>
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import ClassTop from "@/components/ClassTop.vue"
+import ClassTop from "@/components/ClassTop.vue";
 import taskcard from "@/components/TaskCard.vue";
 import Share from "@/components/Share.vue";
 import ClassroomLeft from "@/components/ClassroomLeft.vue";
@@ -27,42 +27,53 @@ export default {
   data() {
     return {
       tasks: [],
-      room_id: 1,
-      classinfo: {}
+      classinfo: {
+        className: "",
+        classDesc: "",
+        classImgSrc: ""
+      }
     };
   },
   methods: {
-    get_tasks() {
-      let datas = { room_id: this.room_id };
-      room_tasks(datas)
+    get_tasks(id) {
+      room_tasks({ room_id: id })
         .then(res => {
           this.tasks = res.data;
           for (var i = 0; i < this.tasks.length; i++)
             this.tasks[i].photo = JSON.parse(this.tasks[i].photo);
         })
-        .catch(() => {
+        .catch(err => {
           this.$message({
-            message: "请求错误",
+            message: err.message,
             type: "error"
           });
         });
     },
-    get_room() {
-      get_classroom_info({ room_id: this.room_id })
+    get_room(id) {
+      get_classroom_info({ room_id: id })
         .then(res => {
-          this.classinfo = res.data;
+          this.classinfo.className = res.data.name;
+          this.classinfo.classDesc = res.data.description;
+          this.classinfo.classImgSrc = res.data.photo;
         })
-        .catch(() => {
+        .catch(err => {
           this.$message({
-            message: "请求错误",
+            message: err.message,
             type: "error"
           });
         });
     }
   },
   created() {
-    this.get_tasks();
-    this.get_room();
+    let roomid = this.$route.params.id;
+    this.get_tasks(roomid);
+    this.get_room(roomid);
+  },
+  beforeRouteUpdate(to, from, next) {
+    let roomid = to.params.id;
+    this.get_tasks(roomid);
+    this.get_room(roomid);
+    next();
   },
   components: {
     ClassroomLeft,
@@ -94,8 +105,9 @@ export default {
   .classintroRight {
     grid-area: right;
   }
-  .classintroTop,.classintroLeft,.classintroRight{
-
+  .classintroTop,
+  .classintroLeft,
+  .classintroRight {
     overflow: hidden;
     margin: -16px;
     padding: 16px;

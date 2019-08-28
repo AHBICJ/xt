@@ -1,55 +1,32 @@
 <template>
-  <div class="content">
-    <div class="left">
-      <div class="stu" @click="get_homework_detail()">
-        <img src="@/assets/images/tx4.png" alt />
-        <p>林津民</p>
-      </div>
-      <div class="stu">
-        <img src="@/assets/images/tx5.png" alt />
-        <p>学生名字</p>
-      </div>
-      <div class="stu">
-        <img src="@/assets/images/tx4.png" alt />
-        <p>学生名字</p>
-      </div>
-      <div class="stu">
-        <img src="@/assets/images/tx5.png" alt />
-        <p>学生名字</p>
-      </div>
-    </div>
-    <right :homeworkinfo="homeworkinfo" />
+  <div class="taskdetail">
+    <taskdetail-left :taskinfo = "taskinfo"/>
   </div>
 </template>
 
 <script>
-import right from "@/components/remark.vue";
+import TaskdetailLeft from "@/components/TaskdetailLeft.vue";
+import { task_detail } from "@/api/toGet";
 import { get_homework } from "@/api/toGet";
 export default {
   data() {
     return {
-      grade: "",
-      remark: "",
-      task_id: 1,
-      homeworkinfo: []
+      id: 1,
+      taskinfo: {},
     };
   },
   created() {
-    this.task_id = this.$route.params.id || 1;
+    this.id = this.$route.params.taskid || 1;
+    this.get_task_detail();
   },
   methods: {
-    get_homework_detail() {
-      let datas = {
-        task_id: this.task_id,
-        student_id: 2
-      };
+    get_task_detail() {
+      let datas = { task_id: this.id };
 
-      get_homework(datas)
+      task_detail(datas)
         .then(res => {
-          this.homeworkinfo = res.data;
-          this.homeworkinfo.image_address = JSON.parse(
-            this.homeworkinfo.image_address
-          );
+          this.taskinfo = res.data;
+          this.taskinfo.photo = JSON.parse(this.taskinfo.photo);
         })
         .catch(() => {
           this.$message({
@@ -60,50 +37,24 @@ export default {
     }
   },
   components: {
-    right
+    TaskdetailLeft
   }
 };
 </script>
 
 <style  scoped lang="scss">
-.content {
-  width: 1100px;
-  height: auto;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  border: 1px solid rgb(233, 230, 230);
+.taskdetail {
+  position: relative;
   margin: 0 auto;
-  margin-top: 20px;
-  .left {
-    width: 299px;
-    height: auto;
-    border-right: 1px solid rgb(233, 230, 230);
-    .stu {
-      width: 260px;
-      height: 30px;
-      border-top: 1px solid rgb(233, 230, 230);
-      border-bottom: 1px solid rgb(233, 230, 230);
-      padding: 20px;
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      cursor: pointer;
-      p {
-        padding-top: 7px;
-        padding-left: 20px;
-        font-size: 14px;
-      }
-      img {
-        width: 35px;
-        height: 35px;
-      }
-    }
-    .stu:hover {
-      background-color: var(--main-color-hover);
-    }
+  width: 1120px;
+  display: grid;
+  grid-template-areas: "left";
+  grid-template-rows: auto auto;
+  // grid-template-columns: 800px 300px;
+  grid-gap: 20px;
+  margin-top: 50px;
+  .taskdetailLeft {
+    grid-area: left;
   }
 }
 </style>

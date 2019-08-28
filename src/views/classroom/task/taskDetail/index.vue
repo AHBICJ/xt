@@ -1,5 +1,5 @@
 <template>
-<teacher/>
+<student/>
 </template>
 <script>
 import Teacher from "@/views/classroom/task/taskDetail/Teacher.vue"

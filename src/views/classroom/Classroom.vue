@@ -12,20 +12,12 @@
         </el-select>
       </div>
       <div class="classroomJoin">
-        <!-- 加入班级dialog -->
-        <el-dialog title="加入班级" :visible.sync="dialogJoin">
-          <el-form ref="form" :model="form" label-width="100px" class="myform">
-            <el-form-item label="班级码">
-              <el-input v-model="form.ma"></el-input>
-            </el-form-item>
-          </el-form>
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogJoin = false">取 消</el-button>
-            <el-button type="primary" @click.native="submit_classroom">确 定</el-button>
-          </span>
-        </el-dialog>
         <!-- 创建班级dialog -->
-        <el-dialog title="创建班级" :visible.sync="dialogCreate">
+        <el-dialog
+          title="创建班级"
+          :visible.sync="dialogCreate"
+          v-if="user.role=='admin'||user.role=='teacher'"
+        >
           <div class="create">
             <el-form ref="form" :model="form" label-width="100px" class="myform">
               <el-form-item label="班级名字">
@@ -57,20 +49,33 @@
             <el-button type="primary" @click.native="submit_classroom">确 定</el-button>
           </span>
         </el-dialog>
-        <!-- 加入班级按钮 -->
-        <el-button type="warning" plain @click="dialogJoin = true">
-          <i class="el-icon-plus"></i>
-          <span>加入班级</span>
-        </el-button>
+        <!-- 加入班级dialog -->
+        <el-dialog title="加入班级" :visible.sync="dialogJoin" v-else>
+          <el-form ref="form" :model="form" label-width="100px" class="myform">
+            <el-form-item label="班级码">
+              <el-input v-model="form.ma"></el-input>
+            </el-form-item>
+          </el-form>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogJoin = false">取 消</el-button>
+            <el-button type="primary" @click.native="join_classroom">确 定</el-button>
+          </span>
+        </el-dialog>
+
         <!-- 创建班级按钮 -->
         <el-button
           type="warning"
           plain
           @click="dialogCreate = true"
-          v-show="myrole=='admin'? true:false"
+          v-if="user.role=='admin'||user.role=='teacher'"
         >
           <i class="el-icon-plus"></i>
           <span>创建班级</span>
+        </el-button>
+        <!-- 加入班级按钮 -->
+        <el-button type="warning" plain @click="dialogJoin = true" v-else>
+          <i class="el-icon-plus"></i>
+          <span>加入班级</span>
         </el-button>
       </div>
     </div>
@@ -95,6 +100,121 @@
     </div>
   </div>
 </template>
+
+<script>
+import Card from "@/components/ClassroomCard.vue";
+import { getClassroomList } from "@/api/toGet";
+import { create_classroom, JoinClassRoom } from "@/api/toPost.js";
+export default {
+  data() {
+    return {
+      user: this.$store.state.user,
+      options: [
+        {
+          value: "选项1",
+          label: "全部学年"
+        },
+        {
+          value: "选项2",
+          label: "2019-2020学年"
+        },
+        {
+          value: "选项3",
+          label: "2018-2019学年"
+        },
+        {
+          value: "选项4",
+          label: "2017-2018学年"
+        }
+      ],
+      value: "全部学年",
+      classrooms: [],
+      page: 1,
+      pagenum: 12,
+      totalPage: 1,
+      dialogJoin: false,
+      dialogCreate: false,
+      form: {
+        ma:"",
+        title: "",
+        intro: "",
+        picimg: ""
+      }
+    };
+  },
+  methods: {
+    getClassrooms() {
+      let prams = {
+        page: this.page,
+        pagenum: this.pagenum
+      };
+      getClassroomList(prams).then(res => {
+        this.classrooms = [...res.data.myclass,...res.data.other];
+        // this.totalPage = res.totalpage;
+      });
+    },
+    getimg(response) {
+      this.form.picimg = response.data[0];
+    },
+    submit_classroom() {
+      let datas = {
+        room_name: this.form.title,
+        description: this.form.intro,
+        photo: this.form.picimg
+      };
+      create_classroom(datas)
+        .then(res => {
+          this.classrooms.push(res.data);
+          this.form.title = "";
+          this.form.intro = "";
+          this.form.picimg = "";
+        })
+        .catch(() => {});
+      this.dialogCreate = false;
+    },
+    join_classroom(){
+      let datas = {
+        room_code : this.form.ma
+      }
+      JoinClassRoom(datas)
+      .then(res=>{
+        if (res.code==200){
+          this.$message({
+            message:'加入成功',
+            type:'success'
+          })
+          
+          this.classrooms.push(res.data)
+        }
+        this.form.ma="";
+        this.dialogJoin = false
+      })
+      .catch(error=>{
+        this.$message({
+          message:error,
+          type:'error'
+        })
+      })
+      this.dialogJoin = false
+      this.form.ma="";
+    }
+  },
+  created() {
+    this.getClassrooms();
+  },
+  computed: {
+    total() {
+      return this.pagenum * this.totalPage;
+    },
+    uploadAddr() {
+      return process.env.VUE_APP_API + "/upload";
+    }
+  },
+  components: {
+    Card
+  }
+};
+</script>
 
 <style lang="scss">
 .content {
@@ -224,88 +344,3 @@
 }
 </style>
 
-<script>
-import Card from "@/components/ClassroomCard.vue";
-import { getClassroomList } from "@/api/toGet";
-import { create_classroom } from "@/api/toPost.js";
-export default {
-  data() {
-    return {
-      options: [
-        {
-          value: "选项1",
-          label: "全部学年"
-        },
-        {
-          value: "选项2",
-          label: "2019-2020学年"
-        },
-        {
-          value: "选项3",
-          label: "2018-2019学年"
-        },
-        {
-          value: "选项4",
-          label: "2017-2018学年"
-        }
-      ],
-      value: "全部学年",
-      classrooms: [],
-      page: 1,
-      pagenum: 12,
-      totalPage: 1,
-      dialogJoin: false,
-      dialogCreate: false,
-      form: {
-        title: "",
-        intro: "",
-        picimg: ""
-      },
-      myrole: JSON.parse(this.$store.state.user).role
-    };
-  },
-  methods: {
-    getClassrooms() {
-      let prams = {
-        page: this.page,
-        pagenum: this.pagenum
-      };
-      getClassroomList(prams).then(res => {
-        this.classrooms = res.data.myclass;
-        // this.totalPage = res.totalpage;
-      });
-    },
-    getimg(response) {
-      this.form.picimg = response.data[0];
-    },
-    submit_classroom() {
-      let datas = {
-        room_name: this.form.title,
-        description: this.form.intro,
-        photo: this.form.picimg
-      };
-      create_classroom(datas)
-        .then(res => {this.classrooms.push(res.data);
-        this.form.title= '';
-        this.form.intro= '';
-        this.form.picimg=''})
-        .catch(() => {});
-      this.dialogCreate = false;
-    }
-  },
-  created() {
-    this.getClassrooms();
-  },
-  computed: {
-    total() {
-      return this.pagenum * this.totalPage;
-    },
-    uploadAddr(){
-      return process.env.VUE_APP_API + "/upload"
-    }
-  },
-  components: {
-    Card
-  }
-};
-</script>

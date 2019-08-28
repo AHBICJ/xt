@@ -1,35 +1,16 @@
 <template>
-  <div class="content">
-    <div class="sign">
-      <i class="el-icon-document" style="color:white"></i>
+  <div class="taskdetail">
+    <!-- 左侧任务详情 -->
+    <div class="taskdetailLeft">
+      <taskdetail-left :taskinfo = "taskinfo"/>
     </div>
-    <div class="txt">
-      <h1>{{taskinfo.name}}</h1>
-      <div class="myrow">
-        <img src="@/assets/images/tx4.png" alt="">
-        <p>学生名字 截止于 {{taskinfo.star_time}}</p>
-      </div>
-      <p style="margin-bottom:20px;" >作业内容:{{taskinfo.desc}}</p>
-      <div v-for=" myimg  in taskinfo.photo" :key="myimg">
-        <img :src="qaq +myimg" alt />
-      </div>
-
-      <div class="homework">
-        <el-form ref="form">
-          <p>我的作业</p>
-          <el-input type="textarea" v-model="homework"></el-input>
-        </el-form>
-        <p>字数限制:200</p>
-      </div>
-    </div>
-
-    <div class="submit">
+    <!-- 右侧提交 -->
+    <div class="taskdetailRight">
       <div class="top">
         <div class="myrow">
           <p>你的作业</p>
           <span>未完成</span>
         </div>
-
         <el-upload
           class="upload-demo"
           action="http://192.168.123.182:5000/upload"
@@ -45,6 +26,7 @@
 </template>
 
 <script>
+import TaskdetailLeft from "@/components/TaskdetailLeft.vue";
 import { task_detail } from "@/api/toGet";
 import { submit_home } from "@/api/toPost";
 export default {
@@ -53,13 +35,11 @@ export default {
       homework: "",
       id: 1,
       taskinfo: {},
-      qaq: process.env.VUE_APP_CDN,
       picList: []
     };
   },
-
   created() {
-    this.id = this.$route.params.id || 1;
+    this.id = this.$route.params.taskid || 1;
     this.get_task_detail();
   },
   methods: {
@@ -96,103 +76,48 @@ export default {
             type: "success"
           });
         })
-        .catch(() => {
-        });
+        .catch(() => {});
     }
+  },
+  components: {
+    TaskdetailLeft
   }
 };
 </script>
 
 <style scoped lang="scss">
-.content {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
+.taskdetail {
+  position: relative;
   margin: 0 auto;
-  width: 1150px;
-  height: auto;
-  margin-top: 50px;
-  .sign {
-    height: 50px;
-    width: 50px;
-    background-color: var(--main-color);
-    border-radius: 0.5rem;
-    border-radius: 50%;
-    margin-right: 20px;
-    .el-icon-document {
-      transform: scale(1.5);
-      margin-left: 17px;
-      margin-top: 17px;
-    }
+  width: 1120px;
+  display: grid;
+  grid-template-areas: "left right";
+  grid-template-rows: auto auto;
+  grid-template-columns: 800px 300px;
+  grid-gap: 20px;
+  margin-top: 30px;
+  .taskdetailLeft {
+    grid-area: left;
   }
-  .txt {
-    width: 760px;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    padding-bottom: 20px;
-    h1 {
-      color: var(--main-color);
-      font-weight: 400;
-    }
-    .myrow {
-      height: auto;
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      width: 760px;
-      height: 50px;
-      border-bottom: 1px solid var(--main-color);
-      margin-top: 10px;
-      padding-bottom: 10px;
-      margin-bottom: 20px;
-      line-height: 50px;
-      p {
-        padding-left: 20px;
-      }
-      img{
-        width: 50px;
-        height: 50px;
-      }
-    }
-    .homework {
-      display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      border-top: 0.125rem solid #e8eaed;
-      margin-top: 20px;
-      p {
-        margin-bottom: 10px;
-        margin-top: 10px;
-      }
-    }
-    div {
-      width: 100%;
-      height: auto;
-      img {
-        width: 100%;
-        height: auto;
-      }
-    }
-  }
-  .submit {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    width: 300px;
-    margin-left: 20px;
+  .taskdetailRight {
+    width: 100%;
+    grid-area: right;
+    // display: flex;
+    // flex-direction: column;
+    // flex-wrap: wrap;
+    // justify-content: flex-start;
+    // width: 300px;
+    // margin-left: 20px;
+    //
+    overflow: hidden;
+    margin: -16px;
+    padding: 16px;
     .top {
       box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302),
         0 2px 6px 2px rgba(60, 64, 67, 0.149);
-      border-radius: 0.5rem;
+      border-radius: 9px;
       overflow: hidden;
-      padding: 1.5rem;
+      padding: 24px;
       .myrow {
         display: flex;
         flex-direction: row;

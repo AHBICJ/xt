@@ -18,7 +18,6 @@
               multiple
               :limit="3"
               :file-list="fileList"
-              :on-success="getimg"
               list-type="picture"
             >
               <el-form-item label="分享图片">

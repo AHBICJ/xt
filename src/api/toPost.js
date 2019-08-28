@@ -37,3 +37,11 @@ export function postComment(datas){
       data
     })
   }
+
+  export function JoinClassRoom(data){
+    return request({
+      url: '/api/join_classroom',
+      method: 'post',
+      data
+    })
+  }
