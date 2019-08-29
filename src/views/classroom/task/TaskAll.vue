@@ -2,33 +2,23 @@
   <div class="article_big">
     <div class="content">
       <div class="left">
-        <task v-for="task in tasks" :task="task" :key="task.id" :teachername="classinfo.series" />
-        <el-row>
+       <classroom-left />
+      </div>
+      <div class="right">
+      <taskcard v-for="task in tasks" :task="task" :key="task.id" />
+        <!-- <el-row>
           <el-button
             type="warning"
             class="add"
             @click="dialogVisible = true"
-            v-show="myrole=='admin'?true:false"
           >
             <i class="el-icon-plus"></i>
             添加新任务
           </el-button>
-        </el-row>
+        </el-row> -->
       </div>
-      <div class="right">
-        <div class="message">
-          <p>消息</p>
-          <p class="text">老师发布了一个的新的作业</p>
-          <a href @click.stop>
-            <p class="r">查看全部</p>
-          </a>
-        </div>
-        <div class="topic">
-          <p>话题</p>
-          <p class="text">台州美食</p>
-        </div>
-      </div>
-      <el-dialog title="任务" :visible.sync="dialogVisible">
+
+      <!-- <el-dialog title="任务" :visible.sync="dialogVisible">
         <div class="create">
           <p>
             日期 : 2019/8/25
@@ -85,95 +75,92 @@
           <el-button @click="dialogVisible = false">取 消</el-button>
           <el-button type="primary" @click.native="submit_task">确 定</el-button>
         </span>
-      </el-dialog>
+      </el-dialog> -->
     </div>
   </div>
 </template>
 
 <script>
-import task from "@/components/task.vue";
-import { create_task } from "@/api/toPost.js";
-import { room_tasks } from "@/api/toGet";
-import { get_classroom_info } from "@/api/toGet";
+import taskcard from "@/components/TaskCard.vue";
+import ClassroomLeft from "@/components/ClassroomLeft.vue";
+// import { create_task } from "@/api/toPost.js";
+import { room_tasks, get_classroom_info } from "@/api/toGet";
 export default {
   data() {
     return {
-      navbarOptions: {
-        isHome: false,
-        isClassroom: true,
-        collapsed: true,
-        cityId: 12,
-        shortTilte: true
-      },
-      dialogVisible: false,
-      form: {
-        title: "",
-        date: "",
-        intro: "",
-        number: "",
-        video: "",
-        picimg: ""
-      },
-      picList: [],
-      fileList: [],
-      flag1: false,
+      // dialogVisible: false,
+      // form: {
+      //   title: "",
+      //   date: "",
+      //   intro: "",
+      //   number: "",
+      //   video: "",
+      //   picimg: ""
+      // },
+      // picList: [],
+      // fileList: [],
+      // flag1: false,
       tasks: [],
-      room_id: 1,
-      classinfo: {},
-      myrole: JSON.parse(this.$store.state.user).role
+      // room_id: 1,
+      //       classinfo: {
+      //   className: "",
+      //   classDesc: "",
+      //   classImgSrc: ""
+      // }
     };
   },
   methods: {
-    getimg(response) {
-      this.form.picimg = response.data;
-      this.picList.push(response.data[0]);
-    },
-    submit_task() {
-      let datas = {
-        room_id: 1,
-        title: this.form.title,
-        date: this.form.date,
-        intro: this.form.intro,
-        number: this.form.number,
-        video: this.form.video,
-        picimg: JSON.stringify(this.picList)
-      };
-      create_task(datas)
-        .then(res => {
-          res.data.photo = JSON.parse(res.data.photo);
-          this.tasks.push(res.data);
-        })
-        .catch(() => {});
-      this.dialogVisible = false;
-    },
+    // getimg(response) {
+    //   this.form.picimg = response.data;
+    //   this.picList.push(response.data[0]);
+    // },
+    // submit_task() {
+    //   let datas = {
+    //     room_id: 1,
+    //     title: this.form.title,
+    //     date: this.form.date,
+    //     intro: this.form.intro,
+    //     number: this.form.number,
+    //     video: this.form.video,
+    //     picimg: JSON.stringify(this.picList)
+    //   };
+    //   create_task(datas)
+    //     .then(res => {
+    //       res.data.photo = JSON.parse(res.data.photo);
+    //       this.tasks.push(res.data);
+    //     })
+    //     .catch(() => {});
+    //   this.dialogVisible = false;
+    // },
     //上面是提交，下面是获取
-    get_tasks() {
-      let datas = { room_id: this.room_id };
-      room_tasks(datas)
+    get_tasks(id) {
+      room_tasks({ room_id: id })
         .then(res => {
           this.tasks = res.data;
           for (var i = 0; i < this.tasks.length; i++)
             this.tasks[i].photo = JSON.parse(this.tasks[i].photo);
         })
-        .catch(() => {
+        .catch(err => {
           this.$message({
-            message: "请求错误",
+            message: err.message,
             type: "error"
           });
         });
     },
-    get_room() {
-      get_classroom_info({ room_id: this.room_id })
-        .then(res => {
-          this.classinfo = res.data;
-        })
-        .catch(() => {
-          this.$message({
-            message: "请求错误",
-            type: "error"
-          });
-        });
-    }
+    // get_room(id) {
+    //   get_classroom_info({ room_id: id })
+    //     .then(res => {
+    //       this.classinfo.className = res.data.name;
+    //       this.classinfo.classDesc = res.data.description;
+    //       this.classinfo.classImgSrc = res.data.photo;
+    //     })
+    //     .catch(err => {
+    //       this.$message({
+    //         message: err.message,
+    //         type: "error"
+    //       });
+    //     });
+    // }
   },
   // computed:{
   //   myrole(){
@@ -181,12 +168,24 @@ export default {
   //   }
   // },
   components: {
-    task,
+    ClassroomLeft,
+    taskcard,
   },
   created() {
-    this.get_tasks();
-    this.get_room();
-  }
+    // this.get_tasks();
+    // this.get_room();
+    let roomid = this.$route.params.id;
+    // this.get_tasks(roomid);
+    this.get_tasks(roomid);
+    this.get_room(roomid);
+  },
+    beforeRouteUpdate(to, from, next) {
+    let roomid = to.params.id;
+    // this.get_tasks(roomid);
+    this.get_tasks(roomid);
+    this.get_room(roomid);
+    next();
+  },
 };
 </script>
 <style scoped lang="scss">

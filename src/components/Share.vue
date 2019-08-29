@@ -5,11 +5,11 @@
     <el-dialog class="share_dialog" title="分享" :visible.sync="dialogVisible">
       <div class="create">
         <el-form ref="form" :model="form" label-width="100px" class="myform">
-          <el-form-item label="标题">
+          <!-- <el-form-item label="标题">
             <el-input v-model="form.title"></el-input>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="分享内容">
-            <el-input type="textarea" v-model="form.intro"></el-input>
+            <el-input type="textarea" v-model="form.desc"></el-input>
           </el-form-item>
           <div class="myrow">
             <el-upload

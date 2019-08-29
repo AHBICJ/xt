@@ -10,23 +10,26 @@
     <!-- 右边具体任务栏 -->
     <div class="classintroRight">
       <!-- 第一行分享栏 -->
-      <share />
+      <share  />
       <!-- 具体任务栏 -->
-      <taskcard v-for="task in tasks" :task="task" :key="task.id" />
+      <!-- <taskcard v-for="task in tasks" :task="task" :key="task.id" /> -->
+      <sharecard v-for="share in shares" :share="share" :key="share.id"/>
     </div>
   </div>
 </template>
 
 <script>
 import ClassTop from "@/components/ClassTop.vue";
-import taskcard from "@/components/TaskCard.vue";
+// import taskcard from "@/components/TaskCard.vue";
+import sharecard from "@/components/ShareCard.vue";
 import Share from "@/components/Share.vue";
 import ClassroomLeft from "@/components/ClassroomLeft.vue";
 import { room_tasks, get_classroom_info } from "@/api/toGet";
 export default {
   data() {
     return {
-      tasks: [],
+      // tasks: [],
+      shares: [],
       classinfo: {
         className: "",
         classDesc: "",
@@ -35,12 +38,26 @@ export default {
     };
   },
   methods: {
-    get_tasks(id) {
+    // get_tasks(id) {
+    //   room_tasks({ room_id: id })
+    //     .then(res => {
+    //       this.tasks = res.data;
+    //       for (var i = 0; i < this.tasks.length; i++)
+    //         this.tasks[i].photo = JSON.parse(this.tasks[i].photo);
+    //     })
+    //     .catch(err => {
+    //       this.$message({
+    //         message: err.message,
+    //         type: "error"
+    //       });
+    //     });
+    // },
+    get_shares(id) {
       room_tasks({ room_id: id })
         .then(res => {
-          this.tasks = res.data;
-          for (var i = 0; i < this.tasks.length; i++)
-            this.tasks[i].photo = JSON.parse(this.tasks[i].photo);
+          this.shares = res.data;
+          for (var i = 0; i < this.shares.length; i++)
+            this.shares[i].photo = JSON.parse(this.shares[i].photo);
         })
         .catch(err => {
           this.$message({
@@ -66,18 +83,21 @@ export default {
   },
   created() {
     let roomid = this.$route.params.id;
-    this.get_tasks(roomid);
+    // this.get_tasks(roomid);
+    this.get_shares(roomid);
     this.get_room(roomid);
   },
   beforeRouteUpdate(to, from, next) {
     let roomid = to.params.id;
-    this.get_tasks(roomid);
+    // this.get_tasks(roomid);
+    this.get_shares(roomid);
     this.get_room(roomid);
     next();
   },
   components: {
     ClassroomLeft,
-    taskcard,
+    // taskcard,
+    sharecard,
     ClassTop,
     Share
   }
