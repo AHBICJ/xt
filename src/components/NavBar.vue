@@ -69,8 +69,13 @@
       </div>
     </div>
     <div class="nav-item" v-if="!options.collapsed">
-      <div class="cities">
+      <div class="cities" v-if="!inClassroom">
         <router-link :to="city.path" v-for="city in cities" :key="city.path">{{city.name}}</router-link>
+      </div>
+      <div class="cities" v-else>
+        <router-link :to="'/classroom/'+$route.params.id+'/'+navitem.path" v-for="navitem in !user?stuNav:user.role=='student'?stuNav:teaNav" :key="navitem.name">
+        {{navitem.name}}
+        </router-link>
       </div>
     </div>
   </div>
@@ -81,6 +86,7 @@ import { islogin } from "@/api/login";
 export default {
   data() {
     return {
+      inClassroom:false,
       login: false,
       user: null,
       navinput: "",
@@ -97,6 +103,18 @@ export default {
         { name: "丽水", path: "/city/10" },
         { name: "舟山", path: "/city/11" },
         { name: "学堂", path: "/classroom" }
+      ],
+      teaNav:[
+        { name: "班级首页", path:"intro"},
+        { name: "班级任务", path:"task"},
+        { name: "班级成员", path:"member"},
+        { name: "班级成绩", path:"grade"}
+      ],
+      stuNav:[
+        { name: "班级首页", path:"intro"},
+        { name: "我的任务", path:"task"},
+        { name: "班级成员", path:"member"},
+        { name: "我的成绩", path:"grade"}
       ]
     };
   },
@@ -138,6 +156,8 @@ export default {
           }
         })
         .catch(() => {});
+      if (this.options.isClassroom && this.$route.params.id) this.inClassroom = true;
+      else this.inClassroom = false;
     },
     handleLogout() {
       this.$store

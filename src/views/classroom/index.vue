@@ -10,8 +10,11 @@ export default {
   data() {
     return {
       navbarOptions: {
-        isclassrom: true,
-        ishome: false
+        isHome: false,
+        isClassroom: true,
+        collapsed: false,
+        cityId: 12,
+        shortTilte: true
       }
     };
   },
@@ -21,10 +24,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-  .classroom{
-    width: 100%;
-    min-height: 100%;
-    background: url(../../assets/images/BG6.jpg);
-    background-attachment: fixed;
-  }
+.classroom {
+  width: 100%;
+  min-height: 100%;
+  background: url(../../assets/images/BG6.jpg);
+  background-attachment: fixed;
+}
 </style>
