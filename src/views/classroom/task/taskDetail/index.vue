@@ -1,8 +1,8 @@
 <template>
-<student/>
+<teacher/>
 </template>
 <script>
-import Teacher from "@/views/classroom/task/taskDetail/Teacher.vue"
+import Teacher from "@/views/classroom/task/taskDetail/xxh_Teacher.vue"
 import Student from "@/views/classroom/task/taskDetail/Student.vue"
 export default {
     components:{

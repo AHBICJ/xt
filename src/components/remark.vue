@@ -1,5 +1,5 @@
 <template>
-  <div class="right">
+  <div class="remark">
     <div class="rtop">
       <p>{{homeworkinfo.content}}</p>
       <div v-for="item in  homeworkinfo.image_address" :key="item">
@@ -39,7 +39,7 @@ export default {
         grade: this.grade,
         remark: this.remark
       };
-      mark_score(datas) 
+      mark_score(datas)
         .then(() => {
           this.$message("这是一条消息提示");
         })
@@ -50,23 +50,26 @@ export default {
 </script>
 
 <style lang="scss" scoped >
-.right {
+.remark {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: flex-start;
-  padding: 50px;
-  width: 700px;
+  box-sizing: border-box;
+  width: 100%;
   .rtop {
     text-indent: 2em;
+    height: 480px;
     img {
       width: 400px;
       height: auto;
     }
   }
   .grade {
-    margin-top: 100px;
-    margin-left: 500px;
+    // margin-top: 100px;
+    // margin-left: 600px;
+    flex: 1;
+    text-align: right;
     p {
       span {
         color: #1e8e3e;
