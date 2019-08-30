@@ -185,6 +185,9 @@ export default {
   overflow: hidden;
   display: grid;
   grid-template-columns: 60px auto;
+  .shareLeft{
+    padding-top: 2px;
+  }
   .shareRight {
     display: flex;
     align-items: center;
