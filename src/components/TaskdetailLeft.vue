@@ -28,7 +28,7 @@
             <span>{{taskinfo.desc}}</span>
           </div>
         </div>
-        <div class="intro_right">
+        <div class="intro_right" v-if="user.role=='student'">
           <div class="turn">
             <div class="num">0</div>
             <div class="word">已上交</div>

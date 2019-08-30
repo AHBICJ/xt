@@ -1,24 +1,32 @@
 <template>
-  <div class="article_big">
+  <div class="taskall_big">
     <div class="content">
-      <div class="left">
-       <classroom-left />
-      </div>
       <div class="right">
-      <taskcard v-for="task in tasks" :task="task" :key="task.id" />
-        <!-- <el-row>
-          <el-button
-            type="warning"
-            class="add"
-            @click="dialogVisible = true"
-          >
-            <i class="el-icon-plus"></i>
-            添加新任务
-          </el-button>
-        </el-row> -->
+        <taskcard v-for="task in tasks" :task="task" :key="task.id" />
+      </div>
+      <div class="left">
+        <div class="ClassroomLeft">
+          <div class="messageBox" v-if="user.role=='admin'||user.role=='teacher'">
+            <p class="title" v-if="user.role=='admin'||user.role=='teacher'">添加任务</p>
+            <p class="title" v-else>消息提示</p>
+            <div class="addtaskBox">
+              <el-row>
+                <el-button type="warning" class="addtask" @click="dialogVisible = true">
+                  <i class="el-icon-plus"></i>
+                  添加新任务
+                </el-button>
+              </el-row>
+            </div>
+          </div>
+          <div class="messageBox">
+            <p class="title">专题任务</p>
+            <router-link class="mylink" to>台州美食</router-link>
+            <router-link class="mylink" to>台州美食</router-link>
+          </div>
+        </div>
       </div>
 
-      <!-- <el-dialog title="任务" :visible.sync="dialogVisible">
+      <el-dialog title="任务" :visible.sync="dialogVisible">
         <div class="create">
           <p>
             日期 : 2019/8/25
@@ -75,33 +83,34 @@
           <el-button @click="dialogVisible = false">取 消</el-button>
           <el-button type="primary" @click.native="submit_task">确 定</el-button>
         </span>
-      </el-dialog> -->
+      </el-dialog>
     </div>
   </div>
 </template>
 
 <script>
 import taskcard from "@/components/TaskCard.vue";
-import ClassroomLeft from "@/components/ClassroomLeft.vue";
-// import { create_task } from "@/api/toPost.js";
-import { room_tasks, get_classroom_info } from "@/api/toGet";
+import { create_task } from "@/api/toPost.js";
+import { room_tasks } from "@/api/toGet";
 export default {
   data() {
     return {
-      // dialogVisible: false,
-      // form: {
-      //   title: "",
-      //   date: "",
-      //   intro: "",
-      //   number: "",
-      //   video: "",
-      //   picimg: ""
-      // },
-      // picList: [],
-      // fileList: [],
-      // flag1: false,
+      dialogVisible: false,
+      form: {
+        title: "",
+        date: "",
+        intro: "",
+        number: "",
+        video: "",
+        picimg: ""
+      },
+      picList: [],
+      fileList: [],
+      flag1: false,
+      dialogCreate: false,
       tasks: [],
-      // room_id: 1,
+      user: this.$store.state.user,
+      room_id: 1,
       //       classinfo: {
       //   className: "",
       //   classDesc: "",
@@ -110,28 +119,28 @@ export default {
     };
   },
   methods: {
-    // getimg(response) {
-    //   this.form.picimg = response.data;
-    //   this.picList.push(response.data[0]);
-    // },
-    // submit_task() {
-    //   let datas = {
-    //     room_id: 1,
-    //     title: this.form.title,
-    //     date: this.form.date,
-    //     intro: this.form.intro,
-    //     number: this.form.number,
-    //     video: this.form.video,
-    //     picimg: JSON.stringify(this.picList)
-    //   };
-    //   create_task(datas)
-    //     .then(res => {
-    //       res.data.photo = JSON.parse(res.data.photo);
-    //       this.tasks.push(res.data);
-    //     })
-    //     .catch(() => {});
-    //   this.dialogVisible = false;
-    // },
+    getimg(response) {
+      this.form.picimg = response.data;
+      this.picList.push(response.data[0]);
+    },
+    submit_task() {
+      let datas = {
+        room_id: 1,
+        title: this.form.title,
+        date: this.form.date,
+        intro: this.form.intro,
+        number: this.form.number,
+        video: this.form.video,
+        picimg: JSON.stringify(this.picList)
+      };
+      create_task(datas)
+        .then(res => {
+          res.data.photo = JSON.parse(res.data.photo);
+          this.tasks.push(res.data);
+        })
+        .catch(() => {});
+      this.dialogVisible = false;
+    },
     //上面是提交，下面是获取
     get_tasks(id) {
       room_tasks({ room_id: id })
@@ -146,21 +155,7 @@ export default {
             type: "error"
           });
         });
-    },
-    // get_room(id) {
-    //   get_classroom_info({ room_id: id })
-    //     .then(res => {
-    //       this.classinfo.className = res.data.name;
-    //       this.classinfo.classDesc = res.data.description;
-    //       this.classinfo.classImgSrc = res.data.photo;
-    //     })
-    //     .catch(err => {
-    //       this.$message({
-    //         message: err.message,
-    //         type: "error"
-    //       });
-    //     });
-    // }
+    }
   },
   // computed:{
   //   myrole(){
@@ -168,61 +163,160 @@ export default {
   //   }
   // },
   components: {
-    ClassroomLeft,
-    taskcard,
+    taskcard
   },
   created() {
-    // this.get_tasks();
-    // this.get_room();
     let roomid = this.$route.params.id;
-    // this.get_tasks(roomid);
     this.get_tasks(roomid);
-    this.get_room(roomid);
   },
-    beforeRouteUpdate(to, from, next) {
+  beforeRouteUpdate(to, from, next) {
     let roomid = to.params.id;
-    // this.get_tasks(roomid);
     this.get_tasks(roomid);
-    this.get_room(roomid);
     next();
-  },
+  }
 };
 </script>
 <style scoped lang="scss">
-.article_big {
-  width: 100%;
-  min-height: 100%;
-  // background: url(../assets/images/BG5.png);
+.taskall_big {
+  position: relative;
+  margin: 0 auto;
+  width: 1120px;
 }
 .content {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
+  position: relative;
   margin: 0 auto;
-  width: 993px;
-  margin-top: 50px;
-  .left {
-    flex-grow: 1;
+  width: 1120px;
+  display: grid;
+  grid-template-areas: "left right";
+  grid-template-rows: auto auto;
+  grid-template-columns: 250px 850px;
+  grid-gap: 20px;
+  // display: flex;
+  // flex-direction: row;
+  // flex-wrap: wrap;
+  // justify-content: flex-start;
+  // margin: 0 auto;
+  // width: 1120px;
+  // margin-top: 50px;
+  .classroomSearchandjoin {
+    height: 40px;
+    border-bottom: 1px solid var(--main-color);
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 0 16px;
     display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    .add {
-      margin-left: 630px;
-      i {
-        transform: scale(1.4);
-        padding-right: 10px;
-        margin-left: -10px;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    // .classroomSearch {
+    //   color: var(--main-color);
+
+    //   span {
+    //     font-family: "Courier New", Courier, monospace;
+    //     font-size: 22px;
+    //     font-weight: bold;
+    //     line-height: 40px;
+    //     margin-right: 5px;
+    //   }
+    // }
+    .classroomJoin {
+      float: right;
+      color: var(--main-color);
+      .el-button {
+        padding: 10px 16px;
+      }
+    }
+    .create {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      p {
+        margin-left: 32px;
+        span {
+          color: var(--main-color);
+          margin-left: 10px;
+        }
+      }
+      .myform {
+        margin-top: 25px;
+      }
+      .myrow {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        .mybutton {
+          width: 45px;
+          height: 30px;
+          margin-right: 20px;
+        }
+        // .ml35 {
+        //   margin-left: 35px;
+        // }
+      }
+    }
+  }
+  .left {
+    grid-area: left;
+    .ClassroomLeft {
+      width: 100%;
+      .messageBox {
+        background-color: #fff;
+        padding: 20px;
+        border: 1px solid #dadce0;
+        border-radius: 8px;
+        letter-spacing: 0.25px;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        color: #3c4043;
+        text-align: left;
+        margin-bottom: 20px;
+        .title {
+          font-size: 16px;
+          font-weight: bold;
+          margin-bottom: 10px;
+        }
+        .addtaskBox {
+          text-align: center;
+          .addtask {
+            i {
+              transform: scale(1.4);
+              padding-right: 10px;
+              margin-left: -10px;
+            }
+          }
+        }
+        .mylink {
+          display: block;
+          font-size: 14px;
+          line-height: 26px;
+          white-space: nowrap; /*不换行*/
+          text-overflow: ellipsis; /*超出部分文字以...显示*/
+          color: rgba(0, 0, 0, 0.6);
+          &:hover {
+            color: rgba(0, 0, 0, 0.9);
+          }
+        }
+        .checkAll {
+          display: block;
+          text-align: right;
+          color: black;
+          font-size: 14px;
+          line-height: 26px;
+          &:hover {
+            color: var(--main-color);
+          }
+        }
       }
     }
   }
   .right {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    width: 210px;
+    grid-area: right;
+    // display: flex;
+    // flex-direction: column;
+    // flex-wrap: wrap;
+    // justify-content: flex-start;
     .message {
       letter-spacing: 0.01785714em;
       font-family: "Google Sans", Roboto, Arial, sans-serif;
