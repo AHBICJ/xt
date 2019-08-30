@@ -1,8 +1,14 @@
 <template>
   <div class="Share">
-    <el-avatar class="avatar" :size="40" :src="avatar"></el-avatar>
+    <!-- 格子布局 左侧头像 -->
+    <div class="shareLeft">
+      <el-avatar class="avatar" :size="40" :src="avatar"></el-avatar>
+    </div>
+    <!-- 分享右侧 -->
     <div class="shareRight">
+      <!-- 具体分享 -->
       <div class="shareMainContent">
+        <!-- 输入框 -->
         <el-input
           type="textarea"
           autosize
@@ -10,7 +16,8 @@
           placeholder="快来和大家分享你的收获吧~"
           @focus="showShareDetail=true"
           :class="[showShareDetail ? 'detailTextarea' : 'noborderTextarea','shareTextarea']"
-        ></el-input>
+        />
+        <!-- 分享图片 与链接 -->
         <el-collapse-transition>
           <div class="shareMainExtendContent" v-show="showShareDetail">
             <p class="shareTitle">分享影音:</p>
@@ -24,7 +31,6 @@
             >
               <i class="el-icon-plus" />
             </el-upload>
-
             <p class="shareTitle">分享链接:</p>
             <div class="urls">
               <div class="urlItem" v-for="(url,idx) in form.urls" :key="idx">
@@ -43,7 +49,7 @@
               </div>
               <div class="urlItem">
                 <div class="urlItemLeft">
-                  <el-input v-model="form.currentUrl"></el-input>
+                  <el-input v-model="form.currentUrl" />
                 </div>
                 <div class="urlItemRight">
                   <el-button type="primary" icon="el-icon-plus" size="mini" circle @click="addUrl" />
@@ -58,6 +64,7 @@
           </div>
         </el-collapse-transition>
       </div>
+      <!-- 未展开之前的图标 -->
       <transition name="el-fade-in">
         <div class="shareMainRight" v-show="!showShareDetail">
           <el-button type="primary" icon="el-icon-edit" circle @click="showShareDetail=true" />
@@ -67,7 +74,6 @@
   </div>
 </template>
 <script>
-
 import { create_task } from "@/api/toPost.js";
 import Address from "@/mixin/Address";
 export default {
@@ -101,7 +107,7 @@ export default {
       };
       create_task(datas)
         .then(res => {
-          this.$emit('shareCreated',res);
+          this.$emit("shareCreated", res);
           this.showShareDetail = false;
           this.form.shareText = "";
           this.form.currentUrl = "";
@@ -115,7 +121,7 @@ export default {
       this.form.urls.splice(idx, 1);
     },
     addUrl() {
-      this.form.urls.push({title:"网页链接",url:this.form.currentUrl});
+      this.form.urls.push({ title: "网页链接", url: this.form.currentUrl });
       this.form.currentUrl = "";
     },
     handleSuccess(res, file, filelist) {
