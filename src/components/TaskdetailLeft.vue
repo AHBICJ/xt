@@ -68,7 +68,8 @@
       </div>
     </div>
 
-    <div class="homework" v-if="user.role=='student'">
+    <!-- <div class="homework" v-if="user.role=='student'"> -->
+    <div class="homework">
       <el-form ref="form">
         <p>我的作业</p>
         <el-input type="textarea" v-model="homework"></el-input>
@@ -101,14 +102,14 @@ export default {
   border-radius: 8px;
   //
   overflow: hidden;
-  padding:0px 16px 16px 16px;
+  padding: 0px 16px 16px 16px;
   box-sizing: border-box;
   .task_title {
     align-items: center;
     display: flex;
     flex-direction: row;
     height: 60px;
-    padding-right:24px;
+    padding-right: 24px;
     position: relative;
     .title_word {
       display: flex;

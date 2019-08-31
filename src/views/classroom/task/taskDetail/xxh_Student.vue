@@ -57,7 +57,6 @@ export default {
       picList: []
     };
   },
-
   created() {
     this.id = this.$route.params.taskid || 1;
     this.get_task_detail();
