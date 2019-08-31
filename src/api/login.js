@@ -56,7 +56,7 @@ export function checkCode(datas){
 
 export function islogin(){
   return request({
-    url: '/auth/islogin',
+    url: '/auth/islogin?'+new Date().getTime(),
     method: 'get',
   })
 }
