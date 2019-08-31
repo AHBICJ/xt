@@ -97,3 +97,11 @@ export function get_homework(data) {
     params: data
   })
 }
+
+export function get_homeworklist(data) {
+  return request({
+    url: '/api/all_commit_homework_stu_list',
+    method: 'get',
+    params: data
+  })
+}

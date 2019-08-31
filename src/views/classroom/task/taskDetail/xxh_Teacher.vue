@@ -1,7 +1,6 @@
 <template>
-  <div class="taskdetail">
-    <div class="taskdetailLeft">
-      <div class="stu_title">学生名单</div>
+  <div class="content">
+    <div class="left">
       <div class="stu" @click="get_homework_detail()">
         <img src="@/assets/images/tx4.png" alt />
         <p>林津民</p>
@@ -11,38 +10,6 @@
         <p>学生名字</p>
       </div>
       <div class="stu">
-        <img src="@/assets/images/tx5.png" alt />
-        <p>学生名字</p>
-      </div>
-      <div class="stu">
-        <img src="@/assets/images/tx5.png" alt />
-        <p>学生名字</p>
-      </div>
-      <div class="stu">
-        <img src="@/assets/images/tx5.png" alt />
-        <p>学生名字</p>
-      </div>
-      <div class="stu">
-        <img src="@/assets/images/tx5.png" alt />
-        <p>学生名字</p>
-      </div>
-      <div class="stu">
-        <img src="@/assets/images/tx5.png" alt />
-        <p>学生名字</p>
-      </div>
-      <div class="stu">
-        <img src="@/assets/images/tx5.png" alt />
-        <p>学生名字</p>
-      </div>
-      <div class="stu">
-        <img src="@/assets/images/tx4.png" alt />
-        <p>学生名字</p>
-      </div>
-      <div class="stu">
-        <img src="@/assets/images/tx5.png" alt />
-        <p>学生名字</p>
-      </div>
-      <div class="stu">
         <img src="@/assets/images/tx4.png" alt />
         <p>学生名字</p>
       </div>
@@ -51,14 +18,12 @@
         <p>学生名字</p>
       </div>
     </div>
-    <div class="taskdetailRight">
-      <remark :homeworkinfo="homeworkinfo" />
-    </div>
+    <right :homeworkinfo="homeworkinfo" />
   </div>
 </template>
 
 <script>
-import remark from "@/components/remark.vue";
+import right from "@/components/remark.vue";
 import { get_homework } from "@/api/toGet";
 export default {
   data() {
@@ -95,53 +60,32 @@ export default {
     }
   },
   components: {
-    remark
+    right
   }
 };
 </script>
 
 <style  scoped lang="scss">
-.taskdetail {
-  width: 1120px;
-  height: 760px;
+.content {
+  width: 1100px;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  border: 1px solid rgb(233, 230, 230);
   margin: 0 auto;
   margin-top: 20px;
-  display: grid;
-  grid-template-areas: "left right";
-  grid-template-rows: auto auto;
-  grid-template-columns: 300px 800px;
-  grid-gap: 20px;
-  overflow: hidden;
-  box-sizing: border-box;
-  .taskdetailLeft {
-    position: relative;
-    grid-area: left;
-    overflow: auto;
-    background-color: #fff;
-    border: 1px solid #dadce0;
-    border-radius: 8px;
-    box-sizing: border-box;
-    .stu_title {
-      width: 100%;
-      // position: absolute;
-      // top: 0;
-      // left: 0;
-      background-color: #fff;
-      box-sizing: border-box;
-      font-size: 20px;
-      color: var(--main-color);
-      font-weight: bold;
-      font-family: "Courier New", Courier, monospace;
-      padding: 20px;
-      border-bottom: 1px solid var(--main-color);
-      // border-left: 6px solid var(--main-color);
-    }
+  .left {
+    width: 299px;
+    height: auto;
+    border-right: 1px solid rgb(233, 230, 230);
     .stu {
-      width: 100%;
-      // height: 70px;
-      border-bottom: 1px solid #ccc;
+      width: 260px;
+      height: 30px;
+      border-top: 1px solid rgb(233, 230, 230);
+      border-bottom: 1px solid rgb(233, 230, 230);
       padding: 20px;
-      box-sizing: border-box;
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
@@ -160,16 +104,6 @@ export default {
     .stu:hover {
       background-color: var(--main-color-hover);
     }
-  }
-  .taskdetailRight {
-    width: 100%;
-    grid-area: right;
-    overflow: hidden;
-    padding: 16px;
-    background-color: #fff;
-    border: 1px solid #dadce0;
-    border-radius: 8px;
-    box-sizing: border-box;
   }
 }
 </style>
