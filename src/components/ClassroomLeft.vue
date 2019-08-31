@@ -1,10 +1,13 @@
 <template>
   <div class="ClassroomLeft">
     <div class="messageBox">
-      <p class="title">消息提示</p>
-      <router-link class="mylink" to>老师发布了一个新的作业</router-link>
-      <router-link class="mylink" to>有15个学生提交了《乡土》</router-link>
-      <router-link to class="checkAll">查看全部</router-link>
+      <div>
+        <p class="title">消息提示</p>
+        <router-link class="mylink" to>老师发布了一个新的作业</router-link>
+        <router-link class="mylink" to>有15个学生提交了《乡土》</router-link>
+        <router-link to class="checkAll">查看全部</router-link>
+      </div>
+
     </div>
     <div class="messageBox">
       <p class="title">专题任务</p>

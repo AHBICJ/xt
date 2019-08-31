@@ -135,7 +135,7 @@ export default {
       dialogJoin: false,
       dialogCreate: false,
       form: {
-        ma:"",
+        ma: "",
         title: "",
         intro: "",
         picimg: ""
@@ -149,7 +149,7 @@ export default {
         pagenum: this.pagenum
       };
       getClassroomList(prams).then(res => {
-        this.classrooms = [...res.data.myclass,...res.data.other];
+        this.classrooms = [...res.data.myclass, ...res.data.other];
         // this.totalPage = res.totalpage;
       });
     },
@@ -172,31 +172,31 @@ export default {
         .catch(() => {});
       this.dialogCreate = false;
     },
-    join_classroom(){
+    join_classroom() {
       let datas = {
-        room_code : this.form.ma
-      }
+        room_code: this.form.ma
+      };
       JoinClassRoom(datas)
-      .then(res=>{
-        if (res.code==200){
-          this.$message({
-            message:'加入成功',
-            type:'success'
-          })
-          
-          this.classrooms.push(res.data)
-        }
-        this.form.ma="";
-        this.dialogJoin = false
-      })
-      .catch(error=>{
-        this.$message({
-          message:error,
-          type:'error'
+        .then(res => {
+          if (res.code == 200) {
+            this.$message({
+              message: "加入成功",
+              type: "success"
+            });
+
+            this.classrooms.push(res.data);
+          }
+          this.form.ma = "";
+          this.dialogJoin = false;
         })
-      })
-      this.dialogJoin = false
-      this.form.ma="";
+        .catch(error => {
+          this.$message({
+            message: error,
+            type: "error"
+          });
+        });
+      this.dialogJoin = false;
+      this.form.ma = "";
     }
   },
   created() {
@@ -233,6 +233,7 @@ export default {
         }
       }
     }
+    //dialog
     .classroomJoin {
       .el-dialog {
         width: 500px;
@@ -243,9 +244,25 @@ export default {
       .el-input {
         width: 300px;
       }
+      .el-dialog__title {
+        line-height: 24px;
+        font-size: 20px;
+        font-family: "Courier New", Courier, monospace;
+        font-weight: bold;
+        border-left: 6px solid var(--main-color);
+        color: var(--main-color);
+        padding-left: 10px;
+      }
+      .el-dialog__headerbtn .el-dialog__close {
+        &:hover{
+        color: var(--main-color);
+        }
+      }
     }
   }
 }
+</style>
+<style lang="scss">
 </style>
 <style lang="scss" scoped >
 .el-pagination {

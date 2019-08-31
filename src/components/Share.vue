@@ -1,86 +1,135 @@
 <template>
   <div class="Share">
-    <!-- 发表分享dialog -->
-
-    <el-dialog class="share_dialog" title="分享" :visible.sync="dialogVisible">
-      <div class="create">
-        <el-form ref="form" :model="form" label-width="100px" class="myform">
-          <el-form-item label="标题">
-            <el-input v-model="form.title"></el-input>
-          </el-form-item>
-          <el-form-item label="分享内容">
-            <el-input type="textarea" v-model="form.intro"></el-input>
-          </el-form-item>
-          <div class="myrow">
+    <!-- 格子布局 左侧头像 -->
+    <div class="shareLeft">
+      <el-avatar class="avatar" :size="40" :src="avatar"></el-avatar>
+    </div>
+    <!-- 分享右侧 -->
+    <div class="shareRight">
+      <!-- 具体分享 -->
+      <div class="shareMainContent">
+        <!-- 输入框 -->
+        <el-input
+          type="textarea"
+          autosize
+          v-model="form.shareText"
+          placeholder="快来和大家分享你的收获吧~"
+          @focus="showShareDetail=true"
+          :class="[showShareDetail ? 'detailTextarea' : 'noborderTextarea','shareTextarea']"
+        />
+        <!-- 分享图片 与链接 -->
+        <el-collapse-transition>
+          <div class="shareMainExtendContent" v-show="showShareDetail">
+            <p class="shareTitle">分享影音:</p>
             <el-upload
-              class="upload-demo"
               :action="upload_api"
-              multiple
-              :limit="3"
-              :file-list="fileList"
-              list-type="picture"
+              list-type="picture-card"
+              :file-list="form.picsToShow"
+              :on-success="handleSuccess"
+              :on-remove="handleRemove"
+              class="upload-content"
             >
-              <el-form-item label="分享图片">
-                <el-button size="small" type="primary" class="mybutton ml35">
-                  <i class="el-icon-plus"></i>
-                </el-button>
-              </el-form-item>
+              <i class="el-icon-plus" />
             </el-upload>
-
-            <el-form-item label="分享视频">
-              <el-button size="small" type="primary" @click="flag1=!flag1" class="mybutton">
-                <i class="el-icon-video-play"></i>
-              </el-button>
-            </el-form-item>
-            <el-collapse-transition>
-              <div v-show="flag1">
-                <el-input v-model="form.video"></el-input>
+            <p class="shareTitle">分享链接:</p>
+            <div class="urls">
+              <div class="urlItem" v-for="(url,idx) in form.urls" :key="idx">
+                <div class="urlItemLeft">
+                  <el-input v-model="form.urls[idx].url"></el-input>
+                </div>
+                <div class="urlItemRight">
+                  <el-button
+                    type="danger"
+                    icon="el-icon-minus"
+                    size="mini"
+                    circle
+                    @click="removeUrl(idx)"
+                  />
+                </div>
               </div>
-            </el-collapse-transition>
-          </div>
-        </el-form>
-      </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click.native="submit_task">确 定</el-button>
-      </span>
-    </el-dialog>
+              <div class="urlItem">
+                <div class="urlItemLeft">
+                  <el-input v-model="form.currentUrl" />
+                </div>
+                <div class="urlItemRight">
+                  <el-button type="primary" icon="el-icon-plus" size="mini" circle @click="addUrl" />
+                </div>
+              </div>
+            </div>
 
-    <div class="share" @click="dialogVisible = true">
-      <div class="tx">
-        <el-avatar class="el-dropdown-link" ref="popupbutton" :size="40" :src="avatar"></el-avatar>
+            <div class="footer">
+              <el-button @click="showShareDetail = false">取 消</el-button>
+              <el-button type="primary" @click.native="submitShare">确 定</el-button>
+            </div>
+          </div>
+        </el-collapse-transition>
       </div>
-      <div class="share_word">快来和大家分享你的收获吧~</div>
-      <div class="share_btn">
-        <el-button type="primary" size="40" icon="el-icon-edit" circle></el-button>
-      </div>
+      <!-- 未展开之前的图标 -->
+      <transition name="el-fade-in">
+        <div class="shareMainRight" v-show="!showShareDetail">
+          <el-button type="primary" icon="el-icon-edit" circle @click="showShareDetail=true" />
+        </div>
+      </transition>
     </div>
   </div>
 </template>
 <script>
+import { create_task } from "@/api/toPost.js";
 import Address from "@/mixin/Address";
 export default {
   data() {
     return {
-      dialogVisible: false,
+      showShareDetail: false,
       form: {
-        title: "",
-        date: "",
-        intro: "",
-        number: "",
-        video: "",
-        picimg: ""
+        shareText: "",
+        currentUrl: "",
+        // 真正上传和维护的数据
+        pics: [],
+        // 需要修改和更新的 在获得数据修改这个 加上cdn前缀 之后不用管
+        picsToShow: [],
+        urls: []
       },
-      picList: [],
-      fileList: [],
-      flag1: false,
-      upload_api:process.env.VUE_APP_CDN
+      upload_api: process.env.VUE_APP_API + "/upload"
     };
   },
-  computed:{
-      avatar(){
-          return "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png";
-      }
+  computed: {
+    avatar() {
+      return "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png";
+    }
+  },
+  methods: {
+    submitShare() {
+      let datas = {
+        room_id: this.$route.params.id,
+        intro: this.form.shareText,
+        picimg: JSON.stringify(this.form.pics),
+        link: JSON.stringify(this.form.urls)
+      };
+      create_task(datas)
+        .then(res => {
+          this.$emit("shareCreated", res);
+          this.showShareDetail = false;
+          this.form.shareText = "";
+          this.form.currentUrl = "";
+          this.form.pics = [];
+          this.form.picsToShow = [];
+          this.form.urls = [];
+        })
+        .catch(() => {});
+    },
+    removeUrl(idx) {
+      this.form.urls.splice(idx, 1);
+    },
+    addUrl() {
+      this.form.urls.push({ title: "网页链接", url: this.form.currentUrl });
+      this.form.currentUrl = "";
+    },
+    handleSuccess(res, file, filelist) {
+      this.form.pics.push({ name: file.name, url: res.data[0] });
+    },
+    handleRemove(file, filelist) {
+      this.form.pics.splice(this.form.pics.indexOf(file.name), 1);
+    }
   },
   mixins: [Address]
 };
@@ -88,12 +137,38 @@ export default {
 
 <style lang="scss">
 .Share {
-  .share_dialog {
-    .el-dialog__body {
-      padding: 0 20px;
-    }
-    .el-dialog {
-      margin-top: 20vh !important;
+  .shareRight {
+    .shareMainContent {
+      .shareTextarea > textarea {
+        resize: none;
+        padding: 10px;
+        font-size: 16px;
+        overflow-y: hidden;
+        transition: border ease-in-out 0.3s, padding ease-in-out 0.3s;
+      }
+      .noborderTextarea > textarea {
+        padding: 10px 0px;
+        border: 1px solid transparent;
+      }
+      .detailTextarea > textarea {
+        border: 1px solid #dcdfe6;
+        &:focus {
+          border-color: #e0b969;
+        }
+      }
+      .shareMainExtendContent {
+        .upload-content {
+          margin-right: -8px;
+          ul > li {
+            width: 142px;
+            height: 142px;
+          }
+          .el-upload--picture-card {
+            width: 142px;
+            height: 142px;
+          }
+        }
+      }
     }
   }
 }
@@ -101,65 +176,53 @@ export default {
 
 <style lang="scss" scoped>
 .Share {
-  // dialog
-  .create {
+  background-color: #fff;
+  margin-bottom: 20px;
+  padding: 20px;
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302),
+    0 2px 6px 2px rgba(60, 64, 67, 0.149);
+  border-radius: 8px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 60px auto;
+  .shareRight {
     display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    p {
-      margin-left: 32px;
-      span {
-        color: var(--main-color);
-        margin-left: 10px;
-      }
-    }
-    .myform {
-      margin-top: 25px;
-    }
-    .myrow {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      .mybutton {
-        width: 45px;
-        height: 30px;
-        margin-right: 20px;
-      }
-    }
-  }
-  .share {
-    background-color: #fff;
-    margin-bottom: 20px;
     align-items: center;
-    display: flex;
-    min-height: 72px;
-    padding: 0 8px;
-    position: relative;
-    z-index: 0;
-    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302),
-      0 2px 6px 2px rgba(60, 64, 67, 0.149);
-    border-radius: 8px;
-    overflow: hidden;
-    cursor: pointer;
-    .tx {
-      padding: 12px;
-    }
-    .share_word {
-      color: #ccc;
-      line-height: 40px;
-      transition: color ease-in-out 0.2s;
-    }
-    .share_btn {
-      position: absolute;
-      right: 8px;
-      padding: 12px;
-    }
-    &:hover {
-      .share_word {
-        color: var(--main-color);
+    .shareMainContent {
+      flex: 1 1 auto;
+      .shareMainExtendContent {
+        .footer {
+          margin-top: 20px;
+          text-align: right;
+        }
+        .shareTitle {
+          margin: 20px 0 5px;
+          color: #666;
+          font-size: 15px;
+        }
+        .urls {
+          .urlItem {
+            display: grid;
+            grid-template-columns: auto 30px;
+            grid-column-gap: 10px;
+            margin-bottom: 5px;
+            .urlItemLeft {
+              width: 100%;
+              justify-self: start;
+              align-self: center;
+            }
+            .urlItemRight {
+              width: 100%;
+              justify-self: end;
+              align-self: center;
+            }
+          }
+        }
       }
+    }
+    .shareMainRight {
+      flex: 0 0 60px;
+      text-align: right;
     }
   }
 }

@@ -1,33 +1,31 @@
 <template>
-  <div class="article_big">
+  <div class="taskall_big">
     <div class="content">
-      <div class="left">
-        <task v-for="task in tasks" :task="task" :key="task.id" :teachername="classinfo.series" />
-        <el-row>
-          <el-button
-            type="warning"
-            class="add"
-            @click="dialogVisible = true"
-            v-show="myrole=='admin'?true:false"
-          >
-            <i class="el-icon-plus"></i>
-            添加新任务
-          </el-button>
-        </el-row>
-      </div>
       <div class="right">
-        <div class="message">
-          <p>消息</p>
-          <p class="text">老师发布了一个的新的作业</p>
-          <a href @click.stop>
-            <p class="r">查看全部</p>
-          </a>
-        </div>
-        <div class="topic">
-          <p>话题</p>
-          <p class="text">台州美食</p>
+        <taskcard v-for="task in tasks" :task="task" :key="task.id" />
+      </div>
+      <div class="left">
+        <div class="ClassroomLeft">
+          <div class="messageBox" v-if="user.role=='admin'||user.role=='teacher'">
+            <p class="title" v-if="user.role=='admin'||user.role=='teacher'">添加任务</p>
+            <p class="title" v-else>消息提示</p>
+            <div class="addtaskBox">
+              <el-row>
+                <el-button type="warning" class="addtask" @click="dialogVisible = true">
+                  <i class="el-icon-plus"></i>
+                  添加新任务
+                </el-button>
+              </el-row>
+            </div>
+          </div>
+          <div class="messageBox">
+            <p class="title">专题任务</p>
+            <router-link class="mylink" to>台州美食</router-link>
+            <router-link class="mylink" to>台州美食</router-link>
+          </div>
         </div>
       </div>
+
       <el-dialog title="任务" :visible.sync="dialogVisible">
         <div class="create">
           <p>
@@ -91,20 +89,12 @@
 </template>
 
 <script>
-import task from "@/components/task.vue";
+import taskcard from "@/components/TaskCard.vue";
 import { create_task } from "@/api/toPost.js";
 import { room_tasks } from "@/api/toGet";
-import { get_classroom_info } from "@/api/toGet";
 export default {
   data() {
     return {
-      navbarOptions: {
-        isHome: false,
-        isClassroom: true,
-        collapsed: true,
-        cityId: 12,
-        shortTilte: true
-      },
       dialogVisible: false,
       form: {
         title: "",
@@ -117,10 +107,15 @@ export default {
       picList: [],
       fileList: [],
       flag1: false,
+      dialogCreate: false,
       tasks: [],
+      user: this.$store.state.user,
       room_id: 1,
-      classinfo: {},
-      myrole: JSON.parse(this.$store.state.user).role
+      //       classinfo: {
+      //   className: "",
+      //   classDesc: "",
+      //   classImgSrc: ""
+      // }
     };
   },
   methods: {
@@ -147,29 +142,16 @@ export default {
       this.dialogVisible = false;
     },
     //上面是提交，下面是获取
-    get_tasks() {
-      let datas = { room_id: this.room_id };
-      room_tasks(datas)
+    get_tasks(id) {
+      room_tasks({ room_id: id })
         .then(res => {
           this.tasks = res.data;
           for (var i = 0; i < this.tasks.length; i++)
             this.tasks[i].photo = JSON.parse(this.tasks[i].photo);
         })
-        .catch(() => {
+        .catch(err => {
           this.$message({
-            message: "请求错误",
-            type: "error"
-          });
-        });
-    },
-    get_room() {
-      get_classroom_info({ room_id: this.room_id })
-        .then(res => {
-          this.classinfo = res.data;
-        })
-        .catch(() => {
-          this.$message({
-            message: "请求错误",
+            message: err.message,
             type: "error"
           });
         });
@@ -181,49 +163,160 @@ export default {
   //   }
   // },
   components: {
-    task,
+    taskcard
   },
   created() {
-    this.get_tasks();
-    this.get_room();
+    let roomid = this.$route.params.id;
+    this.get_tasks(roomid);
+  },
+  beforeRouteUpdate(to, from, next) {
+    let roomid = to.params.id;
+    this.get_tasks(roomid);
+    next();
   }
 };
 </script>
 <style scoped lang="scss">
-.article_big {
-  width: 100%;
-  min-height: 100%;
-  // background: url(../assets/images/BG5.png);
+.taskall_big {
+  position: relative;
+  margin: 0 auto;
+  width: 1120px;
 }
 .content {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
+  position: relative;
   margin: 0 auto;
-  width: 993px;
-  margin-top: 50px;
-  .left {
-    flex-grow: 1;
+  width: 1120px;
+  display: grid;
+  grid-template-areas: "left right";
+  grid-template-rows: auto auto;
+  grid-template-columns: 250px 850px;
+  grid-gap: 20px;
+  // display: flex;
+  // flex-direction: row;
+  // flex-wrap: wrap;
+  // justify-content: flex-start;
+  // margin: 0 auto;
+  // width: 1120px;
+  // margin-top: 50px;
+  .classroomSearchandjoin {
+    height: 40px;
+    border-bottom: 1px solid var(--main-color);
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 0 16px;
     display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    .add {
-      margin-left: 630px;
-      i {
-        transform: scale(1.4);
-        padding-right: 10px;
-        margin-left: -10px;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    // .classroomSearch {
+    //   color: var(--main-color);
+
+    //   span {
+    //     font-family: "Courier New", Courier, monospace;
+    //     font-size: 22px;
+    //     font-weight: bold;
+    //     line-height: 40px;
+    //     margin-right: 5px;
+    //   }
+    // }
+    .classroomJoin {
+      float: right;
+      color: var(--main-color);
+      .el-button {
+        padding: 10px 16px;
+      }
+    }
+    .create {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      p {
+        margin-left: 32px;
+        span {
+          color: var(--main-color);
+          margin-left: 10px;
+        }
+      }
+      .myform {
+        margin-top: 25px;
+      }
+      .myrow {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        .mybutton {
+          width: 45px;
+          height: 30px;
+          margin-right: 20px;
+        }
+        // .ml35 {
+        //   margin-left: 35px;
+        // }
+      }
+    }
+  }
+  .left {
+    grid-area: left;
+    .ClassroomLeft {
+      width: 100%;
+      .messageBox {
+        background-color: #fff;
+        padding: 20px;
+        border: 1px solid #dadce0;
+        border-radius: 8px;
+        letter-spacing: 0.25px;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        color: #3c4043;
+        text-align: left;
+        margin-bottom: 20px;
+        .title {
+          font-size: 16px;
+          font-weight: bold;
+          margin-bottom: 10px;
+        }
+        .addtaskBox {
+          text-align: center;
+          .addtask {
+            i {
+              transform: scale(1.4);
+              padding-right: 10px;
+              margin-left: -10px;
+            }
+          }
+        }
+        .mylink {
+          display: block;
+          font-size: 14px;
+          line-height: 26px;
+          white-space: nowrap; /*不换行*/
+          text-overflow: ellipsis; /*超出部分文字以...显示*/
+          color: rgba(0, 0, 0, 0.6);
+          &:hover {
+            color: rgba(0, 0, 0, 0.9);
+          }
+        }
+        .checkAll {
+          display: block;
+          text-align: right;
+          color: black;
+          font-size: 14px;
+          line-height: 26px;
+          &:hover {
+            color: var(--main-color);
+          }
+        }
       }
     }
   }
   .right {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    width: 210px;
+    grid-area: right;
+    // display: flex;
+    // flex-direction: column;
+    // flex-wrap: wrap;
+    // justify-content: flex-start;
     .message {
       letter-spacing: 0.01785714em;
       font-family: "Google Sans", Roboto, Arial, sans-serif;

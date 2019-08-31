@@ -1,7 +1,7 @@
 <template>
   <div class="classmessage">
     <!-- 标题 -->
-    <router-link :to="$route.fullPath +'/task/'+task.id" class="message_title" @click="show=!show">
+    <router-link :to="$route.fullPath +'/'+task.id" class="message_title" @click="show=!show">
       <div class="title_pic">
         <svg viewBox="0 0 24 24" focusable="false" width="24" height="24">
           <path d="M7 15h7v2H7zm0-4h10v2H7zm0-4h10v2H7z" />
