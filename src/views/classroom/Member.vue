@@ -70,7 +70,7 @@ export default {
     uploadAddr() {
       return process.env.VUE_APP_API + "/upload";
     }
-  },
+  }
 };
 </script>
 
@@ -119,10 +119,9 @@ export default {
     margin-top: 50px;
   }
   .el-pagination {
-  margin: 30px 0 10px;
-  text-align: center;
+    margin: 30px 0 10px;
+    text-align: center;
+  }
 }
-}
-
 </style>
 

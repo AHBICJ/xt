@@ -97,3 +97,13 @@ export function get_homework(data) {
     params: data
   })
 }
+
+export function class_grade(data) {
+  return request({
+    url: '/api/class_grade',
+    method: 'get',
+    params: data
+  })
+}
+
+

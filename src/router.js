@@ -57,6 +57,11 @@ const router = new Router({
           component: () => import('./views/classroom/Member.vue')
         },
         {
+          path: ':id/grade',
+          name: 'grade',
+          component: () => import('./views/classroom/Grade.vue')
+        },
+        {
           path: ':id/task',
           component: () => import('./views/classroom/task'),
           children: [
