@@ -34,7 +34,7 @@
             </div>
             <div class="intro_right" v-if="user.role=='student'">
               <div class="turn">
-                <div class="num">0</div>
+                <div class="num">{{taskinfo.commit_num}}</div>
                 <div class="word">已上交</div>
               </div>
             </div>
@@ -75,7 +75,7 @@
         </div>
         <el-upload
           class="upload-demo"
-          action="http://192.168.123.182:5000/upload"
+          :action="upload_api"
           :on-success="getimg"
         >
           <el-button class="mybuttom">添加附件</el-button>
@@ -100,7 +100,8 @@ export default {
       taskinfo: {},
       picList: [],
       qaq: process.env.VUE_APP_CDN,
-      user: this.$store.state.user
+      user: this.$store.state.user,
+      upload_api: process.env.VUE_APP_API + "/upload"
     };
   },
   mixins: [Address],
