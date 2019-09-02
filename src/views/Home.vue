@@ -42,7 +42,10 @@ export default {
         cityid: 0
       },
       cities: [],
-      options: {},
+      options: {
+        // autoScrolling:false,
+        scrollingSpeed: 1000,
+      },
       slickOptions: {
         items:[],
         autoplay: true,

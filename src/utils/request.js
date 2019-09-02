@@ -12,7 +12,23 @@ const service = axios.create({
   withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })
-
+// request拦截器
+service.interceptors.request.use(
+  request=>{
+    if(request.method=='post'){
+      request.data = {
+        ...request.data,
+        _t: Date.parse(new Date())/1000,
+      }
+    }else if(request.method=='get'){
+      request.params = {
+        _t: Date.parse(new Date())/1000,
+        ...request.params
+      }
+    }
+    return request;
+  }
+)
 // respone拦截器
 service.interceptors.response.use(
   response => {

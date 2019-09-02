@@ -1,5 +1,5 @@
 <template>
-  <div class="classTop" :style="{backgroundImage:'url('+imgAddress(classinfo.classImgSrc)+')'}" :key="classinfo.classImgSrc">
+  <div class="classTop" :style="{backgroundImage:`url(${imgAddress(classinfo.classImgSrc)})`}" :key="classinfo.classImgSrc">
     <div>
       <span class="className">{{classinfo.className}}</span>
       <div class="classIntro">{{classinfo.classDesc}}</div>
