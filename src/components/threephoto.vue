@@ -13,42 +13,60 @@
         >{{item}}</li>
       </ul>
     </div>
-    
-    <div v-show="flag1" > <ppt/>   </div>
-    <div v-show="flag2" > <myvideo/>    </div>
+    <transition>
+      <div v-show="flag1">
+        <ppt />
+      </div>
+    </transition>
+    <transition>
+      <div v-show="flag2">
+        <myvideo />
+      </div>
+    </transition>
+    <transition>
+      <div v-show="flag3">
+        <atlas />
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
 import ppt from "@/components/ppt.vue";
 import myvideo from "@/components/myvideo.vue";
+import atlas from "@/components/atlas.vue";
 export default {
   data() {
     return {
       menu: ["课件", "视频", "图集"],
       index: 0,
-      flag1:false,
-      flag2:false
+      flag1: true,
+      flag2: false,
+      flag3: false
     };
   },
   methods: {
     son(item, idx) {
       this.index = idx;
-      if(idx==0) 
-      {
-        this.flag1=true;
-        this.flag2=false;
-      }
-      else  if(idx==1) 
-      {
-        this.flag1=false;
-        this.flag2=true;
+      if (idx == 0) {
+        this.flag1 = true;
+        this.flag2 = false;
+        this.flag3 = false;
+      } else if (idx == 1) {
+        this.flag1 = false;
+        this.flag2 = true;
+        this.flag3 = false;
+      } else if (idx == 2) {
+        this.flag1 = false;
+        this.flag2 = false;
+        this.flag3 = true;
       }
     }
   },
-   components: {
+  components: {
     ppt,
-    myvideo
+    myvideo,
+    atlas
   }
 };
 </script>
@@ -92,6 +110,13 @@ export default {
       border-bottom: 2px solid var(--main-color);
     }
   }
+}
+.v-enter,
+.v-leave-to {
+  opacity: 0;
+}
+.v-enter-active {
+  transition: all 1.4s ease;
 }
 </style>
 
