@@ -43,7 +43,7 @@ export default {
             this.shares[i].photo = JSON.parse(this.shares[i].photo);
             this.shares[i].link = JSON.parse(this.shares[i].link);
         })
-        .catch(err => {});
+        .catch(() => {});
     },
     get_room(id) {
       get_classroom_info({ room_id: id})
@@ -52,7 +52,7 @@ export default {
           this.classinfo.classDesc = res.data.description;
           this.classinfo.classImgSrc = res.data.photo;
         })
-        .catch(err => {});
+        .catch(()=> {});
     },
     handleShareCreated(res){
       this.shares.unshift(res.data);

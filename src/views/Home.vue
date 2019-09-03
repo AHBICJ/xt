@@ -9,7 +9,7 @@
         <pic-list />
       </div>
       <div class="section">
-        <threephoto />
+        <!-- <threephoto /> -->
       </div>
       <div class="section">
         <z-j-map />
@@ -31,7 +31,7 @@ import NavBar from "@/components/NavBar";
 import ZJMap from "@/components/ZJMap";
 import "@/styles/fullpage.css";
 import { getLanterns } from "@/api/toGet";
-import threephoto from "@/components/threephoto";
+// import threephoto from "@/components/threephoto";
 
 export default {
   data() {
@@ -82,7 +82,7 @@ export default {
     PicList,
     NavBar,
     ZJMap,
-    threephoto
+    // threephoto
   }
 };
 </script>

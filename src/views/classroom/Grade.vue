@@ -45,15 +45,10 @@ export default {
             (this.gradeinfo = JSON.parse(this.gradeinfo)),
             (this.taskinfo = JSON.parse(this.taskinfo));
         })
-        .catch(err => {
-          // this.$message({
-          //   message: err.message,
-          //   type: "error"
-          // });
-        });
+        .catch(() => {});
     },
     get_score(index, filed) {
-      console.log(index);
+      // console.log(index);
       let arr = this.gradeinfo[index];
       let emm = arr.find(item => (item.task_id = filed.task_id));
       if (emm) {

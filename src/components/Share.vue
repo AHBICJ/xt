@@ -124,10 +124,10 @@ export default {
       this.form.urls.push({ title: "网页链接", url: this.form.currentUrl });
       this.form.currentUrl = "";
     },
-    handleSuccess(res, file, filelist) {
+    handleSuccess(res, file) {
       this.form.pics.push({ name: file.name, url: res.data[0] });
     },
-    handleRemove(file, filelist) {
+    handleRemove(file) {
       this.form.pics.splice(this.form.pics.indexOf(file.name), 1);
     }
   },
