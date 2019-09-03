@@ -80,10 +80,18 @@
         <div class="meansBox_out">
           <div class="meansBox" v-for="pho in share.photo" :key="pho.name">
             <a href class="means">
-              <div class="means_pic" :style="`backgroundImage:url(${imgAddress(pho.url)})`">
-              </div>
+              <div class="means_pic" :style="`backgroundImage:url(${imgAddress(pho.url)})`" />
               <div class="means_title">
                 <div class="means_titleword">{{pho.name}}</div>
+              </div>
+            </a>
+          </div>
+          <div class="meansBox" v-for="url in share.link" :key="url.link">
+            <a href class="means">
+              <div class="means_pic linkBG" />
+              <div class="means_title">
+                <div class="means_titleword">{{url.title}}</div>
+                <div class="means_subtitle">{{url.url}}</div>
               </div>
             </a>
           </div>
@@ -270,10 +278,11 @@ export default {
     }
   }
   .share_content {
-    padding: 15px 20px;
+    padding: 15px 20px 0;
     width: 100%;
     box-sizing: border-box;
     .content_intro {
+      padding-bottom: 15px;
       display: flex;
       .intro_left {
         display: flex;
@@ -336,7 +345,7 @@ export default {
     .content_words {
       flex-shrink: 12345;
       overflow: hidden;
-      margin-bottom: 16px;
+      margin-bottom: 15px;
       .mywords {
         display: block;
         overflow: hidden;
@@ -344,7 +353,7 @@ export default {
       }
     }
     .content_means {
-      margin-top: 16px;
+      padding-bottom: 3px;
       .meansBox_out {
         margin-right: -12px;
         .meansBox {
@@ -364,6 +373,9 @@ export default {
             overflow: hidden;
             //
             flex-grow: 1;
+            .linkBG {
+              background-image: url(../assets/images/linkBG.svg)
+            }
             .means_pic {
               display: flex;
               align-items: center;
@@ -381,9 +393,15 @@ export default {
               overflow: hidden;
               .means_titleword {
                 letter-spacing: 0.1px;
-                font-family: "Google Sans", Roboto, Arial, sans-serif;
                 font-size: 16px;
                 line-height: 40px;
+                color: #3c4043;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+              }
+              .means_subtitle{
+                font-size: 16px;
                 color: #3c4043;
                 text-overflow: ellipsis;
                 overflow: hidden;

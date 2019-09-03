@@ -39,9 +39,10 @@ export default {
       room_tasks({ room_id: id})
         .then(res => {
           this.shares = res.data;
-          for (var i = 0; i < this.shares.length; i++)
+          for (var i = 0; i < this.shares.length; i++){
             this.shares[i].photo = JSON.parse(this.shares[i].photo);
             this.shares[i].link = JSON.parse(this.shares[i].link);
+          }
         })
         .catch(() => {});
     },
