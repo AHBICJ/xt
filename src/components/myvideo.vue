@@ -3,7 +3,7 @@
     <div>1</div>
     <div>2</div>
     <div>3</div>
-    <div class="item">4</div>
+    <div class="item" id="mse"></div>
     <div>5</div>
     <div>6</div>
   </div>
@@ -12,9 +12,13 @@
 <script>
 export default {
   data() {
-    return{}
+    return{
+      
+    }
   },
-  methods: {}
+  methods: {},
+  mounted()
+  
 };
 </script>
 
@@ -34,7 +38,7 @@ export default {
     grid-row-start: 1;
     grid-row-end: 3;
   }
-  div{
+  div {
     box-shadow: 0 6px 18px 0 rgba(25, 45, 155, 0.3);
   }
 }

@@ -1,41 +1,34 @@
 <template>
   <div class="right">
-    <el-carousel :interval="5000" arrow="always">
-      <el-carousel-item v-for="item in 4" :key="item">
-        <h3>{{ item }}</h3>
+    <el-carousel :interval="5000" arrow="always" height="500px" >
+      <el-carousel-item v-for="item in photo" :key="item">
+        <img :src="item" alt />
       </el-carousel-item>
     </el-carousel>
   </div>
 </template>
 
 <script>
+import Address from "@/mixin/Address";
 export default {
   data() {
-    return {};
+    return {
+      photo: [
+        "https://dpic.tiankong.com/ax/3s/QJ7116694466.jpg?x-oss-process=style/794ws",
+        "https://dpic.tiankong.com/75/fh/QJ6113497868.jpg?x-oss-process=style/794ws",
+        "http://5b0988e595225.cdn.sohucs.com/images/20180925/f0858c6995394f4c9e9e073efb049fdc.jpeg"
+      ]
+    };
   },
-  methods: {}
+  methods: {},
+  mixins: [Address]
 };
 </script>
 
 <style lang="scss" scoped>
 .right {
-  padding: 25% 17% 10% 3%;
+  padding: 15% 17% 10% 3%;
   margin: 0 auto;
-  .el-carousel__item h3 {
-    color: #475669;
-    font-size: 18px;
-    opacity: 0.75;
-    line-height: 300px;
-    margin: 0;
-  }
-
-  .el-carousel__item:nth-child(2n) {
-    background-color: #99a9bf;
-  }
-
-  .el-carousel__item:nth-child(2n + 1) {
-    background-color: #d3dce6;
-  }
 }
 </style>
 
