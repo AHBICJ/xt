@@ -15,18 +15,24 @@
 
 <script>
 
+import Address from "@/mixin/Address";
+
 export default {
     
   data() {
     return {
       photo: [
+        // imgAddress('2022bd81-0b77-4255-9270-c045a13ded6a.jpg'),
+        // imgAddress('2022bd81-0b77-4255-9270-c045a13ded6a.jpg'),
+        // imgAddress('2022bd81-0b77-4255-9270-c045a13ded6a.jpg')
         require("@/assets/images/BG3.png"),
         require("@/assets/images/BG2.png"),
         require("@/assets/images/BG1.png")
       ],
     };
   },
-  methods: {}
+  methods: {},
+  mixins: [Address]
 };
 </script>
 

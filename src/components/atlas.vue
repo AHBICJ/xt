@@ -19,9 +19,8 @@ export default {
 
 <style lang="scss" scoped>
 .right {
-  background-color: bisque;
-  padding: 10% 17% 10% 3%;
-  height: 80%;
+  padding: 25% 17% 10% 3%;
+  margin: 0 auto;
   .el-carousel__item h3 {
     color: #475669;
     font-size: 18px;
