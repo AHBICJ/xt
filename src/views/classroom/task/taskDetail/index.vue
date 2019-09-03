@@ -1,7 +1,7 @@
 <template>
-<!-- <student v-if="user.role=='student'"/> -->
-<teacher/>
-<!-- <teacher v-else/> -->
+<student v-if="user.role=='student'"/>
+<!-- <teacher/> -->
+<teacher v-else/>
 </template>
 <script>
 import Teacher from "@/views/classroom/task/taskDetail/Teacher.vue"

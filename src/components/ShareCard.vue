@@ -77,15 +77,26 @@
       </div>
       <!-- 资源 -->
       <div class="content_means">
+        <!-- dialog -->
+        <el-dialog
+          title="分享资源"
+          :visible.sync="dialogShare"
+          width="960px"
+          custom-class="dialogShare"
+        >
+          <carouselsshare :images="share"></carouselsshare>
+        </el-dialog>
+        <!-- means -->
         <div class="meansBox_out">
-          <div class="meansBox" v-for="pho in share.photo" :key="pho.name">
-            <a href class="means">
+          <div class="meansBox" v-for="pho in share.photo" :key="pho.name" @click="dialogShare= true">
+            <div class="means">
               <div class="means_pic" :style="`backgroundImage:url(${imgAddress(pho.url)})`" />
               <div class="means_title">
                 <div class="means_titleword">{{pho.name}}</div>
               </div>
-            </a>
+            </div>
           </div>
+          <!-- link -->
           <div class="meansBox" v-for="url in share.link" :key="url.link">
             <a href class="means">
               <div class="means_pic linkBG" />
@@ -102,9 +113,12 @@
 </template>
 <script>
 import Address from "@/mixin/Address";
+import carouselsshare from "@/components/carousels-share.vue";
 export default {
   data() {
-    return {};
+    return {
+      dialogShare: false,
+    };
   },
   computed: {
     istask() {
@@ -112,7 +126,10 @@ export default {
     }
   },
   mixins: [Address],
-  props: ["share"]
+  props: ["share"],
+  components: {
+    carouselsshare
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -374,7 +391,7 @@ export default {
             //
             flex-grow: 1;
             .linkBG {
-              background-image: url(../assets/images/linkBG.svg)
+              background-image: url(../assets/images/linkBG.svg);
             }
             .means_pic {
               display: flex;
@@ -400,7 +417,7 @@ export default {
                 overflow: hidden;
                 white-space: nowrap;
               }
-              .means_subtitle{
+              .means_subtitle {
                 font-size: 16px;
                 color: #3c4043;
                 text-overflow: ellipsis;

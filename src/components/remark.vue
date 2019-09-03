@@ -16,21 +16,24 @@
             </div>
           </div>
         </div>
-        <div class="myname">
-          <img :src="`/images/` + user.photo" alt />
-          <p>{{user.name}}</p>
+        <!-- 学生名字 -->
+        <div class="myname" v-if="homeworkinfo.student">
+          <!-- <img :src="`/images/` + user.photo" alt /> -->
+          <img src="@/assets/images/tx4.png" />
+          <p>{{homeworkinfo.student}}</p>
         </div>
-        <div class="task_content">
+        <!-- 未点击名单，显示任务详情 -->
+        <div class="task_content" v-else>
           <div class="content_intro">
             <div class="intro_left">
               <div class="intro_time">
                 <span class="taskdate">{{taskinfo.star_time}}</span>
               </div>
               <div class="intro_word">
-                <span>{{homeworkinfo.content}}</span>
+                <span>{{taskinfo.desc}}</span>
               </div>
             </div>
-            <div class="intro_right" v-if="user.role=='student'">
+            <div class="intro_right">
               <div class="turn">
                 <div class="num">{{taskinfo.commit_num}}</div>
                 <div class="word">已上交</div>
@@ -40,7 +43,41 @@
           <!-- 资源 -->
           <div class="content_means">
             <div class="meansBox_out">
-              <div class="meansBox" v-for="item in  homeworkinfo.image_address" :key="item">
+              <div class="meansBox" v-for="item in  taskinfo.photo" :key="item">
+                <a href class="means">
+                  <div class="means_pic">
+                    <img :src=" qaq + item " alt />
+                  </div>
+                  <!-- <div class="means_title">
+                    <div class="means_titleword">百度一下，你就知道</div>
+                  </div>-->
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 显示学生作业详情 -->
+        <div class="homework_content" v-if="homeworkinfo.student">
+          <div class="content_intro">
+            <div class="intro_left">
+              <!-- <div class="intro_time">
+                <span class="taskdate">{{taskinfo.star_time}}</span>
+              </div>-->
+              <div class="intro_word">
+                <span>{{homeworkinfo.content}}</span>
+              </div>
+            </div>
+            <div class="intro_right">
+              <div class="turn">
+                <div class="num">{{taskinfo.commit_num}}</div>
+                <div class="word">已上交</div>
+              </div>
+            </div>
+          </div>
+          <!-- 资源 -->
+          <div class="content_means">
+            <div class="meansBox_out">
+              <div class="meansBox" v-for="item in  homeworkinfo.photo" :key="item">
                 <a href class="means">
                   <div class="means_pic">
                     <img :src=" qaq + item " alt />
@@ -58,7 +95,7 @@
     <div class="grade">
       <p>
         打分：
-        <el-input v-model="grade" placeholder="成绩" style="width:80px;"></el-input>
+        <el-input v-model="grade" placeholder="成绩" style="width:80px;margin-right: 5px;"></el-input>
         <span>/100</span>
       </p>
     </div>
@@ -79,8 +116,7 @@ export default {
       grade: "",
       remark: "",
       qaq: process.env.VUE_APP_CDN,
-      user: this.$store.state.user,
-      homeworkinfo: []
+      user: this.$store.state.user
     };
   },
   props: ["homeworkinfo", "taskinfo"],
@@ -98,6 +134,11 @@ export default {
         })
         .catch(() => {});
     }
+  },
+  computed: {
+    // haveHomeork() {
+    //   return this.homeworkinfo.student == "";
+    // }
   }
 };
 </script>
@@ -196,8 +237,10 @@ export default {
           height: 40px;
         }
       }
-
-      .task_content {
+.task_content{
+  border-top:1px solid var(--main-color);
+}
+      .homework_content,.task_content {
         padding: 16px 8px 0 8px;
         width: 100%;
         box-sizing: border-box;
