@@ -82,6 +82,14 @@ export function get_classroom_info(data) {
   })
 }
 
+export function get_classroom_members(data) {
+  return request({
+    url: '/api/member_list',
+    method: 'get',
+    params: data
+  })
+}
+
 export function getClassroomList(data) {
   return request({
     url: '/api/myclassroom',
