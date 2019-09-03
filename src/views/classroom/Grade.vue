@@ -2,8 +2,9 @@
   <div class="grade">
     <table>
       <tr>
-        <th class="wid200">姓名   \   测验名称</th>
+        <th class="wid200">姓名 \ 测验名称</th>
         <th v-for="(item) in taskinfo" :key="item.task_name">{{item.task_name}}</th>
+        <th v-for="index  of 5" :key="index"></th>
       </tr>
       <tr v-for=" item in name" :key="item" :item="item">
         <td>
@@ -18,6 +19,7 @@
           :myitem="myitem"
           v-text="get_score(item,myitem)"
         ></td>
+        <td v-for="index  of 5" :key="index"></td>
       </tr>
     </table>
   </div>
@@ -100,13 +102,13 @@ export default {
       float: left;
       margin-left: 20px;
     }
-    span{
-     float: left;
-     margin-top: 10px;
-     margin-left: 20px;
+    span {
+      float: left;
+      margin-top: 10px;
+      margin-left: 20px;
     }
   }
-  .wid200{
+  .wid200 {
     width: 200px;
   }
 }
