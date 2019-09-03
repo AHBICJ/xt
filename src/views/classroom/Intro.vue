@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     get_shares(id) {
-      room_tasks({ room_id: id })
+      room_tasks({ room_id: id})
         .then(res => {
           this.shares = res.data;
           for (var i = 0; i < this.shares.length; i++)
@@ -46,7 +46,7 @@ export default {
         .catch(err => {});
     },
     get_room(id) {
-      get_classroom_info({ room_id: id })
+      get_classroom_info({ room_id: id})
         .then(res => {
           this.classinfo.className = res.data.name;
           this.classinfo.classDesc = res.data.description;
@@ -56,8 +56,8 @@ export default {
     },
     handleShareCreated(res){
       this.shares.unshift(res.data);
-      this.shares[this.shares.length-1].photo = JSON.parse(this.shares[this.shares.length-1].photo);
-      this.shares[this.shares.length-1].link = JSON.parse(this.shares[this.shares.length-1].link);
+      this.shares[0].photo = JSON.parse(this.shares[0].photo);
+      this.shares[0].link = JSON.parse(this.shares[0].link);
     }
   },
   created() {

@@ -1,7 +1,7 @@
 <template>
   <div class="classmessage">
     <!-- 标题 -->
-    <router-link :to="$route.fullPath +'/'+task.id" class="message_title" @click="show=!show">
+    <router-link :to="$route.fullPath +'/'+task.id" class="message_title">
       <div class="title_pic">
         <svg viewBox="0 0 24 24" focusable="false" width="24" height="24">
           <path d="M7 15h7v2H7zm0-4h10v2H7zm0-4h10v2H7z" />
@@ -24,67 +24,61 @@
       </div>
     </router-link>
     <!-- 介绍以及资源 -->
-    <transition @enter="enter" @after-enter="afterEnter" @leave="leave" @after-leave="afterLeave">
-      <div class="collapse" v-show="show">
-        <div class="message_content">
-          <div class="content_intro">
-            <div class="intro_left">
-              <div class="intro_time">
-                <span class="taskdate">{{task.star_time}}</span>
-              </div>
-              <div class="intro_word">
-                <span>{{task.desc}}</span>
-              </div>
-            </div>
-            <div class="intro_right">
-              <div class="turn">
-                <div class="num">0</div>
-                <div class="word">已上交</div>
-              </div>
-            </div>
+    <div class="message_content">
+      <div class="content_intro">
+        <div class="intro_left">
+          <div class="intro_time">
+            <span class="taskdate">{{task.star_time}}</span>
           </div>
-          <!-- 资源 -->
-          <div class="content_means">
-            <div class="meansBox_out">
-              <div class="meansBox">
-                <a href class="means">
-                  <div class="means_pic">
-                    <img
-                      src="https://www.google.com/webpagethumbnail?c=66&s=105:70&f=0&d=http://baidu.com&a=AIYkKU9eC8yaoGhLEOqmz9bXNUGtShtQQw"
-                      alt
-                    />
-                  </div>
-                  <div class="means_title">
-                    <div class="means_titleword">百度一下，你就知道</div>
-                  </div>
-                </a>
-              </div>
-              <div class="meansBox">
-                <a href class="means">
-                  <div class="means_pic">
-                    <img
-                      src="https://www.google.com/webpagethumbnail?c=66&s=105:70&f=0&d=http://baidu.com&a=AIYkKU9eC8yaoGhLEOqmz9bXNUGtShtQQw"
-                      alt
-                    />
-                  </div>
-                  <div class="means_title">
-                    <div class="means_titleword">百度一下，你就知道</div>
-                  </div>
-                </a>
-              </div>
-            </div>
+          <div class="intro_word">
+            <span>{{task.desc}}</span>
+          </div>
+        </div>
+        <div class="intro_right">
+          <div class="turn">
+            <div class="num">0</div>
+            <div class="word">已上交</div>
           </div>
         </div>
       </div>
-    </transition>
+      <!-- 资源 -->
+      <div class="content_means">
+        <div class="meansBox_out">
+          <div class="meansBox">
+            <a href class="means">
+              <div class="means_pic">
+                <img
+                  src="https://www.google.com/webpagethumbnail?c=66&s=105:70&f=0&d=http://baidu.com&a=AIYkKU9eC8yaoGhLEOqmz9bXNUGtShtQQw"
+                  alt
+                />
+              </div>
+              <div class="means_title">
+                <div class="means_titleword">百度一下，你就知道</div>
+              </div>
+            </a>
+          </div>
+          <div class="meansBox">
+            <a href class="means">
+              <div class="means_pic">
+                <img
+                  src="https://www.google.com/webpagethumbnail?c=66&s=105:70&f=0&d=http://baidu.com&a=AIYkKU9eC8yaoGhLEOqmz9bXNUGtShtQQw"
+                  alt
+                />
+              </div>
+              <div class="means_title">
+                <div class="means_titleword">百度一下，你就知道</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      show: true,
-      // task:[],
     };
   },
   props: ["task"],
@@ -198,8 +192,8 @@ export default {
         }
       }
     }
-    &:hover{
-      background-color:#f9f3e5;
+    &:hover {
+      background-color: #f9f3e5;
     }
   }
   .message_content {

@@ -5,14 +5,14 @@
     </div>
     <div class="list">
       <img src="@/assets/images/tx1.png" alt />
-      <p>孔孟荀墨</p>
+      <p>{{teacher}}</p>
     </div>
     <div class="text mt50">
-      <h2>同学们</h2>
+      <h2>同学</h2>
     </div>
-    <div class="list" v-for="item in stu" :key="item">
-      <img src="@/assets/images/tx4.png" alt />
-      <p>{{item}}</p>
+    <div class="list" v-for="item in members" :key="item">
+      <img :src="`/images/` + item.photo" alt />
+      <p>{{item.name}}</p>
     </div>
     <!-- 分页 -->
     <div class="block">
@@ -36,13 +36,16 @@
 
 <script>
 // import ClassroomLeft from "@/components/ClassroomLeft.vue";
+import { get_classroom_members } from "@/api/toGet";
 export default {
   data() {
     return {
-      stu: ["颜回", "闵子骞", "冉耕", "仲弓"],
+      members: [],  
+      teacher:"",
       page: 1,
       pagenum: 12,
-      totalPage: 1
+      totalPage: 1,
+      upload_api: process.env.VUE_APP_API + "/upload"
     };
   },
   components: {
@@ -52,13 +55,15 @@ export default {
     getMembers() {
       let prams = {
         page: this.page,
-        pagenum: this.pagenum
+        pagenum: this.pagenum,
+        room_id:this.$route.params.id
       };
-      getMemberList(prams).then(res => {
-        this.classrooms = [...res.data.myclass, ...res.data.other];
+      get_classroom_members(prams).then(res => {
+        this.members = res.data.stu_list;
+        this.teacher = res.data.teacher;
         // this.totalPage = res.totalpage;
       });
-    }
+    },
   },
   created() {
     this.getMembers();

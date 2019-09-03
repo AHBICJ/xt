@@ -82,6 +82,14 @@ export function get_classroom_info(data) {
   })
 }
 
+export function get_classroom_members(data) {
+  return request({
+    url: '/api/member_list',
+    method: 'get',
+    params: data
+  })
+}
+
 export function getClassroomList(data) {
   return request({
     url: '/api/myclassroom',
@@ -98,12 +106,21 @@ export function get_homework(data) {
   })
 }
 
+<<<<<<< HEAD
 export function class_grade(data) {
   return request({
     url: '/api/class_grade',
+=======
+export function get_homeworklist(data) {
+  return request({
+    url: '/api/all_commit_homework_stu_list',
+>>>>>>> 0de4e5a4400466b63961f44c8f8fd7750adbd490
     method: 'get',
     params: data
   })
 }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 0de4e5a4400466b63961f44c8f8fd7750adbd490
