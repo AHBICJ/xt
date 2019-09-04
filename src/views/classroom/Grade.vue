@@ -1,10 +1,12 @@
 <template>
   <div class="grade">
+    <div>
+      <e-chart :path-option="option" :dataset="[]" v-if="dataisready"></e-chart>
+    </div>
     <table>
       <tr>
         <th class="wid200">姓名 \ 测验名称</th>
-        <th v-for="(item) in taskinfo" :key="item.task_name">{{item.task_name}}</th>
-        <th v-for="index  of 5" :key="index"></th>
+        <th v-for="(item) in table_head" :key="item.task_name">{{item.task_name}}</th>
       </tr>
       <tr v-for=" item in name" :key="item" :item="item">
         <td>
@@ -14,49 +16,180 @@
           </div>
         </td>
         <td
-          v-for="myitem  in taskinfo"
+          v-for="myitem  in table_head"
           :key="myitem.task_name"
           :myitem="myitem"
           v-text="get_score(item,myitem)"
         ></td>
-        <td v-for="index  of 5" :key="index"></td>
       </tr>
     </table>
+    <div class="charts">
+      <e-chart
+        :path-option="defaultOption"
+        :dataset="datas"
+        height="350px"
+        width="100%"
+        v-if="dataisready"
+      ></e-chart>
+    </div>
   </div>
 </template>
 
 <script>
 import { class_grade } from "@/api/toGet";
+import EChart from "@/components/chart/echart";
 export default {
+  name:"Grade",
   data() {
     return {
       taskinfo: [],
       gradeinfo: [],
-      name: []
+      name: [],
+      dataisready: false,
+      datas: [
+        {
+          name: "视频赏析",
+          value: 79
+        },
+        {
+          name: "图集欣赏",
+          value: 124
+        },
+        {
+          name: "PPT下载",
+          value: 145
+        }
+      ],
+      defaultOption: [
+        ["color", ["#E0B969"]],
+        ["legend.orient", "horizontal"],
+        ["legend.y", "bottom"],
+        ["xAxis.show", false],
+        ["yAxis.show", false],
+        ["series[0].type", "pie"],
+        ["series[0].avoidLabelOverlap", true],
+        ["series[0].radius", ["50%", "70%"]]
+      ],
+      option: [
+        [
+          "title",
+          {
+            text: "班级成绩统计"
+            // subtext: "数据来自网络"
+          }
+        ],
+        [
+          "tooltip",
+          {
+            trigger: "axis"
+          }
+        ],
+        [
+          "legend",
+          {
+            data: ["2011年"]
+          }
+        ],
+        [
+          "toolbox",
+          {
+            show: true,
+            feature: {
+              mark: { show: true },
+              dataView: { show: true, readOnly: false },
+              magicType: { show: true, type: ["line", "bar"] },
+              restore: { show: true },
+              saveAsImage: { show: true }
+            }
+          }
+        ],
+        ["calculable", true],
+        [
+          "xAxis",
+          [
+            {
+              type: "value",
+              boundaryGap: [0, 0.01]
+            }
+          ]
+        ],
+        [
+          "yAxis",
+          [
+            {
+              type: "category",
+              data: ["巴西", "印尼", "美国", "印度", "中国", "世界人口(万)"]
+            }
+          ]
+        ],
+        [
+          "series",
+          [
+            {
+              name: "2011年",
+              type: "bar",
+              data: [18203, 23489, 29034, 104970, 131744, 630230]
+            }
+            // {
+            //   name: "2012年",
+            //   type: "bar",
+            //   data: [19325, 23438, 31000, 121594, 134141, 681807]
+            // }
+          ]
+        ]
+      ]
     };
   },
-  components: {},
-  computed: {},
+  components: {
+    EChart
+  },
+  computed: {
+    table_head() {
+      let temp = [];
+      for (let qaq of this.taskinfo) {
+        temp.push(qaq);
+      }
+      while (temp.length < 6) {
+        temp.push({});
+      }
+      return temp;
+    }
+  },
   methods: {
+    init_chart_data() {
+      this.dataisready = true;
+      // this.option[]
+      let qaq = this.find_element('yAxis')
+      if (qaq){
+        qaq[1][0].data = this.name;
+      }
+      // console.log(qaq);
+    },
+    find_element(index){
+      return this.option.find(item=>item[0] == index)
+    },
     get_class_grade(id) {
       class_grade({ room_id: id })
         .then(res => {
-          (this.gradeinfo = res.data.stus),
-            (this.taskinfo = res.data.header),
-            (this.name = Object.keys(this.gradeinfo)),
-            (this.gradeinfo = JSON.parse(this.gradeinfo)),
-            (this.taskinfo = JSON.parse(this.taskinfo));
+          this.gradeinfo = res.data.stus;
+          this.taskinfo = res.data.header;
+          this.name = Object.keys(this.gradeinfo),
+          this.init_chart_data();
         })
         .catch(() => {});
     },
     get_score(index, filed) {
-      // console.log(index);
+      if (!filed.task_id) {
+        return "";
+      }
       let arr = this.gradeinfo[index];
-      let emm = arr.find(item => (item.task_id = filed.task_id));
-      if (emm) {
-        return emm.grade;
-      } else {
+      let emm = arr.find(item => item.task_id == filed.task_id);
+      if (!emm) {
         return "未提交";
+      } else if (!emm.grade) {
+        return "未评分";
+      } else {
+        return emm.grade;
       }
     }
   },
