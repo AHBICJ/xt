@@ -1,93 +1,93 @@
 <template>
-    <div class="task_all">
-      <div class="right">
-        <taskcard v-for="task in tasks" :task="task" :key="task.id" />
-      </div>
-      <div class="left">
-        <div class="ClassroomLeft">
-          <div class="messageBox" v-if="user.role=='admin'||user.role=='teacher'">
-            <p class="title" v-if="user.role=='admin'||user.role=='teacher'">添加任务</p>
-            <p class="title" v-else>消息提示</p>
-            <div class="addtaskBox">
-              <el-row>
-                <el-button type="warning" class="addtask" @click="dialogVisible = true">
-                  <i class="el-icon-plus"></i>
-                  添加新任务
-                </el-button>
-              </el-row>
-            </div>
-          </div>
-          <div class="messageBox">
-            <p class="title">专题任务</p>
-            <router-link class="mylink" to>台州美食</router-link>
-            <router-link class="mylink" to>台州美食</router-link>
-          </div>
-        </div>
-      </div>
-
-      <el-dialog title="任务" :visible.sync="dialogVisible">
-        <div class="create">
-          <p>
-            日期 : 2019/8/25
-            <span>对象： 所有学生</span>
-          </p>
-          <el-form ref="form" :model="form" label-width="100px" class="myform">
-            <el-form-item label="任务标题">
-              <el-input v-model="form.title"></el-input>
-            </el-form-item>
-            <el-form-item label="任务介绍">
-              <el-input type="textarea" v-model="form.intro"></el-input>
-            </el-form-item>
-
-            <div class="myrow">
-              <el-form-item label="字数限制">
-                <el-input v-model="form.number"></el-input>
-              </el-form-item>
-              <el-form-item label="截至时间">
-                <el-date-picker
-                  type="date"
-                  placeholder="截至时间"
-                  v-model="form.date"
-                  style="width: 100%;"
-                  value-format="yyyy-M-d h:m:s"
-                ></el-date-picker>
-              </el-form-item>
-            </div>
-            <div class="myrow">
-              <el-upload
-                class="upload-demo"
-                action="http://192.168.123.182:5000/upload"
-                multiple
-                :limit="3"
-                :file-list="fileList"
-                :on-success="getimg"
-                list-type="picture"
-              >
-                <el-button size="small" type="primary" class="mybutton ml35">
-                  <i class="el-icon-plus"></i>
-                </el-button>
-              </el-upload>
-              <el-button size="small" type="primary" @click="flag1=!flag1" class="mybutton">
-                <i class="el-icon-video-play"></i>
-              </el-button>
-              <el-collapse-transition>
-                <div v-show="flag1">
-                  <el-input v-model="form.video"></el-input>
-                </div>
-              </el-collapse-transition>
-            </div>
-          </el-form>
-        </div>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click.native="submit_task">确 定</el-button>
-        </span>
-      </el-dialog>
+  <div class="task_all">
+    <div class="right">
+      <share-card v-for="task in tasks" :share="task" :key="task.id" />
     </div>
+    <div class="left">
+      <div class="ClassroomLeft">
+        <div class="messageBox" v-if="user.role=='admin'||user.role=='teacher'">
+          <p class="title" v-if="user.role=='admin'||user.role=='teacher'">添加任务</p>
+          <p class="title" v-else>消息提示</p>
+          <div class="addtaskBox">
+            <el-row>
+              <el-button type="warning" class="addtask" @click="dialogVisible = true">
+                <i class="el-icon-plus"></i>
+                添加新任务
+              </el-button>
+            </el-row>
+          </div>
+        </div>
+        <div class="messageBox">
+          <p class="title">专题任务</p>
+          <router-link class="mylink" to>台州美食</router-link>
+          <router-link class="mylink" to>台州美食</router-link>
+        </div>
+      </div>
+    </div>
+
+    <el-dialog title="任务" :visible.sync="dialogVisible">
+      <div class="create">
+        <p>
+          日期 : 2019/8/25
+          <span>对象： 所有学生</span>
+        </p>
+        <el-form ref="form" :model="form" label-width="100px" class="myform">
+          <el-form-item label="任务标题">
+            <el-input v-model="form.title"></el-input>
+          </el-form-item>
+          <el-form-item label="任务介绍">
+            <el-input type="textarea" v-model="form.intro"></el-input>
+          </el-form-item>
+
+          <div class="myrow">
+            <el-form-item label="字数限制">
+              <el-input v-model="form.number"></el-input>
+            </el-form-item>
+            <el-form-item label="截至时间">
+              <el-date-picker
+                type="date"
+                placeholder="截至时间"
+                v-model="form.date"
+                style="width: 100%;"
+                value-format="yyyy-M-d h:m:s"
+              ></el-date-picker>
+            </el-form-item>
+          </div>
+          <div class="myrow">
+            <el-upload
+              class="upload-demo"
+              action="http://192.168.123.182:5000/upload"
+              multiple
+              :limit="3"
+              :file-list="fileList"
+              :on-success="getimg"
+              list-type="picture"
+            >
+              <el-button size="small" type="primary" class="mybutton ml35">
+                <i class="el-icon-plus"></i>
+              </el-button>
+            </el-upload>
+            <el-button size="small" type="primary" @click="flag1=!flag1" class="mybutton">
+              <i class="el-icon-video-play"></i>
+            </el-button>
+            <el-collapse-transition>
+              <div v-show="flag1">
+                <el-input v-model="form.video"></el-input>
+              </div>
+            </el-collapse-transition>
+          </div>
+        </el-form>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click.native="submit_task">确 定</el-button>
+      </span>
+    </el-dialog>
+  </div>
 </template>
 
 <script>
-import taskcard from "@/components/TaskCard.vue";
+import ShareCard from "@/components/ShareCard.vue";
 import { create_task } from "@/api/toPost.js";
 import { room_tasks } from "@/api/toGet";
 export default {
@@ -108,12 +108,7 @@ export default {
       dialogCreate: false,
       tasks: [],
       user: this.$store.state.user,
-      room_id: 1,
-      //       classinfo: {
-      //   className: "",
-      //   classDesc: "",
-      //   classImgSrc: ""
-      // }
+      room_id: 1
     };
   },
   methods: {
@@ -141,27 +136,19 @@ export default {
     },
     //上面是提交，下面是获取
     get_tasks(id) {
-      room_tasks({ room_id: id })
+      room_tasks({ room_id: id ,type:"task" })
         .then(res => {
           this.tasks = res.data;
-          for (var i = 0; i < this.tasks.length; i++)
+          for (var i = 0; i < this.tasks.length; i++) {
             this.tasks[i].photo = JSON.parse(this.tasks[i].photo);
+            this.tasks[i].link = JSON.parse(this.tasks[i].link);
+          }
         })
-        .catch(err => {
-          this.$message({
-            message: err.message,
-            type: "error"
-          });
-        });
+        .catch(() => {});
     }
   },
-  // computed:{
-  //   myrole(){
-  //     return this.$store.state.user
-  //   }
-  // },
   components: {
-    taskcard
+    ShareCard
   },
   created() {
     let roomid = this.$route.params.id;
@@ -175,7 +162,6 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-
 .task_all {
   position: relative;
   margin: 0 auto;
