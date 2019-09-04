@@ -40,20 +40,19 @@ export default {
 .right {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  margin-right: 20%;
   .mt150 {
-    padding-top: 35%;
+    padding-top: 20%;
     text-align: center;
   }
   .mt50 {
-    padding-top: 15%;
-    text-align: left;
+    text-align: center;
   }
   img {
-    width: 300px;
-    height: 160px;
+    width: 350px;
+    height: 180px;
     margin-bottom: 10%;
     box-shadow: 0 6px 18px 0 rgba(25, 45, 155, 0.3);
+    cursor: pointer;
   }
 }
 </style>

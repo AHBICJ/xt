@@ -14,9 +14,9 @@ export default {
   data() {
     return {
       photo: [
+        "http://5b0988e595225.cdn.sohucs.com/images/20180925/f0858c6995394f4c9e9e073efb049fdc.jpeg",
         "https://dpic.tiankong.com/ax/3s/QJ7116694466.jpg?x-oss-process=style/794ws",
-        "https://dpic.tiankong.com/75/fh/QJ6113497868.jpg?x-oss-process=style/794ws",
-        "http://5b0988e595225.cdn.sohucs.com/images/20180925/f0858c6995394f4c9e9e073efb049fdc.jpeg"
+        "https://dpic.tiankong.com/75/fh/QJ6113497868.jpg?x-oss-process=style/794ws"
       ]
     };
   },
@@ -27,7 +27,7 @@ export default {
 
 <style lang="scss" scoped>
 .right {
-  padding: 15% 17% 10% 3%;
+  padding: 15% 0 10% 3%;
   margin: 0 auto;
 }
 </style>

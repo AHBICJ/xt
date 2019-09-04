@@ -1,33 +1,35 @@
 <template>
-  <div class="content">
-    <div class="left">
-      <h2>强大的展示功能</h2>
-      <p>借助设计器模板，数以百万计的可重复使用的演示文稿以及PowerPoint-to-Prezi转换器，除非您愿意，否则无需从头开始。</p>
-      <ul>
-        <li
-          class="liMenu"
-          :class="idx==index?'hover':''"
-          @click="son(item,idx)"
-          v-for="(item,idx) in menu"
-          :key="idx"
-        >{{item}}</li>
-      </ul>
+  <div class="bigcontent">
+    <div class="content">
+      <div class="left">
+        <h2>强大的展示功能</h2>
+        <p>借助设计器模板，数以百万计的可重复使用的演示文稿以及PowerPoint-to-Prezi转换器，除非您愿意，否则无需从头开始。</p>
+        <ul>
+          <li
+            class="liMenu"
+            :class="idx==index?'hover':''"
+            @click="son(item,idx)"
+            v-for="(item,idx) in menu"
+            :key="idx"
+          >{{item}}</li>
+        </ul>
+      </div>
+      <transition>
+        <div v-show="flag1">
+          <ppt />
+        </div>
+      </transition>
+      <transition>
+        <div v-show="flag2">
+          <myvideo />
+        </div>
+      </transition>
+      <transition>
+        <div v-show="flag3">
+          <atlas />
+        </div>
+      </transition>
     </div>
-    <transition>
-      <div v-show="flag1">
-        <ppt />
-      </div>
-    </transition>
-    <transition>
-      <div v-show="flag2">
-        <myvideo />
-      </div>
-    </transition>
-    <transition>
-      <div v-show="flag3">
-        <atlas />
-      </div>
-    </transition>
   </div>
 </template>
 
@@ -72,18 +74,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.bigcontent {
+  height: 100%;
+  width: 100%;
+  background-image: url("../assets/images/BG7.jpg");
+  background-size: cover;
+  padding-top: 5%;
+}
 .content {
-  width: 80%;
+  width: 1200px;
   height: 80%;
   margin: auto auto;
-  // background-color: beige;
   display: grid;
-  grid-template-columns: 4fr 6fr;
+  grid-template-columns: 3fr 7fr;
   .left {
     display: flex;
     flex-direction: column;
-    padding-top: 45%;
-    padding-left: 30%;
+    padding-top: 80%;
     li {
       float: left;
       font-size: 16px;
