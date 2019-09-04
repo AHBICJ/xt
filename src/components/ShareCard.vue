@@ -52,7 +52,14 @@
       </div>
     </div>
 
-    <!-- <div> -->
+    <el-dialog title="影音预览" :visible.sync="showPreview" width="80%" top="10vh">
+      <el-carousel :autoplay="false" arrow="hover" height="680px" ref="previewCarousel">
+        <el-carousel-item v-for="pho in share.photo" :key="pho.name">
+          <img :src="imgAddress(pho.url)"/>
+        </el-carousel-item>
+      </el-carousel>
+    </el-dialog>
+
     <!-- 资源 -->
     <div class="share_content">
       <div class="content_intro" v-if="istask">
@@ -78,22 +85,22 @@
       <!-- 资源 -->
       <div class="content_means">
         <div class="meansBox_out">
-          <div class="meansBox" v-for="pho in share.photo" :key="pho.name">
-            <a href class="means">
+          <div class="meansBox" v-for="(pho,idx) in share.photo" :key="pho.name" @click="handlePreview(idx)">
+            <div href class="means">
               <div class="means_pic" :style="`backgroundImage:url(${imgAddress(pho.url)})`" />
               <div class="means_title">
                 <div class="means_titleword">{{pho.name}}</div>
               </div>
-            </a>
+            </div>
           </div>
           <div class="meansBox" v-for="url in share.link" :key="url.link">
-            <a href class="means">
+            <div href class="means">
               <div class="means_pic linkBG" />
               <div class="means_title">
                 <div class="means_titleword">{{url.title}}</div>
                 <div class="means_subtitle">{{url.url}}</div>
               </div>
-            </a>
+            </div>
           </div>
         </div>
       </div>
@@ -104,17 +111,40 @@
 import Address from "@/mixin/Address";
 export default {
   data() {
-    return {};
+    return {
+      showPreview: false,
+      initialIndex:0,
+    };
   },
   computed: {
     istask() {
       return this.share.task_type == "task";
     }
   },
+  methods:{
+    handlePreview(idx){
+      this.showPreview=true;
+      this.$refs.previewCarousel.setActiveItem(idx);
+    }
+  },
   mixins: [Address],
   props: ["share"]
 };
 </script>
+
+<style lang="scss">
+.share_card{
+   .el-carousel__item{
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     img{
+       max-width: 100%;
+       max-height: 100%;
+     }
+  }
+}
+</style>
 <style lang="scss" scoped>
 .share_card {
   background-color: #fff;
@@ -364,17 +394,15 @@ export default {
           width: calc(50% - 12px);
           .means {
             display: flex;
-            flex-direction: row;
             position: relative;
             padding-right: 8px;
             background-color: #fff;
             border: 1px solid #dadce0;
             border-radius: 8px;
             overflow: hidden;
-            //
             flex-grow: 1;
             .linkBG {
-              background-image: url(../assets/images/linkBG.svg)
+              background-image: url(../assets/images/linkBG.svg);
             }
             .means_pic {
               display: flex;
@@ -400,7 +428,7 @@ export default {
                 overflow: hidden;
                 white-space: nowrap;
               }
-              .means_subtitle{
+              .means_subtitle {
                 font-size: 16px;
                 color: #3c4043;
                 text-overflow: ellipsis;

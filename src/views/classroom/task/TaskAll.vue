@@ -1,6 +1,5 @@
 <template>
-  <div class="taskall_big">
-    <div class="content">
+    <div class="task_all">
       <div class="right">
         <taskcard v-for="task in tasks" :task="task" :key="task.id" />
       </div>
@@ -85,7 +84,6 @@
         </span>
       </el-dialog>
     </div>
-  </div>
 </template>
 
 <script>
@@ -177,12 +175,8 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-.taskall_big {
-  position: relative;
-  margin: 0 auto;
-  width: 1120px;
-}
-.content {
+
+.task_all {
   position: relative;
   margin: 0 auto;
   width: 1120px;
@@ -191,13 +185,6 @@ export default {
   grid-template-rows: auto auto;
   grid-template-columns: 250px 850px;
   grid-gap: 20px;
-  // display: flex;
-  // flex-direction: row;
-  // flex-wrap: wrap;
-  // justify-content: flex-start;
-  // margin: 0 auto;
-  // width: 1120px;
-  // margin-top: 50px;
   .classroomSearchandjoin {
     height: 40px;
     border-bottom: 1px solid var(--main-color);
@@ -207,17 +194,6 @@ export default {
     display: flex;
     -webkit-flex-direction: row;
     flex-direction: row;
-    // .classroomSearch {
-    //   color: var(--main-color);
-
-    //   span {
-    //     font-family: "Courier New", Courier, monospace;
-    //     font-size: 22px;
-    //     font-weight: bold;
-    //     line-height: 40px;
-    //     margin-right: 5px;
-    //   }
-    // }
     .classroomJoin {
       float: right;
       color: var(--main-color);

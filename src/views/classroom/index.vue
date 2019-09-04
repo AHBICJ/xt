@@ -29,5 +29,6 @@ export default {
   min-height: 100%;
   background: url(../../assets/images/BG6.jpg);
   background-attachment: fixed;
+  background-position: center;
 }
 </style>
