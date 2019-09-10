@@ -59,17 +59,17 @@
 </template>
 
 <script>
-import { checkCode } from "@/api/login";
+// import { checkCode } from "@/api/login";
 import { Message } from "element-ui";
 export default {
   name: "userlogin",
   components: {},
   data() {
-    const validateCode = (rule, value, callback) => {
-      checkCode({ vcode: this.loginForm.code }).then(res =>
-        res.data.res ? callback() : callback(new Error("请输入正确的验证码"))
-      );
-    };
+    // const validateCode = (rule, value, callback) => {
+    //   checkCode({ vcode: this.loginForm.code }).then(res =>
+    //     res.data.res ? callback() : callback(new Error("请输入正确的验证码"))
+    //   );
+    // };
     return {
       fullscreenLoading: false,
       loginForm: {
@@ -86,7 +86,7 @@ export default {
           { required: true, message: "请输入密码", trigger: "blur" },
           { min: 6, message: "密码长度最少为6位", trigger: "blur" }
         ],
-        code: [{ required: true, trigger: "blur", validator: validateCode }]
+        code: [{ required: true, message: "请输入验证码", trigger: "blur", /*validator: validateCode*/ }]
       },
       passwordType: "password"
     };
