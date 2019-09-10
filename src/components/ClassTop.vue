@@ -1,5 +1,11 @@
 <template>
-  <div class="classTop" :style="{backgroundImage:`url(${imgAddress(classinfo.classImgSrc)})`}" :key="classinfo.classImgSrc">
+  <!-- <div class="classTop" :style="{backgroundImage:`url(${imgAddress(classinfo.classImgSrc)})`}" :key="classinfo.classImgSrc">
+    <div>
+      <span class="className">{{classinfo.className}}</span>
+      <div class="classIntro">{{classinfo.classDesc}}</div>
+    </div>
+  </div>-->
+  <div class="classTop" style="backgroundImage:url(/images/crbg10.jpg)">
     <div>
       <span class="className">{{classinfo.className}}</span>
       <div class="classIntro">{{classinfo.classDesc}}</div>
@@ -14,12 +20,7 @@ export default {
   },
   props: {
     classinfo: {
-      type: Object,
-    //   default: () => ({
-    //       className:"乡土1班",
-    //       classDesc:"欢迎加入乡土1班",
-    //       classImgSrc:"39fa58e4-5336-4b00-bb05-47d745a3029c.jpg"
-    //   })
+      type: Object
     }
   },
   mixins: [Address]
@@ -39,11 +40,17 @@ export default {
   background-position: center center;
   .className {
     color: #fff;
+    position: relative;
+    top:10px;
+    left:20px;
     font-size: 36px;
     font-weight: bold;
     line-height: 44px;
   }
   .classIntro {
+    position: relative;
+    top:20px;
+    left:20px;
     font-size: 18px;
     line-height: 30px;
     color: #fff;

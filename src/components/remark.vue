@@ -95,15 +95,24 @@
     <div class="grade">
       <p>
         打分：
-
-        <el-input v-model="grade" :placeholder="homeworkinfo.grade" style="width:80px;margin-right: 5px;"  v-if="homeworkinfo.grade"></el-input>
-                <el-input v-model="grade" placeholder="成绩" style="width:80px;margin-right: 5px;" v-else></el-input>
+        <el-input
+          v-model="grade"
+          :placeholder="homeworkinfo.grade"
+          style="width:80px;margin-right: 5px;"
+          v-if="homeworkinfo.grade"
+        ></el-input>
+        <el-input v-model="grade" placeholder="成绩" style="width:80px;margin-right: 5px;" v-else></el-input>
         <span>/100</span>
       </p>
     </div>
     <div class="remark_content">
       <p>教师评语</p>
-      <el-input type="textarea" v-model="remark" :placeholder="homeworkinfo.comment" v-if="homeworkinfo.comment"></el-input>
+      <el-input
+        type="textarea"
+        v-model="remark"
+        :placeholder="homeworkinfo.comment"
+        v-if="homeworkinfo.comment"
+      ></el-input>
       <el-input type="textarea" v-model="remark" placeholder="请输入评语" v-else></el-input>
       <el-button type="warning" class="mybutton" @click="get_mark_score()">完成评价</el-button>
     </div>
@@ -240,10 +249,11 @@ export default {
           height: 40px;
         }
       }
-.task_content{
-  border-top:1px solid var(--main-color);
-}
-      .homework_content,.task_content {
+      .task_content {
+        border-top: 1px solid var(--main-color);
+      }
+      .homework_content,
+      .task_content {
         padding: 16px 8px 0 8px;
         width: 100%;
         box-sizing: border-box;
