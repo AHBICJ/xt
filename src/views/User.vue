@@ -100,18 +100,18 @@
                     <span>用户名称</span>
                     <div class="input_box">
                       <input type="text" placeholder="请填写你的用户名称" />
-                      <a href @.stop>
+                      <div class="input_a">
                         <i class="el-icon-edit"></i>&nbsp;修改
-                      </a>
+                      </div>
                     </div>
                   </li>
                   <li>
                     <span>个人介绍</span>
                     <div class="input_box">
                       <input type="text" placeholder="填写兴趣爱好、擅长的事情、喜欢的事情等" />
-                      <a href @.stop>
+                      <div class="input_a">
                         <i class="el-icon-edit"></i> &nbsp;修改
-                      </a>
+                      </div>
                     </div>
                   </li>
                 </ul>
@@ -120,16 +120,22 @@
             <el-tab-pane label="修改密码" name="five">
               <ul>
                 <li>
+                  <div class="input_box">
                   <span class="label">旧密码</span>
                   <input type="text" placeholder="请输入原密码（初次设置时可留空）" />
+                  </div>
                 </li>
                 <li>
+                  <div class="input_box">
                   <span class="label">新密码</span>
                   <input type="text" placeholder="请输入新密码" />
+                  </div>
                 </li>
                 <li>
+                  <div class="input_box">
                   <span class="label">确认新密码</span>
                   <input type="text" placeholder="确认新密码" />
+                  </div>
                 </li>
               </ul>
               <div class="submit_btn">
@@ -290,27 +296,25 @@ export default {
               color: #333;
               width: 120px;
             }
-            .label {
-              width: 6em;
-            }
             .input_box {
               display: flex;
               justify-content: flex-end;
               flex: 1;
               input {
                 flex: 1;
+                font-size: 14px !important;
                 display: inline-block;
                 border: none;
                 outline: none;
-                color: #909090;
+                // color: #ccc;
                 font-size: 16px;
                 margin: initial;
               }
-              a {
+              .input_a {
                 margin-left: 12px;
                 color: var(--main-color);
                 font-size: 16px;
-                text-decoration: none;
+                cursor:pointer;
                 &:hover {
                   color: var(--main-color-hover);
                 }
