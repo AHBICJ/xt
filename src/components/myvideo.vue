@@ -60,7 +60,7 @@ export default {
         sources: [
           {
             src:
-              "http://vdse.bdstatic.com//e22ca3cbcbb30eb2b39461602e8ff2ac?authorization=bce-auth-v1/fb297a5cc0fb434c971b8fa103e8dd7b/2017-05-11T09:02:31Z/-1//84df7fa5c7206bbd40a433165de2f3942759199e104bc6528701b115fa5d36c8", // 路径
+              "//vdse.bdstatic.com//1adf55c54a87e99470dd0d4366f5d2b1?authorization=bce-auth-v1/fb297a5cc0fb434c971b8fa103e8dd7b/2017-05-11T09:02:31Z/-1//d6d22a3f90c97c7b29738a43374a3d1376c183186bdbd63febacfd823b772ec4", // 路径
             type: "video/mp4" // 类型
           },
           {
