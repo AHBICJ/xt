@@ -79,7 +79,6 @@ export default {
   width: 100%;
   background-image: url("../assets/images/BG7.jpg");
   background-size: cover;
-  padding-top: 5%;
 }
 .content {
   width: 1200px;
