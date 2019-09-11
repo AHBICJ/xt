@@ -2,17 +2,19 @@
   <div class="bigcontent">
     <div class="content">
       <div class="left">
-        <h2>强大的展示功能</h2>
-        <p>借助设计器模板，数以百万计的可重复使用的演示文稿以及PowerPoint-to-Prezi转换器，除非您愿意，否则无需从头开始。</p>
-        <ul>
-          <li
-            class="liMenu"
-            :class="idx==index?'hover':''"
-            @click="son(item,idx)"
-            v-for="(item,idx) in menu"
-            :key="idx"
-          >{{item}}</li>
-        </ul>
+        <div>
+          <h2>强大的展示功能</h2>
+          <p>借助设计器模板，数以百万计的可重复使用的演示文稿以及PowerPoint-to-Prezi转换器，除非您愿意，否则无需从头开始。</p>
+          <ul>
+            <li
+              class="liMenu"
+              :class="idx==index?'hover':''"
+              @click="son(item,idx)"
+              v-for="(item,idx) in menu"
+              :key="idx"
+            >{{item}}</li>
+          </ul>
+        </div>
       </div>
       <transition>
         <div v-show="flag1">
@@ -75,11 +77,12 @@ export default {
 
 <style lang="scss" scoped>
 .bigcontent {
+  display: flex;
+  justify-content: center; //子元素水平居中
+  align-items: center; //子元素垂直居中
   height: 100%;
-  width: 100%;
   background-image: url("../assets/images/BG7.jpg");
   background-size: cover;
-  padding-top: 5%;
 }
 .content {
   width: 1200px;
@@ -90,7 +93,9 @@ export default {
   .left {
     display: flex;
     flex-direction: column;
-    padding-top: 80%;
+    justify-content: center; //子元素水平居中
+    align-items: center; //子元素垂直居中
+    text-align: left;
     li {
       float: left;
       font-size: 16px;
