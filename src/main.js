@@ -5,6 +5,8 @@ import store from './store'
 import './plugins/element'
 import './styles/main.css'
 
+
+
 Vue.config.productionTip = false;
 function imgaddress(image) {
   if (!image) return "null"
