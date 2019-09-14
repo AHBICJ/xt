@@ -4,14 +4,16 @@
     <div class="UserContent">
       <div class="left">
         <div class="top">
-          <div class="User_tx"></div>
+          <div class="User_tx">
+            <!-- <img :src="`/images/` + user.photo" alt /> -->
+          </div>
           <div class="User_txt">
             <h1>林津民</h1>
             <div class="User_tag">
-              <i class="el-icon-plus"></i> 疯狂读书?
+              <i class="el-icon-plus"></i> 热爱学习
             </div>
             <div class="User_tag">
-              <i class="el-icon-plus"></i> 从未迟到?
+              <i class="el-icon-plus"></i> 从未迟到
             </div>
           </div>
           <div class="User_classroom">
@@ -24,7 +26,7 @@
             <el-tab-pane label="我的收藏" name="first">
               <div class="zan">
                 <p>
-                  <span>专栏</span> · 文章 / 2天前
+                  <span>绍兴</span> · 名人贤士
                 </p>
                 <a href @.stop>绍兴名人——感受古味道绍兴</a>
                 <div class="zanimg">
@@ -36,21 +38,21 @@
               </div>
               <div class="zan">
                 <p>
-                  <span>专栏</span> · 文章 / 2天前
+                  <span>绍兴</span> · 风俗民情
                 </p>
-                <a href @.stop>绍兴名人——感受古味道绍兴</a>
+                <a href @.stop>越剧文化</a>
                 <div class="zanimg">
                   <img src="https://b-gold-cdn.xitu.io/v3/static/img/zan-active.930baa2.svg" alt />
-                  <p>234</p>
+                  <p>134</p>
                   <img src="https://b-gold-cdn.xitu.io/v3/static/img/comment.4d5744f.svg" alt />
-                  <p>54</p>
+                  <p>21</p>
                 </div>
               </div>
             </el-tab-pane>
             <el-tab-pane label="我的点赞" name="second">
               <div class="zan">
                 <p>
-                  <span>专栏</span> · 文章 / 2天前
+                  <span>绍兴</span> · 名人贤士
                 </p>
                 <a href @.stop>绍兴名人——感受古味道绍兴</a>
                 <div class="zanimg">
@@ -64,7 +66,7 @@
             <el-tab-pane label="浏览历史" name="third">
               <div class="zan">
                 <p>
-                  <span>专栏</span> · 文章 / 2天前
+                  <span>绍兴</span> · 名人贤士
                 </p>
                 <a href @.stop>绍兴名人——感受古味道绍兴</a>
                 <div class="zanimg">
@@ -72,6 +74,18 @@
                   <p>234</p>
                   <img src="https://b-gold-cdn.xitu.io/v3/static/img/comment.4d5744f.svg" alt />
                   <p>54</p>
+                </div>
+              </div>
+              <div class="zan">
+                <p>
+                  <span>绍兴</span> · 风俗民情
+                </p>
+                <a href @.stop>越剧文化</a>
+                <div class="zanimg">
+                  <img src="https://b-gold-cdn.xitu.io/v3/static/img/zan-active.930baa2.svg" alt />
+                  <p>134</p>
+                  <img src="https://b-gold-cdn.xitu.io/v3/static/img/comment.4d5744f.svg" alt />
+                  <p>21</p>
                 </div>
               </div>
             </el-tab-pane>
@@ -121,20 +135,20 @@
               <ul>
                 <li>
                   <div class="input_box">
-                  <span class="label">旧密码</span>
-                  <input type="text" placeholder="请输入原密码（初次设置时可留空）" />
+                    <span class="label">旧密码</span>
+                    <input type="text" placeholder="请输入原密码（初次设置时可留空）" />
                   </div>
                 </li>
                 <li>
                   <div class="input_box">
-                  <span class="label">新密码</span>
-                  <input type="text" placeholder="请输入新密码" />
+                    <span class="label">新密码</span>
+                    <input type="text" placeholder="请输入新密码" />
                   </div>
                 </li>
                 <li>
                   <div class="input_box">
-                  <span class="label">确认新密码</span>
-                  <input type="text" placeholder="确认新密码" />
+                    <span class="label">确认新密码</span>
+                    <input type="text" placeholder="确认新密码" />
                   </div>
                 </li>
               </ul>
@@ -148,12 +162,12 @@
       <div class="right">
         <div class="right_top">
           <div class="txt">
-            <p>被表扬</p>
-            <span>123</span>
+            <p>完成任务</p>
+            <span>8</span>
           </div>
           <div class="txt">
-            <p>被点赞</p>
-            <span>109</span>
+            <p>任务总数</p>
+            <span>12</span>
           </div>
           <!-- :after -->
         </div>
@@ -164,8 +178,8 @@
               <span>23</span>
             </li>
             <li>
-              完成任务
-              <span>49</span>
+              评论总数
+              <span>12</span>
             </li>
           </ul>
         </div>
@@ -184,7 +198,8 @@ export default {
         isClassroom: false,
         collapsed: false,
         cityId: 12,
-        shortTilte: false
+        shortTilte: false,
+        // user: this.$store.state.user
       },
       imageUrl: "",
       activeName: "first"
@@ -217,8 +232,8 @@ export default {
 .User {
   width: 100%;
   min-height: 100%;
-  // background: url(../assets/images/BG6.jpg);
-  background-color: #a1a1a1;
+  background: url(../assets/images/BG6.jpg);
+  // background-color: #a1a1a1;
   background-attachment: fixed;
   .UserContent {
     position: relative;
@@ -229,7 +244,7 @@ export default {
     grid-template-rows: auto;
     grid-template-columns: 800px 300px;
     grid-gap: 20px;
-    background-color: #a1a1a1;
+    // background-color: #a1a1a1;
     .left {
       grid-area: left;
       .top {
@@ -245,6 +260,13 @@ export default {
           border-radius: 50%;
           background-image: url(../assets/images/tx3.png);
           background-size: 100% 100%;
+          img {
+            display: flex;
+            justify-content: center; /* 水平居中 */
+            align-items: center;
+            width: 90px;
+            height: 90px;
+          }
         }
         .User_txt {
           display: flex;
@@ -314,7 +336,7 @@ export default {
                 margin-left: 12px;
                 color: var(--main-color);
                 font-size: 16px;
-                cursor:pointer;
+                cursor: pointer;
                 &:hover {
                   color: var(--main-color-hover);
                 }
@@ -487,7 +509,7 @@ export default {
               flex: 1;
               margin-right: 20px;
             }
-            &:hover{
+            &:hover {
               color: var(--main-color-hover);
             }
           }

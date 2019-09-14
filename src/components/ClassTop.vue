@@ -1,11 +1,5 @@
 <template>
-  <!-- <div class="classTop" :style="{backgroundImage:`url(${imgAddress(classinfo.classImgSrc)})`}" :key="classinfo.classImgSrc">
-    <div>
-      <span class="className">{{classinfo.className}}</span>
-      <div class="classIntro">{{classinfo.classDesc}}</div>
-    </div>
-  </div>-->
-  <div class="classTop" style="backgroundImage:url(/images/crbg10.jpg)">
+  <div class="classTop" :style="{backgroundImage:`url(${imgAddress(classinfo.classImgSrc)})`}" :key="classinfo.classImgSrc">
     <div>
       <span class="className">{{classinfo.className}}</span>
       <div class="classIntro">{{classinfo.classDesc}}</div>
