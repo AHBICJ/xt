@@ -1,5 +1,5 @@
 <template>
-  <div class="Share">
+  <div :class="[{'broadPadding':showShareDetail},'Share']">
     <!-- 格子布局 左侧头像 -->
     <div class="shareLeft">
       <el-avatar class="avatar" :size="40" :src="avatar"></el-avatar>
@@ -185,7 +185,7 @@ export default {
   overflow: hidden;
   display: grid;
   grid-template-columns: 60px auto;
-  .shareLeft{
+  .shareLeft {
     padding-top: 2px;
   }
   .shareRight {
@@ -228,5 +228,8 @@ export default {
       text-align: right;
     }
   }
+}
+.broadPadding {
+  padding: 20px;
 }
 </style>
