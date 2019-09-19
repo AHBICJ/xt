@@ -121,3 +121,10 @@ export function get_homeworklist(data) {
     params: data
   })
 }
+export function get_aboutme(data) {
+  return request({
+    url: '/api/aboutme',
+    method: 'get',
+    params: data
+  })
+}

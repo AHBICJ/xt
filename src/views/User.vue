@@ -5,10 +5,10 @@
       <div class="left">
         <div class="top">
           <div class="User_tx">
-            <!-- <img :src="`/images/` + user.photo" alt /> -->
+            <img :src="`/images/` + user.photo" alt />
           </div>
           <div class="User_txt">
-            <h1>林津民</h1>
+            <h1>{{user.name}}</h1>
             <div class="User_tag">
               <i class="el-icon-plus"></i> 热爱学习
             </div>
@@ -190,6 +190,7 @@
 
 <script>
 import NavBar from "@/components/NavBar.vue";
+import { get_aboutme } from "@/api/toGet";
 export default {
   data() {
     return {
@@ -198,12 +199,17 @@ export default {
         isClassroom: false,
         collapsed: false,
         cityId: 12,
-        shortTilte: false,
+        shortTilte: false
         // user: this.$store.state.user
       },
       imageUrl: "",
-      activeName: "first"
+      activeName: "first",
+      user: this.$store.state.user,
+      my:{}
     };
+  },
+  created() {
+    this.getUser(this.$route.params.id);
   },
   methods: {
     handleAvatarSuccess(res, file) {
@@ -220,7 +226,14 @@ export default {
         this.$message.error("上传头像图片大小不能超过 2MB!");
       }
       return isJPG && isLt2M;
-    }
+    },
+    getUser() {
+      get_aboutme({user_id: this.user.id}).then(res => {
+        this.my = res.data;
+        // this.teacher = res.data.teacher;
+        // this.totalPage = res.totalpage;
+      });
+    },
   },
   components: {
     NavBar
