@@ -1,169 +1,300 @@
 <template>
-  <div class="taskall_big">
-    <div class="content">
-      <div class="right">
-        <taskcard v-for="task in tasks" :task="task" :key="task.id" />
-      </div>
-      <div class="left">
-        <div class="ClassroomLeft">
-          <div class="messageBox" v-if="user.role=='admin'||user.role=='teacher'">
-            <p class="title" v-if="user.role=='admin'||user.role=='teacher'">添加任务</p>
-            <p class="title" v-else>消息提示</p>
-            <div class="addtaskBox">
-              <el-row>
-                <el-button type="warning" class="addtask" @click="dialogVisible = true">
-                  <i class="el-icon-plus"></i>
-                  添加新任务
-                </el-button>
-              </el-row>
-            </div>
+  <div class="task_all">
+    <div class="left">
+      <div class="ClassroomLeft">
+        <div class="messageBox" v-if="user.role!='student'">
+          <div class="addtaskBox">
+            <el-button type="primary" class="addtask" @click="showCreateDialog = true">
+              <i class="el-icon-plus"></i>
+              添加新任务
+            </el-button>
           </div>
-          <div class="messageBox">
-            <p class="title">专题任务</p>
-            <router-link class="mylink" to>台州美食</router-link>
-            <router-link class="mylink" to>台州美食</router-link>
+          <div class="addTopicBox">
+            <el-button type="primary" class="addtopic" @click="showCreateTopic = true">
+              <i class="el-icon-plus"></i>
+              添加新专题
+            </el-button>
           </div>
         </div>
-      </div>
-
-      <el-dialog title="任务" :visible.sync="dialogVisible">
-        <div class="create">
-          <p>
-            日期 : 2019/8/25
-            <span>对象： 所有学生</span>
-          </p>
-          <el-form ref="form" :model="form" label-width="100px" class="myform">
-            <el-form-item label="任务标题">
-              <el-input v-model="form.title"></el-input>
-            </el-form-item>
-            <el-form-item label="任务介绍">
-              <el-input type="textarea" v-model="form.intro"></el-input>
-            </el-form-item>
-
-            <div class="myrow">
-              <el-form-item label="字数限制">
-                <el-input v-model="form.number"></el-input>
-              </el-form-item>
-              <el-form-item label="截至时间">
-                <el-date-picker
-                  type="date"
-                  placeholder="截至时间"
-                  v-model="form.date"
-                  style="width: 100%;"
-                  value-format="yyyy-M-d h:m:s"
-                ></el-date-picker>
-              </el-form-item>
-            </div>
-            <div class="myrow">
-              <el-upload
-                class="upload-demo"
-                action="http://192.168.123.182:5000/upload"
-                multiple
-                :limit="3"
-                :file-list="fileList"
-                :on-success="getimg"
-                list-type="picture"
-              >
-                <el-button size="small" type="primary" class="mybutton ml35">
-                  <i class="el-icon-plus"></i>
-                </el-button>
-              </el-upload>
-              <el-button size="small" type="primary" @click="flag1=!flag1" class="mybutton">
-                <i class="el-icon-video-play"></i>
-              </el-button>
-              <el-collapse-transition>
-                <div v-show="flag1">
-                  <el-input v-model="form.video"></el-input>
+        <div class="messageBox">
+          <el-collapse-transition>
+            <div class="createTopicDialog" v-if="showCreateTopic && user.role!='student'">
+              <p class="createTopicTitle">新专题名称：</p>
+              <div class="myrow">
+                <el-input v-model="newTopicName" placeholder="输入新专题名称" />
+                <div class="buttonBox">
+                  <el-button
+                    type="success"
+                    icon="el-icon-check"
+                    size="mini"
+                    circle
+                    @click="addTopic(newTopicName)"
+                  />
                 </div>
-              </el-collapse-transition>
+                <div class="buttonBox">
+                  <el-button
+                    type="danger"
+                    icon="el-icon-close"
+                    size="mini"
+                    circle
+                    @click="showCreateTopic=false"
+                  />
+                </div>
+              </div>
             </div>
-          </el-form>
+          </el-collapse-transition>
+          <p class="title">专题任务</p>
+          <p
+            class="mylink"
+            :class="{active:currentTopicId==topic.id}"
+            v-for="topic in topics"
+            :key="topic.name"
+            @click="setTopic(topic.id)"
+          >{{topic.id==-1?"全部主题":topic.name}}</p>
         </div>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click.native="submit_task">确 定</el-button>
-        </span>
-      </el-dialog>
+      </div>
+    </div>
+
+    <div class="right">
+      <el-collapse-transition>
+        <!-- 创建任务 -->
+        <div class="CreateDialog" v-if="showCreateDialog && user.role!='student'">
+          <!-- 输入框 -->
+          <div class="formItem">
+            <p class="taskTitle nomargintop">任务标题：</p>
+            <el-input v-model="form.taskTilte" placeholder="请输入任务标题" />
+          </div>
+          <div class="formItem">
+            <p class="taskTitle">任务说明：</p>
+            <el-input type="textarea" :rows="5" placeholder="请输入任务说明" v-model="form.taskDetail" />
+          </div>
+          <div class="formItem">
+            <div class="inlineFormItem marginRight20Item">
+              <p class="taskTitle">选择分类：</p>
+              <el-select v-model="form.topicId" allow-create placeholder="请选择任务分类">
+                <el-option
+                  v-for="topic in topics"
+                  :key="topic.id"
+                  :label="topic.name"
+                  :value="topic.id"
+                ></el-option>
+              </el-select>
+            </div>
+            <div class="inlineFormItem">
+              <p class="taskTitle">起止时间：</p>
+              <el-date-picker
+                v-model="form.time"
+                type="datetimerange"
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                value-format="yyyy-MM-dd HH:mm:ss"
+              ></el-date-picker>
+            </div>
+          </div>
+          <div class="formItem">
+            <p class="taskTitle">分享影音：</p>
+            <el-upload
+              :action="upload_api"
+              list-type="picture-card"
+              :file-list="form.picsToShow"
+              :on-success="handleSuccess"
+              :on-remove="handleRemove"
+              class="upload-content"
+            >
+              <i class="el-icon-plus" />
+            </el-upload>
+          </div>
+          <div class="formItem">
+            <p class="taskTitle">分享链接：</p>
+            <div class="urls">
+              <div class="urlItem" v-for="(url,idx) in form.urls" :key="idx">
+                <div class="urlItemLeft">
+                  <el-input v-model="form.urls[idx].url"></el-input>
+                </div>
+                <div class="urlItemRight">
+                  <el-button
+                    type="danger"
+                    icon="el-icon-minus"
+                    size="mini"
+                    circle
+                    @click="removeUrl(idx)"
+                  />
+                </div>
+              </div>
+              <div class="urlItem">
+                <div class="urlItemRight">
+                  <el-button type="primary" icon="el-icon-plus" size="mini" circle @click="addUrl" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="footer">
+            <el-button @click="showCreateDialog = false">取 消</el-button>
+            <el-button type="primary" @click.native="submitTask">确 定</el-button>
+          </div>
+        </div>
+      </el-collapse-transition>
+      <div
+        v-if="taskNum==0 && topics.length==1 && currentTopicId==-1"
+        class="nothingHere"
+      >使用左侧的按钮创建专题活动吧</div>
+      <task-group
+        v-for="topic in whatToDisplay"
+        :topic="topic"
+        :key="`${currentTopicId}${topic.name}${topic.tasks.length}`"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import taskcard from "@/components/TaskCard.vue";
-import { create_task } from "@/api/toPost.js";
+import TaskGroup from "@/components/TaskGroup.vue";
+import { create_task, createTopic } from "@/api/toPost";
 import { room_tasks } from "@/api/toGet";
 export default {
   data() {
     return {
-      dialogVisible: false,
-      form: {
-        title: "",
-        date: "",
-        intro: "",
-        number: "",
-        video: "",
-        picimg: ""
-      },
-      picList: [],
-      fileList: [],
-      flag1: false,
-      dialogCreate: false,
-      tasks: [],
       user: this.$store.state.user,
-      room_id: 1,
-      //       classinfo: {
-      //   className: "",
-      //   classDesc: "",
-      //   classImgSrc: ""
-      // }
+      currentTopicId: -1,
+      topics: [],
+      taskNum: 0,
+      showCreateDialog: false,
+      showCreateTopic: false,
+      newTopicName: "",
+      form: {
+        taskTitle: "",
+        taskDetail: "",
+        topicId: this.currentTopicId,
+        time: [],
+        pics: [],
+        picsToShow: [],
+        urls: []
+      },
+      upload_api: process.env.VUE_APP_API + "/upload"
     };
   },
-  methods: {
-    getimg(response) {
-      this.form.picimg = response.data;
-      this.picList.push(response.data[0]);
-    },
-    submit_task() {
-      let datas = {
-        room_id: 1,
-        title: this.form.title,
-        date: this.form.date,
-        intro: this.form.intro,
-        number: this.form.number,
-        video: this.form.video,
-        picimg: JSON.stringify(this.picList)
-      };
-      create_task(datas)
-        .then(res => {
-          res.data.photo = JSON.parse(res.data.photo);
-          this.tasks.push(res.data);
-        })
-        .catch(() => {});
-      this.dialogVisible = false;
-    },
-    //上面是提交，下面是获取
-    get_tasks(id) {
-      room_tasks({ room_id: id })
-        .then(res => {
-          this.tasks = res.data;
-          for (var i = 0; i < this.tasks.length; i++)
-            this.tasks[i].photo = JSON.parse(this.tasks[i].photo);
-        })
-        .catch(err => {
-          this.$message({
-            message: err.message,
-            type: "error"
-          });
-        });
+  computed: {
+    whatToDisplay: function() {
+      if (this.currentTopicId == -1) return this.topics;
+      var res = [];
+      this.topics.forEach(topic => {
+        if (topic.id == this.currentTopicId) res.push(topic);
+      });
+      return res;
     }
   },
-  // computed:{
-  //   myrole(){
-  //     return this.$store.state.user
-  //   }
-  // },
+  methods: {
+    get_tasks(id) {
+      room_tasks({ room_id: id, task_type: "task" })
+        .then(res => {
+          this.taskNum = 0;
+          this.topics = [
+            {
+              id: -1,
+              name: "默认主题",
+              room_id: id,
+              tasks: res.data.default
+            },
+            ...res.data.topics
+          ];
+          this.topics.forEach(topic => {
+            topic.tasks.forEach(task => {
+              this.taskNum++;
+              task.photo = JSON.parse(task.photo);
+              task.link = JSON.parse(task.link);
+            });
+          });
+        })
+        .catch(() => {});
+    },
+    submitTask() {
+      let datas = {
+        room_id: this.$route.params.id,
+        task_type: "task",
+        title: this.form.taskTitle,
+        intro: this.form.taskDetail,
+        picimg: JSON.stringify(this.form.pics),
+        link: JSON.stringify(this.form.urls),
+        star_time: this.form.time[0],
+        end_time: this.form.time[1]
+      };
+      if (this.form.topicId != -1) datas.topic_id = this.form.topicId;
+      create_task(datas)
+        .then(res => {
+          this.showCreateDialog = false;
+          var task = res.data;
+          task.photo = JSON.parse(task.photo);
+          task.link = JSON.parse(task.link);
+          this.pushTask(task);
+          this.form = {
+            taskTitle: "",
+            taskDetail: "",
+            topicId: this.currentTopicId,
+            time: [],
+            pics: [],
+            picsToShow: [],
+            urls: []
+          };
+        })
+        .catch(error => {
+          this.$message({
+            message: error.message + ",请检查表格内容后重试",
+            type: "error",
+            duration: 2000
+          });
+        });
+    },
+    removeUrl(idx) {
+      this.form.urls.splice(idx, 1);
+    },
+    addUrl() {
+      this.form.urls.push({ title: "网页链接", url: "https://" });
+    },
+    handleSuccess(res, file) {
+      this.form.pics.push({ name: file.name, url: res.data[0] });
+    },
+    handleRemove(file) {
+      this.form.pics.splice(this.form.pics.indexOf(file.name), 1);
+    },
+    setTopic(id) {
+      this.currentTopicId = id;
+      this.form.topicId = id;
+    },
+    addTopic(topicName) {
+      let datas = {
+        room_id: this.$route.params.id,
+        name: topicName
+      };
+      createTopic(datas)
+        .then(res => {
+          this.topics.push(res.data);
+          this.showCreateTopic = false;
+          this.topicName = "";
+          this.currentTopicId = res.data.id;
+        })
+        .catch(error => {
+          this.$message({
+            message: error.message + ",请检查表格内容后重试",
+            type: "error",
+            duration: 2000
+          });
+        });
+    },
+    pushTask(task) {
+      if (task.topic_id == null) {
+        this.topics[0].tasks.unshift(task);
+        return;
+      }
+      this.topics.forEach(topic => {
+        if (topic.id == task.topic_id) {
+          topic.tasks.unshift(task);
+        }
+      });
+    }
+  },
   components: {
-    taskcard
+    TaskGroup
   },
   created() {
     let roomid = this.$route.params.id;
@@ -177,12 +308,7 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-.taskall_big {
-  position: relative;
-  margin: 0 auto;
-  width: 1120px;
-}
-.content {
+.task_all {
   position: relative;
   margin: 0 auto;
   width: 1120px;
@@ -191,71 +317,7 @@ export default {
   grid-template-rows: auto auto;
   grid-template-columns: 250px 850px;
   grid-gap: 20px;
-  // display: flex;
-  // flex-direction: row;
-  // flex-wrap: wrap;
-  // justify-content: flex-start;
-  // margin: 0 auto;
-  // width: 1120px;
-  // margin-top: 50px;
-  .classroomSearchandjoin {
-    height: 40px;
-    border-bottom: 1px solid var(--main-color);
-    justify-content: space-between;
-    margin-bottom: 10px;
-    padding: 0 16px;
-    display: flex;
-    -webkit-flex-direction: row;
-    flex-direction: row;
-    // .classroomSearch {
-    //   color: var(--main-color);
 
-    //   span {
-    //     font-family: "Courier New", Courier, monospace;
-    //     font-size: 22px;
-    //     font-weight: bold;
-    //     line-height: 40px;
-    //     margin-right: 5px;
-    //   }
-    // }
-    .classroomJoin {
-      float: right;
-      color: var(--main-color);
-      .el-button {
-        padding: 10px 16px;
-      }
-    }
-    .create {
-      display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      p {
-        margin-left: 32px;
-        span {
-          color: var(--main-color);
-          margin-left: 10px;
-        }
-      }
-      .myform {
-        margin-top: 25px;
-      }
-      .myrow {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        .mybutton {
-          width: 45px;
-          height: 30px;
-          margin-right: 20px;
-        }
-        // .ml35 {
-        //   margin-left: 35px;
-        // }
-      }
-    }
-  }
   .left {
     grid-area: left;
     .ClassroomLeft {
@@ -273,15 +335,27 @@ export default {
         text-align: left;
         margin-bottom: 20px;
         .title {
-          font-size: 16px;
+          font-size: 17px;
           font-weight: bold;
           margin-bottom: 10px;
         }
         .addtaskBox {
           text-align: center;
           .addtask {
+            width: 100%;
             i {
-              transform: scale(1.4);
+              transform: scale(1.3);
+              padding-right: 10px;
+              margin-left: -10px;
+            }
+          }
+          margin-bottom: 20px;
+        }
+        .addTopicBox {
+          .addtopic {
+            width: 100%;
+            i {
+              transform: scale(1.3);
               padding-right: 10px;
               margin-left: -10px;
             }
@@ -289,23 +363,34 @@ export default {
         }
         .mylink {
           display: block;
-          font-size: 14px;
+          font-size: 15px;
           line-height: 26px;
           white-space: nowrap; /*不换行*/
           text-overflow: ellipsis; /*超出部分文字以...显示*/
+          cursor: pointer;
           color: rgba(0, 0, 0, 0.6);
           &:hover {
             color: rgba(0, 0, 0, 0.9);
           }
         }
-        .checkAll {
-          display: block;
-          text-align: right;
-          color: black;
-          font-size: 14px;
-          line-height: 26px;
+        .active {
+          color: var(--main-color) !important;
           &:hover {
-            color: var(--main-color);
+            color: var(--main-color-hover) !important;
+          }
+        }
+        .createTopicDialog {
+          margin-bottom: 20px;
+          .createTopicTitle {
+            margin: 0px 0 5px;
+            color: #666;
+            font-size: 15px;
+          }
+          .myrow {
+            display: grid;
+            grid-template-columns: auto 35px 35px;
+            align-items: center;
+            justify-items: right;
           }
         }
       }
@@ -313,92 +398,62 @@ export default {
   }
   .right {
     grid-area: right;
-    // display: flex;
-    // flex-direction: column;
-    // flex-wrap: wrap;
-    // justify-content: flex-start;
-    .message {
-      letter-spacing: 0.01785714em;
-      font-family: "Google Sans", Roboto, Arial, sans-serif;
-      font-size: 0.875rem;
-      font-weight: 500;
-      line-height: 1.25rem;
-      color: #3c4043;
-      text-transform: none;
-      border: 0.0625rem solid #dadce0;
-      border-radius: 0.5rem;
-      text-align: left;
-      padding: 25px;
-      .text {
-        font-size: 0.8125rem;
-        font-weight: 400;
-        line-height: 1.25rem;
-        padding: 15px 0;
-        color: rgba(0, 0, 0, 0.549);
-      }
-      .r {
-        float: right;
-        color: black;
-        &:hover {
-          color: var(--main-color);
-        }
-      }
-    }
-    .topic {
-      letter-spacing: 0.01785714em;
-      font-family: "Google Sans", Roboto, Arial, sans-serif;
-      font-size: 0.875rem;
-      font-weight: 500;
-      line-height: 1.25rem;
-      color: #3c4043;
-      text-transform: none;
-      border: 0.0625rem solid #dadce0;
-      border-radius: 0.5rem;
-      text-align: left;
-      padding: 25px;
-      margin-top: 20px;
-      .text {
-        font-size: 0.8125rem;
-        font-weight: 400;
-        line-height: 1.25rem;
-        padding: 10px 0;
-        color: rgba(0, 0, 0, 0.549);
-        cursor: pointer;
-      }
-      .text:hover {
-        color: var(--main-color);
-      }
-    }
-  }
-
-  .create {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    p {
-      margin-left: 32px;
-      span {
-        color: var(--main-color);
-        margin-left: 10px;
-      }
-    }
-
-    .myform {
-      margin-top: 25px;
-    }
-    .myrow {
+    .nothingHere {
+      height: 680px;
+      background-color: #fff;
+      border: 1px solid #dadce0;
+      border-radius: 8px;
+      color: #666;
       display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      .mybutton {
-        width: 45px;
-        height: 30px;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .CreateDialog {
+      background-color: #fff;
+      margin-bottom: 20px;
+      padding: 20px;
+      box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302),
+        0 2px 6px 2px rgba(60, 64, 67, 0.149);
+      border-radius: 8px;
+      overflow: hidden;
+      .formItem {
+        margin-bottom: 20px;
+      }
+      .inlineFormItem {
+        display: inline-block;
+      }
+      .marginRight20Item {
         margin-right: 20px;
       }
-      .ml35 {
-        margin-left: 35px;
+      .taskTitle {
+        margin: 0px 0 5px;
+        color: #666;
+        font-size: 15px;
+      }
+      .nomargintop {
+        margin-top: 0 !important;
+      }
+      .urls {
+        .urlItem {
+          display: grid;
+          grid-template-columns: auto 30px;
+          grid-column-gap: 10px;
+          margin-bottom: 5px;
+          .urlItemLeft {
+            width: 100%;
+            justify-self: start;
+            align-self: center;
+          }
+          .urlItemRight {
+            width: 100%;
+            justify-self: end;
+            align-self: center;
+          }
+        }
+      }
+      .footer {
+        text-align: right;
       }
     }
   }
