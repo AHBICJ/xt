@@ -1,13 +1,13 @@
 <template>
   <div class="picList">
     <!-- 这个是只有一张图的 -->
-    <!-- <div class="tab-item" :style="{backgroundImage: 'url('+cities[currentCityId].items[currentId].imgSrc+')'}"></div> -->
+    <!-- <div class="tab-item" :style="{backgroundImage: 'url('+cities[currentTypeId].items[currentId].imgSrc+')'}"></div> -->
     <!-- 打算每张图都有一个div 然后来做transition -->
     <div class="tab-cont">
       <transition-group>
         <div
           class="tab-item"
-          v-for="(item,idx) in this.cities[currentCityId].items"
+          v-for="(item,idx) in this.cities[currentTypeId].items"
           :key="item.imgSrc"
           v-show="idx==currentId"
           :style="{backgroundImage: 'url('+item.imgSrc+')'}"
@@ -17,13 +17,15 @@
     <div class="tab-bar">
       <div class="title middle">
         <div class="title-txt">
-          <div>{{cities[currentCityId].name}}</div>
+          <div class="title-top" v-on:click="changetype_top()"></div>
+          <div>{{cities[currentTypeId].name}}</div>
+          <div class="title-bottom" v-on:click="changetype_bottom()"></div>
         </div>
       </div>
       <div class="tab-track justify">
         <div
           class="tab-term"
-          v-for="(item,idx) in this.cities[currentCityId].items"
+          v-for="(item,idx) in this.cities[currentTypeId].items"
           :key="idx"
           :class="['t'+(idx+1),{'cur':idx==currentId}]"
           @mouseenter="currentId=idx"
@@ -44,20 +46,20 @@
 export default {
   data() {
     return {
-      currentCityId: 0,
+      currentTypeId: 0,
       currentId: 0,
       // current:
       //   "http://www.ihchina.cn/Uploads/Picture/2019/06/20/s5d0ae2caabc3c.jpg",
       cityLegth: 2,
       cities: [
         {
-          cityidx: 0,
-          name: "绍兴",
+          typeid: 0,
+          name: "风俗民情",
           items: [
             {
               imgSrc:
                 "http://www.ihchina.cn/Uploads/Picture/2019/06/20/s5d0ae2caabc3c.jpg",
-              title: "刘兰芳：从艺60周年回眸",
+              title: "lll",
               link: "http://www.ihchina.cn/character_detail/18817.html"
             },
             {
@@ -93,13 +95,97 @@ export default {
           ]
         },
         {
-          cityid: 1,
-          name: "台州",
+          typeid: 1,
+          name: "古建遗存",
+          items: [
+            {
+              imgSrc:
+                "http://www.ihchina.cn/Uploads/Picture/2019/06/19/s5d09de0f0e2c1.jpg",
+              title: "222",
+              link: "http://www.ihchina.cn/character_detail/18817.html"
+            },
+            {
+              imgSrc:
+                "http://www.ihchina.cn/Uploads/Picture/2019/06/19/s5d09de0f0e2c1.jpg",
+              title: "刘魁立：行走田野 问俗追风",
+              link: "http://www.ihchina.cn/character_detail/18817.html"
+            },
+            {
+              imgSrc:
+                "http://www.ihchina.cn/Uploads/Picture/2019/03/15/s5c8b0c06cdd1d.jpg",
+              title: "刘兰芳：从艺60周年回眸",
+              link: "http://www.ihchina.cn/character_detail/18817.html"
+            },
+            {
+              imgSrc:
+                "http://www.ihchina.cn/Uploads/Picture/2019/03/15/s5c8b0c84ddbdd.jpg",
+              title: "刘兰芳：从艺60周年回眸",
+              link: "http://www.ihchina.cn/character_detail/18817.html"
+            },
+            {
+              imgSrc:
+                "http://www.ihchina.cn/Uploads/Picture/2019/02/20/s5c6d05d8e0d67.jpg",
+              title: "刘兰芳：从艺60周年回眸",
+              link: "http://www.ihchina.cn/character_detail/18817.html"
+            },
+            {
+              imgSrc:
+                "http://www.ihchina.cn/Uploads/Picture/2019/02/20/s5c6d05e3cab99.jpg",
+              title: "刘兰芳：从艺60周年回眸",
+              link: "http://www.ihchina.cn/character_detail/18817.html"
+            }
+          ]
+        },
+        {
+          typeid: 2,
+          name: "传统技艺",
           items: [
             {
               imgSrc:
                 "http://www.ihchina.cn/Uploads/Picture/2019/06/20/s5d0ae2caabc3c.jpg",
+              title: "333",
+              link: "http://www.ihchina.cn/character_detail/18817.html"
+            },
+            {
+              imgSrc:
+                "http://www.ihchina.cn/Uploads/Picture/2019/06/19/s5d09de0f0e2c1.jpg",
+              title: "刘魁立：行走田野 问俗追风",
+              link: "http://www.ihchina.cn/character_detail/18817.html"
+            },
+            {
+              imgSrc:
+                "http://www.ihchina.cn/Uploads/Picture/2019/03/15/s5c8b0c06cdd1d.jpg",
               title: "刘兰芳：从艺60周年回眸",
+              link: "http://www.ihchina.cn/character_detail/18817.html"
+            },
+            {
+              imgSrc:
+                "http://www.ihchina.cn/Uploads/Picture/2019/03/15/s5c8b0c84ddbdd.jpg",
+              title: "刘兰芳：从艺60周年回眸",
+              link: "http://www.ihchina.cn/character_detail/18817.html"
+            },
+            {
+              imgSrc:
+                "http://www.ihchina.cn/Uploads/Picture/2019/02/20/s5c6d05d8e0d67.jpg",
+              title: "刘兰芳：从艺60周年回眸",
+              link: "http://www.ihchina.cn/character_detail/18817.html"
+            },
+            {
+              imgSrc:
+                "http://www.ihchina.cn/Uploads/Picture/2019/02/20/s5c6d05e3cab99.jpg",
+              title: "刘兰芳：从艺60周年回眸",
+              link: "http://www.ihchina.cn/character_detail/18817.html"
+            }
+          ]
+        },
+        {
+          typeid: 3,
+          name: "乡贤名士",
+          items: [
+            {
+              imgSrc:
+                "http://www.ihchina.cn/Uploads/Picture/2019/06/20/s5d0ae2caabc3c.jpg",
+              title: "444",
               link: "http://www.ihchina.cn/character_detail/18817.html"
             },
             {
@@ -143,7 +229,20 @@ export default {
   //     default: () => ({})
   //   }
   // },
-  methods: {}
+  methods: {
+    changetype_top() {
+      this.currentTypeId += 1;
+      if (this.currentTypeId > 3) {
+        this.currentTypeId = 0;
+      }
+    },
+    changetype_bottom() {
+      this.currentTypeId -= 1;
+      if (this.currentTypeId < 0) {
+        this.currentTypeId = 3;
+      }
+    }
+  }
 };
 </script>
 
@@ -167,7 +266,7 @@ a {
       left: 0;
       top: 0;
       bottom: 0;
-      right: 50%;
+      right: 60%;
       background-position: center;
       background-size: cover;
       background-repeat: no-repeat;
@@ -175,7 +274,7 @@ a {
   }
   .tab-bar {
     position: absolute;
-    left: 50%;
+    left: 40%;
     top: 0;
     bottom: 0;
     right: 0;
@@ -190,28 +289,54 @@ a {
         padding: 45px 0px;
         width: 1em;
         font-size: 30px;
+        // font-family: 'Courier New', Courier, monospace;
         line-height: 1;
+        letter-spacing: 5px;
+        .title-top {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          background-position: left;
+          margin: auto;
+          width: 34px;
+          height: 24px;
+          background: url(../assets/images/png11.png) no-repeat;
+          cursor: pointer;
+        }
+        .title-bottom {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          margin: auto;
+          width: 34px;
+          height: 24px;
+          background: url(../assets/images/png11.png) no-repeat;
+          background-position: right;
+          cursor: pointer;
+        }
       }
       // 绍兴 上下两块
-      .title-txt::before,
-      .title-txt::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        margin: auto;
-        width: 34px;
-        height: 24px;
-        background: url(../assets/images/png11.png) no-repeat;
-      }
-      .title-txt::before {
-        top: 0;
-        background-position: left;
-      }
-      .title-txt::after {
-        bottom: 0;
-        background-position: right;
-      }
+      // .title-txt::before,
+      // .title-txt::after {
+      //   content: "";
+      //   position: absolute;
+      //   left: 0;
+      //   right: 0;
+      //   margin: auto;
+      //   width: 34px;
+      //   height: 24px;
+      //   background: url(../assets/images/png11.png) no-repeat;
+      // }
+      // .title-txt::before {
+      //   top: 0;
+      //   background-position: left;
+      // }
+      // .title-txt::after {
+      //   bottom: 0;
+      //   background-position: right;
+      // }
     }
     // ‘绍兴’ 垂直居中
     .middle {
@@ -276,7 +401,7 @@ a {
         border-left: 1px solid #ccc;
       }
       .cur {
-        color:var(--main-color);
+        color: var(--main-color);
         // color: #9a2929;
       }
       .cur::before {
