@@ -15,7 +15,7 @@
         <z-j-map />
       </div>
       <div class="section fp-auto-height">
-        <div style="height:600px;">789</div>
+        <bottombar :options="bottombaroptions" />
       </div>
     </full-page>
   </div>
@@ -32,6 +32,7 @@ import ZJMap from "@/components/ZJMap";
 import "@/styles/fullpage.css";
 import { getLanterns } from "@/api/toGet";
 import threephoto from "@/components/threephoto";
+import bottombar from "@/components/bottombar";
 
 export default {
   data() {
@@ -42,13 +43,16 @@ export default {
         collapsed: false,
         cityid: 0
       },
+      bottombaroptions: {
+        isHome: true
+      },
       cities: [],
       options: {
         // autoScrolling:false,
-        scrollingSpeed: 1000,
+        scrollingSpeed: 1000
       },
       slickOptions: {
-        items:[],
+        items: [],
         autoplay: true,
         arrows: false,
         dots: true,
@@ -82,7 +86,8 @@ export default {
     PicList,
     NavBar,
     ZJMap,
-    threephoto
+    threephoto,
+    bottombar
   }
 };
 </script>
