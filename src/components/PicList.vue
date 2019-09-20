@@ -17,9 +17,19 @@
     <div class="tab-bar">
       <div class="title middle">
         <div class="title-txt">
-          <div class="title-top" v-on:click="changetype_top()"></div>
-          <div>{{cities[currentTypeId].name}}</div>
-          <div class="title-bottom" v-on:click="changetype_bottom()"></div>
+          <div
+            class="title-top"
+            v-on:click="changetype_top()"
+            @mouseenter="hoverClass()"
+            @mouseleave="removeHoverClasss()"
+          ></div>
+          <div class="titleword">{{cities[currentTypeId].name}}</div>
+          <div
+            class="title-bottom"
+            v-on:click="changetype_bottom()"
+            @mouseenter="hoverClass()"
+            @mouseleave="removeHoverClasss()"
+          ></div>
         </div>
       </div>
       <div class="tab-track justify">
@@ -241,6 +251,12 @@ export default {
       if (this.currentTypeId < 0) {
         this.currentTypeId = 3;
       }
+    },
+    hoverClass(event) {
+      this.currentHoverCity = event.target.dataset.city;
+    },
+    removeHoverClasss() {
+      this.currentHoverCity = "";
     }
   }
 };
@@ -292,6 +308,10 @@ a {
         // font-family: 'Courier New', Courier, monospace;
         line-height: 1;
         letter-spacing: 5px;
+
+        .titleword {
+          pointer-events: none;
+        }
         .title-top {
           position: absolute;
           left: 0;
@@ -302,7 +322,14 @@ a {
           width: 34px;
           height: 24px;
           background: url(../assets/images/png11.png) no-repeat;
+          transition: all 0.3s ease-in-out 0s;
           cursor: pointer;
+          &:hover {
+            height: 50px;
+            background: url(../assets/images/png11_hover.png) no-repeat;
+            position: absolute;
+            top: -10px;
+          }
         }
         .title-bottom {
           position: absolute;
@@ -314,7 +341,15 @@ a {
           height: 24px;
           background: url(../assets/images/png11.png) no-repeat;
           background-position: right;
+          transition: all 0.3s ease-in-out 0s;
           cursor: pointer;
+          &:hover {
+            height: 50px;
+            background: url(../assets/images/png11_hover.png) no-repeat;
+            background-position: right;
+            position: absolute;
+            bottom: -20px;
+          }
         }
       }
       // 绍兴 上下两块
