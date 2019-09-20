@@ -222,7 +222,7 @@ export default {
           fill: currentColor;
         }
         &:hover {
-          background-color: var(--main-color-hover);
+          background-color: #f9e5bb;
         }
       }
     }

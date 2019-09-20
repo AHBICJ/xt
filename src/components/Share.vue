@@ -48,9 +48,6 @@
                 </div>
               </div>
               <div class="urlItem">
-                <div class="urlItemLeft">
-                  <el-input v-model="form.currentUrl" />
-                </div>
                 <div class="urlItemRight">
                   <el-button type="primary" icon="el-icon-plus" size="mini" circle @click="addUrl" />
                 </div>
@@ -82,7 +79,6 @@ export default {
       showShareDetail: false,
       form: {
         shareText: "",
-        currentUrl: "",
         // 真正上传和维护的数据
         pics: [],
         // 需要修改和更新的 在获得数据修改这个 加上cdn前缀 之后不用管
@@ -110,7 +106,6 @@ export default {
           this.$emit("shareCreated", res);
           this.showShareDetail = false;
           this.form.shareText = "";
-          this.form.currentUrl = "";
           this.form.pics = [];
           this.form.picsToShow = [];
           this.form.urls = [];
@@ -121,8 +116,7 @@ export default {
       this.form.urls.splice(idx, 1);
     },
     addUrl() {
-      this.form.urls.push({ title: "网页链接", url: this.form.currentUrl });
-      this.form.currentUrl = "";
+      this.form.urls.push({ title: "网页链接", url: "https://" });
     },
     handleSuccess(res, file) {
       this.form.pics.push({ name: file.name, url: res.data[0] });

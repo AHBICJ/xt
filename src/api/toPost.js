@@ -45,3 +45,11 @@ export function postComment(datas){
       data
     })
   }
+
+  export function createTopic(data){
+    return request({
+      url: '/api/topic',
+      method:'post',
+      data
+    })
+  }
