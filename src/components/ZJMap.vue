@@ -506,7 +506,6 @@
       <text class="city_text zhoushan" transform="matrix(1 0 0 1 515 180)">舟山市</text>
     </svg>
     <router-link class="content" :to="cities[currentCity]">
-      <h1 class="city_name">{{place}}</h1>
       <div class="cit_des"></div>
     </router-link>
   </div>
@@ -534,10 +533,6 @@ export default {
     };
   },
   computed: {
-    place() {
-      // return this.cities.currentCity;
-      return "绍兴";
-    }
   },
   methods: {
     addClass: function(event) {
@@ -598,12 +593,12 @@ export default {
     fill: url(#hover) !important;
   }
   .content {
-    height: 750px;
-    width: 540px;
+    height: 800px;
+    width: 600px;
     position: absolute;
     top: 115px;
     left: 57.8%;
-    background-color: rgba(0, 255, 255, 0.8);
+    // background-color: rgba(0, 255, 255, 0.8);
     .city_name {
       font-family: "FZQK";
       font-size: 97px;
