@@ -52,7 +52,14 @@
       </div>
     </div>
 
-    <!-- <div> -->
+    <el-dialog title="影音预览" :visible.sync="showPreview" width="80%" top="10vh">
+      <el-carousel :autoplay="false" arrow="hover" height="680px" ref="previewCarousel">
+        <el-carousel-item v-for="pho in share.photo" :key="pho.name">
+          <img :src="imgAddress(pho.url)"/>
+        </el-carousel-item>
+      </el-carousel>
+    </el-dialog>
+
     <!-- 资源 -->
     <div class="share_content">
       <div class="content_intro" v-if="istask">
@@ -88,8 +95,8 @@
         </el-dialog>
         <!-- means -->
         <div class="meansBox_out">
-          <div class="meansBox" v-for="pho in share.photo" :key="pho.name" @click="dialogShare= true">
-            <div class="means">
+          <div class="meansBox" v-for="(pho,idx) in share.photo" :key="pho.name" @click="handlePreview(idx)">
+            <div href class="means">
               <div class="means_pic" :style="`backgroundImage:url(${imgAddress(pho.url)})`" />
               <div class="means_title">
                 <div class="means_titleword">{{pho.name}}</div>
@@ -98,13 +105,13 @@
           </div>
           <!-- link -->
           <div class="meansBox" v-for="url in share.link" :key="url.link">
-            <a href class="means">
+            <div href class="means">
               <div class="means_pic linkBG" />
               <div class="means_title">
                 <div class="means_titleword">{{url.title}}</div>
                 <div class="means_subtitle">{{url.url}}</div>
               </div>
-            </a>
+            </div>
           </div>
         </div>
       </div>
@@ -117,12 +124,19 @@ import carouselsshare from "@/components/carousels-share.vue";
 export default {
   data() {
     return {
-      dialogShare: false,
+      showPreview: false,
+      initialIndex:0,
     };
   },
   computed: {
     istask() {
       return this.share.task_type == "task";
+    }
+  },
+  methods:{
+    handlePreview(idx){
+      this.showPreview=true;
+      this.$refs.previewCarousel.setActiveItem(idx);
     }
   },
   mixins: [Address],
@@ -132,6 +146,20 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.share_card{
+   .el-carousel__item{
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     img{
+       max-width: 100%;
+       max-height: 100%;
+     }
+  }
+}
+</style>
 <style lang="scss" scoped>
 .share_card {
   background-color: #fff;
@@ -209,7 +237,7 @@ export default {
           fill: currentColor;
         }
         &:hover {
-          background-color: var(--main-color-hover);
+          background-color: #f9e5bb;
         }
       }
     }
@@ -381,14 +409,12 @@ export default {
           width: calc(50% - 12px);
           .means {
             display: flex;
-            flex-direction: row;
             position: relative;
             padding-right: 8px;
             background-color: #fff;
             border: 1px solid #dadce0;
             border-radius: 8px;
             overflow: hidden;
-            //
             flex-grow: 1;
             .linkBG {
               background-image: url(../assets/images/linkBG.svg);
