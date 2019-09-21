@@ -72,7 +72,7 @@
           <stop offset="30%" stop-color="#FFE0B2" />
           <stop offset="80%" stop-color="#FFCC80" />-->
           <stop offset="0%" stop-color="#FFF3E0" />
-          <stop offset="100%" stop-color="#ba9163" />
+          <stop offset="100%" stop-color="#9A8B74" />
         </radialGradient>
         <radialGradient
           spreadMethod="reflect"
