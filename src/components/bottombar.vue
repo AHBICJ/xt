@@ -127,6 +127,7 @@ export default {
       display: grid;
       grid-template-columns: 6fr  4fr;
       .mypadding
+      
       {
         padding-left: 70px;
       }
