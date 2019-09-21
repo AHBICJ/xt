@@ -46,7 +46,7 @@
         </div>
       </div>
       <div class="p-more middle">
-        <a href="/character.html" class="link middle-cont">查看更多</a>
+        <a @click="$router.push({path:'/city/4'})" class="link middle-cont">查看更多</a>
       </div>
     </div>
   </div>
@@ -300,15 +300,16 @@ a {
       bottom: 0;
       left: 13%;
       .title-txt {
-        writing-mode: vertical-lr;
+        // writing-mode: vertical-lr;
         position: relative;
-        padding: 45px 0px;
-        width: 1em;
+        padding: 40px 0px;
+        width: 36px;
+        text-align: center;
         font-size: 30px;
-        // font-family: 'Courier New', Courier, monospace;
-        line-height: 1;
-        letter-spacing: 5px;
-
+        font-family: "Courier New", Courier, monospace;
+        font-weight: bold;
+        // line-height: 1.2;
+        letter-spacing: 0;
         .titleword {
           pointer-events: none;
         }
@@ -475,15 +476,20 @@ a {
       top: 0;
       bottom: 0;
       left: 75%;
-      width: 1em;
+      width: 24px;
+      text-align: center;
       .link {
         position: relative;
         padding: 35px 4px;
         background: url(../assets/images/png14.png);
         font-family: "微软雅黑";
         font-size: 16px;
-        writing-mode: vertical-lr;
+        // writing-mode: vertical-lr;
         line-height: 1;
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 16px;
+        letter-spacing: 0;
       }
       // 更多的上下两块背景
       .link::before {
@@ -504,6 +510,9 @@ a {
         right: 0;
         bottom: 0;
         background-position: right;
+      }
+      a {
+        cursor: pointer;
       }
     }
     // 更多的竖线
