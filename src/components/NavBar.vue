@@ -52,7 +52,7 @@
           <i class="el-icon-message-solid my-nav-message"></i>
           <div class="loginGroup" v-if="!login">
             <router-link to="/login" class="btnLogin">登&nbsp;&nbsp;录</router-link>
-            <router-link to="/register" class="btnRegister">注&nbsp;&nbsp;册</router-link>
+            <router-link to="/login" class="btnRegister">注&nbsp;&nbsp;册</router-link>
           </div>
           <div class="loginedGroup" v-else>
             <el-dropdown trigger="click">

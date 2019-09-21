@@ -68,6 +68,8 @@
 
 <script>
 import { checkCode } from "@/api/login";
+import { register } from "@/api/login";
+import md5 from 'js-md5';
 export default {
   name: "register",
   components: {},
@@ -157,29 +159,21 @@ export default {
   props: ['vcodeSrc'],
   methods: {
     handleRegister() {
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
-          // if (this.isTeacher) {
-          //   this.loginForm.occupation = 2
-          // }
-          this.fullscreenLoading = true;
-          this.$store
-            .dispatch("Register", this.loginForm)
-            .then(res => {
-              this.fullscreenLoading = false;
-              if (res.data.code === 0) {
-                // this.$router.push({ path: '/user/index' })
-                // 为了重置路由
-                location.reload();
-              } else {
-                this.$message.warning(res.data.msg);
-              }
-            })
-            .catch(() => {
-              this.fullscreenLoading = false;
-            });
-        }
-      });
+      let datas = {
+        account: this.loginForm.username,
+        name: this.loginForm.username,
+        passwd : md5(this.loginForm.password) ,
+        repasswd:md5(this.loginForm.password)
+      };
+      register(datas) 
+        .then(() => {
+          this.$message("注册成功！！");
+        })
+        .catch(() => {});
+    
+
+     
+      
     }
   }
 };

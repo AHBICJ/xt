@@ -61,14 +61,14 @@ export default {
   background: rgba(0, 0, 0, 0.2);
   position: relative;
   height: 100%;
-  .login-info {
-    // 左侧登录信息
-    .logo {
-      // 左侧logo
-      .a {
-      } // 路由渲染后的链接
-    }
-  }
+  // .login-info {
+  //   // 左侧登录信息
+  //   .logo {
+  //     // 左侧logo
+  //     .a {
+  //     } // 路由渲染后的链接
+  //   }
+  // }
   .login-border {
     // 登录面板
     padding: 30px 50px 25px 50px;
