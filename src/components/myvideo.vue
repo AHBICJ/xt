@@ -106,20 +106,11 @@ export default {
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   // background-color: bisque;
-<<<<<<< HEAD
-  padding-top: 50px;
-  padding-left: 20px;
-  height: 700px;
-  // padding: 10% 0 10% 3%;
-  grid-row-gap: 30px;
-  grid-column-gap: 30px;
-=======
   margin-top: 50px;
   height: 700px;
   padding: 0 0 0 3%;
   grid-row-gap: 20px;
   grid-column-gap: 20px;
->>>>>>> really-xxh
   .item {
     grid-column-start: 2;
     grid-column-end: 4;

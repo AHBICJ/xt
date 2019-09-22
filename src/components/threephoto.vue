@@ -109,11 +109,7 @@ export default {
     // align-items: center; //子元素垂直居中
     flex-direction: column-reverse;
     text-align: left;
-<<<<<<< HEAD
-    .bottom500 {
-=======
     .bottom50 {
->>>>>>> really-xxh
       height: 300px;
       margin-bottom: 50px;
     }

@@ -2,7 +2,7 @@
   <div class="right">
     <div class="mt150">
       <div v-for="item in photo " :key="item">
-        <img :src="item" alt />
+        <router-link :to="'/article/774 '"><img :src="item" alt /> </router-link >
       </div>
     </div>
     <div class="mt50">
