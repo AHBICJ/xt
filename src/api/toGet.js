@@ -128,3 +128,11 @@ export function get_aboutme(data) {
     params: data
   })
 }
+
+export function myTask(data){
+  return request({
+    url:"/api/mytask",
+    method:"get",
+    params:data
+  })
+}
