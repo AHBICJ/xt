@@ -62,7 +62,7 @@
           <!-- 输入框 -->
           <div class="formItem">
             <p class="taskTitle nomargintop">任务标题：</p>
-            <el-input v-model="form.taskTilte" placeholder="请输入任务标题" />
+            <el-input v-model="form.taskTitle" placeholder="请输入任务标题" />
           </div>
           <div class="formItem">
             <p class="taskTitle">任务说明：</p>

@@ -88,7 +88,6 @@
 </template>
 
 <script>
-// import TaskdetailLeft from "@/components/TaskdetailLeft.vue";
 import { task_detail } from "@/api/toGet";
 import { submit_home } from "@/api/toPost";
 import Address from "@/mixin/Address";
@@ -147,7 +146,6 @@ export default {
     }
   },
   components: {
-    // TaskdetailLeft
   }
 };
 </script>
