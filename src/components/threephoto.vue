@@ -3,9 +3,19 @@
     <div class="content">
       <div class="left">
         <div>
-          <h2>强大的展示功能</h2>
-          <p>在本次乡土文化网站当中，我们采用多种展示功能，包括课件，视频和图集，确保给阅读者带来良好的阅读体验，增加美感。</p>
-          <ul>
+          <div v-show="flag1">
+            <h2>精美的课件</h2>
+            <p>在本网站中我还提供了多而精美的课件，供老师自由的挑选和采用，方便老师的教学，减轻老师的教学压力。</p>
+          </div>
+          <div v-show="flag2">
+            <h2>众多的视频</h2>
+            <p>为了能让读者更好的了解乡土文化风情，我们提供了种类繁多的欣赏视频供浏览者观看，方便浏览者的学习</p>
+          </div>
+           <div v-show="flag3">
+            <h2>众多的视频</h2>
+            <p>为了能让读者更好的了解乡土文化风情，我们提供了种类繁多的欣赏视频供浏览者观看，方便浏览者的学习</p>
+          </div>
+          <ul class="bottom500">
             <li
               class="liMenu"
               :class="idx==index?'hover':''"
@@ -16,21 +26,23 @@
           </ul>
         </div>
       </div>
-      <transition>
-        <div v-show="flag1">
-          <ppt />
-        </div>
-      </transition>
-      <transition>
-        <div v-show="flag2">
-          <myvideo />
-        </div>
-      </transition>
-      <transition>
-        <div v-show="flag3">
-          <atlas />
-        </div>
-      </transition>
+      <div>
+        <transition>
+          <div v-show="flag1">
+            <ppt />
+          </div>
+        </transition>
+        <transition>
+          <div v-show="flag2">
+            <myvideo />
+          </div>
+        </transition>
+        <transition>
+          <div v-show="flag3">
+            <atlas />
+          </div>
+        </transition>
+      </div>
     </div>
   </div>
 </template>
@@ -86,16 +98,21 @@ export default {
 }
 .content {
   width: 1200px;
-  height: 80%;
+  height: 775px;
   margin: auto auto;
   display: grid;
   grid-template-columns: 3fr 7fr;
   .left {
     display: flex;
-    flex-direction: column;
-    justify-content: center; //子元素水平居中
-    align-items: center; //子元素垂直居中
+    // flex-direction: column;
+    // justify-content: center; //子元素水平居中
+    // align-items: center; //子元素垂直居中
+    flex-direction: column-reverse;
     text-align: left;
+    .bottom500 {
+      height: 300px;
+      margin-bottom: 50px;
+    }
     li {
       float: left;
       font-size: 16px;

@@ -69,7 +69,7 @@ export default {
           }
         ],
         poster:
-          "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1568179940&di=e9e452cf1f0cfe1fc708c0463e0b3f13&imgtype=jpg&er=1&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180116%2F3bf016cc43114677a3f93bbb95bc1dea.jpeg", //你的封面地址
+          "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569124330789&di=fb9dbd058c6e9b5163330433ece65b1c&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180116%2F3bf016cc43114677a3f93bbb95bc1dea.jpeg", //你的封面地址
         // width: document.documentElement.clientWidth,
         notSupportedMessage: "此视频暂无法播放，请稍后再试", //允许覆盖Video.js无法播放媒体源时显示的默认信息。
         controlBar: {
@@ -101,10 +101,12 @@ export default {
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   // background-color: bisque;
-  height: 80%;
-  padding: 10% 0 10% 3%;
-  grid-row-gap: 20px;
-  grid-column-gap: 20px;
+  padding-top: 50px;
+  padding-left: 20px;
+  height: 700px;
+  // padding: 10% 0 10% 3%;
+  grid-row-gap: 30px;
+  grid-column-gap: 30px;
   .item {
     grid-column-start: 2;
     grid-column-end: 4;
