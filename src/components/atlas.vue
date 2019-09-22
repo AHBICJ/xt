@@ -1,8 +1,13 @@
 <template>
   <div class="right">
-    <el-carousel :interval="5000" arrow="always" height="500px" >
+    <el-carousel :interval="5000" arrow="always" height="500px">
       <el-carousel-item v-for="item in photo" :key="item">
-        <img :src="item" alt />
+        <!-- <img :src="item" alt /> -->
+        <div
+          ref="height"
+          class="imgbox-city"
+          :style="{backgroundImage:'url('+$imgaddress(item)+')'}"
+        ></div>
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -29,6 +34,13 @@ export default {
 .right {
   padding: 15% 0 10% 3%;
   margin: 0 auto;
+  .imgbox-city {
+    height: 100%;
+    overflow: hidden;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center center !important;
+  }
 }
 </style>
 
