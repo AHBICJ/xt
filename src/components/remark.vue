@@ -151,6 +151,16 @@ export default {
     // haveHomeork() {
     //   return this.homeworkinfo.student == "";
     // }
+  },
+  watch:{
+    homeworkinfo:{
+      handler:function(){
+        
+        this.grade = this.homeworkinfo.grade || '';
+        this.remark = this.homeworkinfo.comment || "";
+      },
+      deep:true
+    }
   }
 };
 </script>
