@@ -67,40 +67,38 @@ export default {
           name: "风俗民情",
           items: [
             {
-              imgSrc:
-                "http://www.ihchina.cn/Uploads/Picture/2019/06/20/s5d0ae2caabc3c.jpg",
-              title: "lll",
-              link: "http://www.ihchina.cn/character_detail/18817.html"
+              imgSrc: "images/piclistimg/sxms.jpg",
+              title: "绍兴：绍兴美食",
+              link: "/article/770"
+            },
+            {
+              imgSrc: "images/piclistimg/hsldsh.jpg",
+              title: "杭州：河上龙灯盛会",
+              link: "article/245"
             },
             {
               imgSrc:
-                "http://www.ihchina.cn/Uploads/Picture/2019/06/19/s5d09de0f0e2c1.jpg",
-              title: "刘魁立：行走田野 问俗追风",
-              link: "http://www.ihchina.cn/character_detail/18817.html"
+                "images/piclistimg/nblzcs.jpg",
+              title: "宁波：宁波梁祝传说",
+              link: "article/700"
             },
             {
               imgSrc:
-                "http://www.ihchina.cn/Uploads/Picture/2019/03/15/s5c8b0c06cdd1d.jpg",
-              title: "张树萍：初心不改，戏大于天",
-              link: "http://www.ihchina.cn/character_detail/18817.html"
+                "images/piclistimg/tsdzmg.jpg",
+              title: "温州：泰顺畲族民歌",
+              link: "article/464"
             },
             {
               imgSrc:
-                "http://www.ihchina.cn/Uploads/Picture/2019/03/15/s5c8b0c84ddbdd.jpg",
-              title: "姚惠芬：走进威尼斯双年展的中国苏绣大师",
-              link: "http://www.ihchina.cn/character_detail/18817.html"
+                "images/piclistimg/wfzzz.jpg",
+              title: "嘉兴：五芳斋粽子",
+              link: "article/368"
             },
             {
               imgSrc:
-                "http://www.ihchina.cn/Uploads/Picture/2019/02/20/s5c6d05d8e0d67.jpg",
-              title: "尚长荣：“老戏骨”的创新之路",
-              link: "http://www.ihchina.cn/character_detail/18817.html"
-            },
-            {
-              imgSrc:
-                "http://www.ihchina.cn/Uploads/Picture/2019/02/20/s5c6d05e3cab99.jpg",
-              title: "刘锡诚：心无旁骛的民间文学守望者",
-              link: "http://www.ihchina.cn/character_detail/18817.html"
+                "images/piclistimg/dn.jpg",
+              title: "金华：斗牛",
+              link: "article/311"
             }
           ]
         },
@@ -109,40 +107,39 @@ export default {
           name: "古建遗存",
           items: [
             {
-              imgSrc:
-                "http://www.ihchina.cn/Uploads/Picture/2019/06/19/s5d09de0f0e2c1.jpg",
-              title: "222",
-              link: "http://www.ihchina.cn/character_detail/18817.html"
+              imgSrc: "images/piclistimg/sxj.jpg",
+              title: "台州：神仙居",
+              link: "article/818"
             },
             {
               imgSrc:
-                "http://www.ihchina.cn/Uploads/Picture/2019/06/19/s5d09de0f0e2c1.jpg",
-              title: "刘魁立：行走田野 问俗追风",
-              link: "http://www.ihchina.cn/character_detail/18817.html"
+                "images/piclistimg/ylgjj.jpg",
+              title: "舟山：园林古建筑",
+              link: "article/212"
             },
             {
               imgSrc:
-                "http://www.ihchina.cn/Uploads/Picture/2019/03/15/s5c8b0c06cdd1d.jpg",
-              title: "刘兰芳：从艺60周年回眸",
-              link: "http://www.ihchina.cn/character_detail/18817.html"
+                "images/piclistimg/xkgc.jpg",
+              title: "丽水：西坑古村",
+              link: "article/180"
             },
             {
               imgSrc:
-                "http://www.ihchina.cn/Uploads/Picture/2019/03/15/s5c8b0c84ddbdd.jpg",
-              title: "刘兰芳：从艺60周年回眸",
-              link: "http://www.ihchina.cn/character_detail/18817.html"
+                "images/piclistimg/nbdgz.jpg",
+              title: "衢州：廿八都古镇",
+              link: "article/254"
             },
             {
               imgSrc:
-                "http://www.ihchina.cn/Uploads/Picture/2019/02/20/s5c6d05d8e0d67.jpg",
-              title: "刘兰芳：从艺60周年回眸",
-              link: "http://www.ihchina.cn/character_detail/18817.html"
+                "images/piclistimg/lxgl.jpg",
+              title: "鲁迅故里",
+              link: "article/774"
             },
             {
               imgSrc:
-                "http://www.ihchina.cn/Uploads/Picture/2019/02/20/s5c6d05e3cab99.jpg",
-              title: "刘兰芳：从艺60周年回眸",
-              link: "http://www.ihchina.cn/character_detail/18817.html"
+                "images/piclistimg/zgbgc.jpg",
+              title: "金华：诸葛八卦村",
+              link: "article/720"
             }
           ]
         },
@@ -151,40 +148,39 @@ export default {
           name: "传统技艺",
           items: [
             {
-              imgSrc:
-                "http://www.ihchina.cn/Uploads/Picture/2019/06/20/s5d0ae2caabc3c.jpg",
-              title: "333",
-              link: "http://www.ihchina.cn/character_detail/18817.html"
+              imgSrc: "images/piclistimg/casjx.jpg",
+              title: "杭州：淳安三脚戏",
+              link: "article/294"
             },
             {
               imgSrc:
-                "http://www.ihchina.cn/Uploads/Picture/2019/06/19/s5d09de0f0e2c1.jpg",
-              title: "刘魁立：行走田野 问俗追风",
-              link: "http://www.ihchina.cn/character_detail/18817.html"
+                "images/piclistimg/nsgdzzjy.jpg",
+              title: "宁波：宁式糕点制作技艺",
+              link: "article/526"
             },
             {
               imgSrc:
-                "http://www.ihchina.cn/Uploads/Picture/2019/03/15/s5c8b0c06cdd1d.jpg",
-              title: "刘兰芳：从艺60周年回眸",
-              link: "http://www.ihchina.cn/character_detail/18817.html"
+                "images/piclistimg/yjwh.jpg",
+              title: "绍兴：越剧文化",
+              link: "article/776"
             },
             {
               imgSrc:
-                "http://www.ihchina.cn/Uploads/Picture/2019/03/15/s5c8b0c84ddbdd.jpg",
-              title: "刘兰芳：从艺60周年回眸",
-              link: "http://www.ihchina.cn/character_detail/18817.html"
+                "images/piclistimg/oxjy.jpg",
+              title: "温州：瓯绣技艺",
+              link: "article/706"
             },
             {
               imgSrc:
-                "http://www.ihchina.cn/Uploads/Picture/2019/02/20/s5c6d05d8e0d67.jpg",
-              title: "刘兰芳：从艺60周年回眸",
-              link: "http://www.ihchina.cn/character_detail/18817.html"
+                "images/piclistimg/tzlt.jpg",
+              title: "台州：台州乱弹",
+              link: "article/807"
             },
             {
               imgSrc:
-                "http://www.ihchina.cn/Uploads/Picture/2019/02/20/s5c6d05e3cab99.jpg",
-              title: "刘兰芳：从艺60周年回眸",
-              link: "http://www.ihchina.cn/character_detail/18817.html"
+                "images/piclistimg/dshyszjy.jpg",
+              title: "舟山：岱山海盐晒制技艺",
+              link: "article/213"
             }
           ]
         },
@@ -193,40 +189,39 @@ export default {
           name: "乡贤名士",
           items: [
             {
+              imgSrc: "images/piclistimg/lx.jpg",
+              title: "绍兴：中国的民族魂——鲁迅",
+              link: "article/775"
+            },
+            {
               imgSrc:
-                "http://www.ihchina.cn/Uploads/Picture/2019/06/20/s5d0ae2caabc3c.jpg",
-              title: "444",
+                "images/piclistimg/lbw.jpg",
+              title: "温州：神机妙算文成公——刘伯温",
               link: "http://www.ihchina.cn/character_detail/18817.html"
             },
             {
               imgSrc:
-                "http://www.ihchina.cn/Uploads/Picture/2019/06/19/s5d09de0f0e2c1.jpg",
-              title: "刘魁立：行走田野 问俗追风",
-              link: "http://www.ihchina.cn/character_detail/18817.html"
+                "images/piclistimg/ysw.jpg",
+              title: "丽水：江湖诗派诗人——叶绍翁",
+              link: "article/189"
             },
             {
               imgSrc:
-                "http://www.ihchina.cn/Uploads/Picture/2019/03/15/s5c8b0c06cdd1d.jpg",
-              title: "刘兰芳：从艺60周年回眸",
-              link: "http://www.ihchina.cn/character_detail/18817.html"
+                "images/piclistimg/qjg.jpg",
+              title: "台州：抗倭名将——戚继光",
+              link: "article/840"
             },
             {
               imgSrc:
-                "http://www.ihchina.cn/Uploads/Picture/2019/03/15/s5c8b0c84ddbdd.jpg",
-              title: "刘兰芳：从艺60周年回眸",
-              link: "http://www.ihchina.cn/character_detail/18817.html"
+                "images/piclistimg/lbw.jpg",
+              title: "金华：“初唐四杰”——骆宾王",
+              link: "article/722"
             },
             {
               imgSrc:
-                "http://www.ihchina.cn/Uploads/Picture/2019/02/20/s5c6d05d8e0d67.jpg",
-              title: "刘兰芳：从艺60周年回眸",
-              link: "http://www.ihchina.cn/character_detail/18817.html"
-            },
-            {
-              imgSrc:
-                "http://www.ihchina.cn/Uploads/Picture/2019/02/20/s5c6d05e3cab99.jpg",
-              title: "刘兰芳：从艺60周年回眸",
-              link: "http://www.ihchina.cn/character_detail/18817.html"
+                "images/piclistimg/jjs.jpg",
+              title: "宁波：民国政坛——蒋介石",
+              link: "article/703"
             }
           ]
         }
@@ -241,15 +236,15 @@ export default {
   // },
   methods: {
     changetype_top() {
-      this.currentTypeId += 1;
-      if (this.currentTypeId > 3) {
-        this.currentTypeId = 0;
-      }
-    },
-    changetype_bottom() {
       this.currentTypeId -= 1;
       if (this.currentTypeId < 0) {
         this.currentTypeId = 3;
+      }
+    },
+    changetype_bottom() {
+      this.currentTypeId += 1;
+      if (this.currentTypeId > 3) {
+        this.currentTypeId = 0;
       }
     },
     hoverClass(event) {
@@ -271,8 +266,7 @@ a {
   position: relative;
   height: 100%;
   width: 100%;
-  background: url(http://www.ihchina.cn/Public/static/themes/image/temp/img8.jpg)
-    center no-repeat;
+  background: url(../assets/images/piclistbg.jpg) center no-repeat;
   background-size: cover;
   .tab-cont {
     transition: visibility 0.3s, opacity 0.3s, right 0.8s;
