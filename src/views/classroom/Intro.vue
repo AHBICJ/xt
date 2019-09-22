@@ -30,7 +30,8 @@ export default {
       classinfo: {
         className: "",
         classDesc: "",
-        classImgSrc: ""
+        classImgSrc: "",
+        classCode :""
       }
     };
   },
@@ -52,6 +53,7 @@ export default {
           this.classinfo.className = res.data.name;
           this.classinfo.classDesc = res.data.description;
           this.classinfo.classImgSrc = res.data.photo;
+          this.classinfo.classCode = res.data.class_code;
         })
         .catch(()=> {});
     },

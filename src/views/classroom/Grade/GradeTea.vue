@@ -3,44 +3,6 @@
     <h3 class="grade-title">班级信息统计</h3>
     <div class="chart-container">
       <div class="chart">
-        <div class="title">作业完成度</div>
-        <e-chart
-          :path-option="chart1"
-          v-if="dataisready"
-          width="500px"
-          height="300px"
-          :dataset="[]"
-        ></e-chart>
-      </div>
-      <div class="chart">
-        <div class="title">学生作业完成度</div>
-        <e-chart :path-option="chart2" height="350px" width="470px" v-if="dataisready"></e-chart>
-      </div>
-    </div>
-    <div class="scroll-table">
-      <table :style="{width:table_width+'px'}" style="min-width:">
-        <tr>
-          <th class="wid200 fixed">姓名 \ 测验名称</th>
-          <th v-for="(item) in table_head" :key="item.task_name">{{item.task_name}}</th>
-        </tr>
-        <tr v-for=" item in name" :key="item" :item="item">
-          <td class="fixed">
-            <div>
-              <img src="@/assets/images/tx4.png" alt />
-              <span>{{item}}</span>
-            </div>
-          </td>
-          <td
-            v-for="myitem  in table_head"
-            :key="myitem.task_name"
-            :myitem="myitem"
-            v-text="get_score(item,myitem)"
-          ></td>
-        </tr>
-      </table>
-    </div>
-    <div class="chart-container">
-      <div class="chart">
         <div class="title">学生测验曲线</div>
         <el-select v-model="select_stu" placeholder="请选择" style="text-aligin:center;">
           <el-option v-for="item in name" :key="item" :label="item" :value="item"></el-option>
@@ -70,6 +32,45 @@
           width="470px"
           v-if="dataisready"
         ></e-chart>
+      </div>
+    </div>
+    <div class="scroll-table">
+      <table :style="{width:table_width+'px'}" style="min-width:">
+        <tr>
+          <th class="wid200 fixed">姓名 \ 测验名称</th>
+          <th v-for="(item) in table_head" :key="item.task_name">{{item.task_name}}</th>
+        </tr>
+        <tr v-for=" item in name" :key="item" :item="item">
+          <td class="fixed">
+            <div>
+              <img src="@/assets/images/tx4.png" alt />
+              <span>{{item}}</span>
+            </div>
+          </td>
+          <td
+            v-for="myitem  in table_head"
+            :key="myitem.task_name"
+            :myitem="myitem"
+            v-text="get_score(item,myitem)"
+          ></td>
+        </tr>
+      </table>
+    </div>
+    
+    <div class="chart-container">
+      <div class="chart">
+        <div class="title">作业完成度</div>
+        <e-chart
+          :path-option="chart1"
+          v-if="dataisready"
+          width="500px"
+          height="300px"
+          :dataset="[]"
+        ></e-chart>
+      </div>
+      <div class="chart">
+        <div class="title">学生作业完成度</div>
+        <e-chart :path-option="chart2" height="350px" width="470px" v-if="dataisready"></e-chart>
       </div>
     </div>
   </div>
@@ -240,7 +241,9 @@ export default {
         let cnt = 0;
         let num = 0;
         this.name.forEach(filed => {
-          let qwer = this.get_score(item, filed);
+          console.log(item,filed)
+          let qwer = this.get_score(filed, item).trim();
+          // console.log(qwer);
           if (qwer == "未提交") {
             cnt++;
           } else {
@@ -248,6 +251,7 @@ export default {
             cnt++;
           }
         });
+        console.log(num,cnt);
         datass.push((100 * num) / cnt);
       });
       qaq[1][0].data = datass;

@@ -1,7 +1,27 @@
 <template>
-  <div class="classTop" :style="{backgroundImage:`url(${imgAddress(classinfo.classImgSrc)})`}" :key="classinfo.classImgSrc">
+  <div
+    class="classTop"
+    :style="{backgroundImage:`url(${imgAddress(classinfo.classImgSrc)})`}"
+    :key="classinfo.classImgSrc"
+  >
+    <el-dialog title="班级码" :visible.sync="dialogVisible" width="30%">
+      <span style="font-size:48px;display: block; margin: auto;width: 200px;color: var(--main-color);">{{classinfo.classCode}}</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
     <div>
       <span class="className">{{classinfo.className}}</span>
+      <el-dropdown style="float:right">
+        <span class="el-dropdown-link" style="color: white;font-size: 18px;font-weight: bold;">
+          菜单
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item @click.native="dialogVisible=true">班级码</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
       <div class="classIntro">{{classinfo.classDesc}}</div>
     </div>
   </div>
@@ -10,7 +30,9 @@
 import Address from "@/mixin/Address";
 export default {
   data() {
-    return {};
+    return {
+      dialogVisible: false
+    };
   },
   props: {
     classinfo: {
@@ -35,16 +57,16 @@ export default {
   .className {
     color: #fff;
     position: relative;
-    top:10px;
-    left:20px;
+    top: 10px;
+    left: 20px;
     font-size: 36px;
     font-weight: bold;
     line-height: 44px;
   }
   .classIntro {
     position: relative;
-    top:20px;
-    left:20px;
+    top: 20px;
+    left: 20px;
     font-size: 18px;
     line-height: 30px;
     color: #fff;
