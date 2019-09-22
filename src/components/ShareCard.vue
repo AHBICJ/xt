@@ -85,7 +85,7 @@
         <div class="meansBox_out">
           <div
             class="meansBox"
-            v-for="(pho,idx) in share.photo"
+            v-for="(pho,idx) in share_photo"
             :key="pho.name"
             @click="handlePreview(idx)"
           >
@@ -97,7 +97,7 @@
             </div>
           </div>
           <!-- link -->
-          <div class="meansBox" v-for="url in share.link" :key="url.link">
+          <div class="meansBox" v-for="url in share_link" :key="url.link">
             <div href class="means">
               <div class="means_pic linkBG" />
               <div class="means_title">
@@ -133,6 +133,18 @@ export default {
     ownshare() {
       return this.share.user_id == this.user.id;
       // return this.share.username==this.user.name;
+    },
+    share_photo(){
+      if (typeof this.share.photo == 'string'){
+        return JSON.parse(this.share.photo);
+      }
+      return this.share.photo;
+    },
+    share_link(){
+      if (typeof this.share.link == 'string'){
+        return JSON.parse(this.share.link);
+      }
+      return this.share.link;
     }
   },
   methods: {
