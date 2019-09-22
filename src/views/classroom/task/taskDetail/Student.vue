@@ -1,5 +1,12 @@
 <template>
   <div class="taskdetail">
+    <el-dialog title="影音预览" :visible.sync="showPreview" width="80%" top="10vh">
+      <el-carousel :autoplay="false" arrow="hover" height="680px" ref="previewCarousel">
+        <el-carousel-item v-for="pho in share.photo" :key="pho.name">
+          <img :src="imgAddress(pho.url)" />
+        </el-carousel-item>
+      </el-carousel>
+    </el-dialog>
     <!-- 左侧任务详情 -->
     <div class="taskdetailLeft">
       <!-- <taskdetail-left :taskinfo = "taskinfo"/> -->
@@ -34,14 +41,14 @@
             </div>
             <div class="intro_right" v-if="user.role=='student'">
               <div class="turn">
-                <div class="num">{{taskinfo.commit_num}}</div>
-                <div class="word">已上交</div>
+                <div class="word">成绩/状态</div>
+                <div class="num">{{status=='已完成'?homework_info.grade:status}}</div>
               </div>
             </div>
           </div>
           <!-- 资源 -->
-          <div class="content_means">
-            <div class="meansBox_out" v-for="item in  taskinfo.image_address" :key="item">
+          <!-- <div class="content_means">
+            <div class="meansBox_out" v-for="item in  taskinfo.photo" :key="item">
               <div class="meansBox">
                 <a href class="means">
                   <div class="means_pic">
@@ -53,16 +60,67 @@
                 </a>
               </div>
             </div>
+          </div>-->
+          <div class="content_means">
+            <!-- dialog -->
+            <!-- <el-dialog
+              title="分享资源"
+              :visible.sync="dialogShare"
+              width="960px"
+              custom-class="dialogShare"
+            >
+              <carouselsshare :images="share"></carouselsshare>
+            </el-dialog>-->
+            <!-- means -->
+            <div class="meansBox_out">
+              <div
+                class="meansBox"
+                v-for="(pho,idx) in share.photo"
+                :key="pho.name"
+                @click="handlePreview(idx)"
+              >
+                <div href class="means">
+                  <div class="means_pic" :style="`backgroundImage:url(${imgAddress(pho.url)})`" />
+                  <div class="means_title">
+                    <div class="means_titleword">{{pho.name}}</div>
+                  </div>
+                </div>
+              </div>
+              <!-- link -->
+              <div class="meansBox" v-for="url in share.link" :key="url.link">
+                <div href class="means">
+                  <div class="means_pic linkBG" />
+                  <div class="means_title">
+                    <div class="means_titleword">{{url.title}}</div>
+                    <div class="means_subtitle">{{url.url}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-
-        <!-- <div class="homework" v-if="user.role=='student'"> -->
+      </div>
+      <share />
+      <div class="homework" v-if="user.role=='student'">
         <div class="homework">
           <el-form ref="form">
             <p>我的作业</p>
-            <el-input type="textarea" v-model="homework"></el-input>
+            <el-input
+              type="textarea"
+              v-model="homework"
+              :autosize="{ minRows: 3, maxRows: 6}"
+              :disabled="status=='qqwqw已完成'"
+            ></el-input>
           </el-form>
-          <p>字数限制:200</p>
+          <!-- <p>字数限制:200</p> -->
+        </div>
+      </div>
+      <div v-if="user.role=='student'">
+        <div class="homework">
+          <el-form ref="form">
+            <p>老师评语</p>
+            <el-input v-model="homework_info.comment" disabled></el-input>
+          </el-form>
         </div>
       </div>
     </div>
@@ -71,11 +129,13 @@
       <div class="top">
         <div class="myrow">
           <p>你的作业</p>
-          <span>未完成</span>
+          <span>{{status}}</span>
         </div>
         <el-upload
           class="upload-demo"
-          :action="upload_api"
+          :action="uploadAddr"
+          :file-list="homework_photo"
+          :on-remove="handleRemove"
           :on-success="getimg"
         >
           <el-button class="mybuttom">添加附件</el-button>
@@ -88,10 +148,10 @@
 </template>
 
 <script>
-// import TaskdetailLeft from "@/components/TaskdetailLeft.vue";
-import { task_detail } from "@/api/toGet";
+import { task_detail, myTask } from "@/api/toGet";
 import { submit_home } from "@/api/toPost";
 import Address from "@/mixin/Address";
+import Share from "@/components/Share";
 export default {
   data() {
     return {
@@ -100,16 +160,27 @@ export default {
       taskinfo: {},
       picList: [],
       qaq: process.env.VUE_APP_CDN,
-      user: this.$store.state.user,
-      upload_api: process.env.VUE_APP_API + "/upload"
+      status: "",
+      showPreview: false,
+      homework_info: {},
+      homework_photo: [],
+      share: {
+        link: [],
+        photo: []
+      },
+      user: this.$store.state.user
     };
   },
   mixins: [Address],
   created() {
     this.id = this.$route.params.taskid || 1;
-    this.get_task_detail();
+    this.getMyTask();
   },
   methods: {
+    handlePreview(idx) {
+      this.showPreview = true;
+      this.$refs.previewCarousel.setActiveItem(idx);
+    },
     get_task_detail() {
       let datas = { task_id: this.id };
 
@@ -126,8 +197,11 @@ export default {
         });
     },
     //上面是获取，下面是提交
-    getimg(response) {
-      this.picList.push(response.data[0]);
+    getimg(res, file) {
+      this.picList.push({ name: file.name, url: res.data[0] });
+    },
+    handleRemove(file) {
+      this.picList.splice(this.picList.indexOf(file.name), 1);
     },
     submit_homework() {
       let datas = {
@@ -137,17 +211,39 @@ export default {
         image_address: JSON.stringify(this.picList)
       };
       submit_home(datas)
-        .then(() => {
+        .then(res => {
           this.$message({
-            message: "提交成功",
+            message: res.msg,
             type: "success"
           });
         })
-        .catch(() => {});
+        .catch(error => {
+          this.$message({
+            message: error.msg,
+            type: "error"
+          });
+        });
+    },
+    getMyTask() {
+      let datas = {
+        task_id: this.id
+      };
+      myTask(datas).then(res => {
+        this.status = res.status;
+        this.homework_info = res.data.hw;
+        this.taskinfo = res.data.task;
+        this.taskinfo.photo = JSON.parse(this.taskinfo.photo);
+        this.share.photo =
+          this.taskinfo.photo || JSON.parse(this.taskinfo.photo);
+        this.homework = res.data.hw.content || "";
+        this.share.link = JSON.parse(this.taskinfo.link) || [];
+        this.homework_photo =
+          JSON.parse(this.homework_info.image_address) || [];
+      });
     }
   },
   components: {
-    // TaskdetailLeft
+    Share
   }
 };
 </script>
@@ -314,49 +410,53 @@ export default {
           }
         }
         .content_means {
-          margin-top: 16px;
+          padding-bottom: 3px;
           .meansBox_out {
-            margin-right: -24px;
+            margin-right: -12px;
             .meansBox {
               display: inline-block;
               position: relative;
               margin-bottom: 12px;
-              margin-right: 24px;
-              width: calc(50% - 24px);
+              margin-right: 12px;
+              width: calc(50% - 12px);
               .means {
                 display: flex;
-                flex-direction: row;
                 position: relative;
                 padding-right: 8px;
                 background-color: #fff;
                 border: 1px solid #dadce0;
                 border-radius: 8px;
                 overflow: hidden;
-                //
                 flex-grow: 1;
+                .linkBG {
+                  background-image: url(../../../../assets/images/linkBG.svg);
+                }
                 .means_pic {
                   display: flex;
                   align-items: center;
                   justify-content: center;
                   margin-right: 16px;
-                  height: 100px;
+                  height: 70px;
                   overflow: hidden;
-                  width: 150px;
+                  width: 105px;
                   flex-shrink: 0;
                   position: relative;
-                  img {
-                    max-height: 100%;
-                    max-width: 100%;
-                    border: none;
-                  }
+                  background-position: center center;
+                  background-size: cover;
                 }
                 .means_title {
                   overflow: hidden;
                   .means_titleword {
                     letter-spacing: 0.1px;
-                    font-family: "Google Sans", Roboto, Arial, sans-serif;
                     font-size: 16px;
                     line-height: 40px;
+                    color: #3c4043;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                  }
+                  .means_subtitle {
+                    font-size: 16px;
                     color: #3c4043;
                     text-overflow: ellipsis;
                     overflow: hidden;
@@ -429,6 +529,29 @@ export default {
         margin-bottom: 10px;
         margin-left: 0px;
       }
+    }
+  }
+}
+</style>
+<style lang="scss">
+.taskdetail {
+  .el-carousel__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+}
+.el-dropdown-menu__item {
+  a {
+    color: #606266;
+  }
+  &:hover {
+    a {
+      color: #e6c787;
     }
   }
 }

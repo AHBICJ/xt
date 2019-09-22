@@ -112,7 +112,9 @@
         v-model="remark"
         :placeholder="homeworkinfo.comment"
         v-if="homeworkinfo.comment"
-      ></el-input>
+      >
+      
+      </el-input>
       <el-input type="textarea" v-model="remark" placeholder="请输入评语" v-else></el-input>
       <el-button type="warning" class="mybutton" @click="get_mark_score()">完成评价</el-button>
     </div>
@@ -131,6 +133,10 @@ export default {
       user: this.$store.state.user
     };
   },
+  created() {
+    this.remark=this.homeworkinfo.comment,
+    this.grade=this.homeworkinfo.grade
+  },
   props: ["homeworkinfo", "taskinfo"],
   mixins: [Address],
   methods: {
@@ -138,11 +144,12 @@ export default {
       let datas = {
         homework_id: this.homeworkinfo.id,
         grade: this.grade,
-        remark: this.remark
+        comment: this.remark
       };
       mark_score(datas)
         .then(() => {
           this.$message("评价成功");
+          
         })
         .catch(() => {});
     }
@@ -151,6 +158,16 @@ export default {
     // haveHomeork() {
     //   return this.homeworkinfo.student == "";
     // }
+  },
+  watch:{
+    homeworkinfo:{
+      handler:function(){
+        
+        this.grade = this.homeworkinfo.grade || '';
+        this.remark = this.homeworkinfo.comment || "";
+      },
+      deep:true
+    }
   }
 };
 </script>
