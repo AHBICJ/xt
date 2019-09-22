@@ -12,7 +12,7 @@
     <div
       class="card_title"
       :class="{is_task_title:istask}"
-      @click="$router.push({name:'taskdetail',params:{taskid:share.id}})"
+      @click="title_click"
     >
       <!-- <router-link
         :to="{name:'taskdetail',params:{taskid:share.id}}"
@@ -145,6 +145,11 @@ export default {
     handlePreview(idx) {
       this.showPreview = true;
       this.$refs.previewCarousel.setActiveItem(idx);
+    },
+    title_click(){
+      if (this.share.task_type == "task")
+        this.$router.push({name:'taskdetail',params:{taskid:this.share.id}});
+      else return;
     }
   },
   mixins: [Address],
@@ -186,7 +191,8 @@ export default {
   margin-bottom: 20px;
   .is_task_title {
     border-bottom: 1px solid #e0e0e0;
-    padding: 10px 20px !important;
+    padding: 10px 20px !important;    
+    cursor: pointer;
     .task_title_hidden_a {
       bottom: 0;
       left: 0;
@@ -205,7 +211,6 @@ export default {
     height: 50px;
     padding: 10px 20px 0px;
     position: relative;
-    cursor: pointer;
     .title_pic {
       display: flex;
       flex: 0 0 auto;
