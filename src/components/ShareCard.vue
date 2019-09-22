@@ -7,13 +7,8 @@
         </el-carousel-item>
       </el-carousel>
     </el-dialog>
-
     <!-- 标题 -->
-    <div
-      class="card_title"
-      :class="{is_task_title:istask}"
-      @click="title_click"
-    >
+    <div class="card_title" :class="{is_task_title:istask}" @click="title_click">
       <!-- <router-link
         :to="{name:'taskdetail',params:{taskid:share.id}}"
         class="task_title_hidden_a"
@@ -47,8 +42,7 @@
             </span>
           </div>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item v-if="istask">修改任务
-            </el-dropdown-item>
+            <el-dropdown-item v-if="istask" @click.native="$emit('ModTask',share)">修改任务</el-dropdown-item>
             <el-dropdown-item @click.native="RemoveShare">删除{{istask?'任务':'分享'}}</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -146,10 +140,36 @@ export default {
       this.showPreview = true;
       this.$refs.previewCarousel.setActiveItem(idx);
     },
-    title_click(){
+    title_click() {
       if (this.share.task_type == "task")
-        this.$router.push({name:'taskdetail',params:{taskid:this.share.id}});
+        this.$router.push({
+          name: "taskdetail",
+          params: { taskid: this.share.id }
+        });
       else return;
+    },
+    RemoveShare() {
+      this.$confirm(
+        `此操作将永久删除该${this.istask ? "任务" : "分享"}?`,
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }
+      )
+        .then(() => {
+          this.$message({
+            type: "success",
+            message: "删除成功!"
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     }
   },
   mixins: [Address],
@@ -191,7 +211,7 @@ export default {
   margin-bottom: 20px;
   .is_task_title {
     border-bottom: 1px solid #e0e0e0;
-    padding: 10px 20px !important;    
+    padding: 10px 20px !important;
     cursor: pointer;
     .task_title_hidden_a {
       bottom: 0;
