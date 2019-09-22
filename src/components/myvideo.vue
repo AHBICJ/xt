@@ -74,11 +74,7 @@ export default {
           }
         ],
         poster:
-<<<<<<< HEAD
-          "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569124330789&di=fb9dbd058c6e9b5163330433ece65b1c&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180116%2F3bf016cc43114677a3f93bbb95bc1dea.jpeg", //你的封面地址
-=======
           "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569136329286&di=99da994dd7a0047971db4199540f9314&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180116%2F3bf016cc43114677a3f93bbb95bc1dea.jpeg", //你的封面地址
->>>>>>> really-xxh
         // width: document.documentElement.clientWidth,
         notSupportedMessage: "此视频暂无法播放，请稍后再试", //允许覆盖Video.js无法播放媒体源时显示的默认信息。
         controlBar: {
