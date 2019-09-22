@@ -1,16 +1,21 @@
 <template>
   <div class="right">
     <div>
+
+       <router-link :to="'/article/775 '">
       <img
         src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1567585273507&di=15532efd0f67262b41cb25d89fea0519&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fq_mini%2Cc_zoom%2Cw_640%2Fupload%2F20170326%2Fcefe4c71b75949cea5f967a52bcb9535_th.jpeg"
         alt
       />
+      </router-link >
     </div>
     <div>
+      <router-link :to="'/article/775 '">
       <img
         src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1567585306984&di=1519866ebba9b9c5b31e9bd624b485eb&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20171015%2Fc318b1d44a5544938a7c1aeca12f075c.jpeg"
         alt
       />
+      </router-link >
     </div>
     <div>
       <img
