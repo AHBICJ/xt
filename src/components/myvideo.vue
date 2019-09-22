@@ -1,16 +1,21 @@
 <template>
   <div class="right">
     <div>
+
+       <router-link :to="'/article/775 '">
       <img
         src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1567585273507&di=15532efd0f67262b41cb25d89fea0519&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fq_mini%2Cc_zoom%2Cw_640%2Fupload%2F20170326%2Fcefe4c71b75949cea5f967a52bcb9535_th.jpeg"
         alt
       />
+      </router-link >
     </div>
     <div>
+      <router-link :to="'/article/775 '">
       <img
         src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1567585306984&di=1519866ebba9b9c5b31e9bd624b485eb&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20171015%2Fc318b1d44a5544938a7c1aeca12f075c.jpeg"
         alt
       />
+      </router-link >
     </div>
     <div>
       <img
@@ -69,7 +74,11 @@ export default {
           }
         ],
         poster:
+<<<<<<< HEAD
           "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569124330789&di=fb9dbd058c6e9b5163330433ece65b1c&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180116%2F3bf016cc43114677a3f93bbb95bc1dea.jpeg", //你的封面地址
+=======
+          "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569136329286&di=99da994dd7a0047971db4199540f9314&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180116%2F3bf016cc43114677a3f93bbb95bc1dea.jpeg", //你的封面地址
+>>>>>>> really-xxh
         // width: document.documentElement.clientWidth,
         notSupportedMessage: "此视频暂无法播放，请稍后再试", //允许覆盖Video.js无法播放媒体源时显示的默认信息。
         controlBar: {
@@ -101,12 +110,20 @@ export default {
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   // background-color: bisque;
+<<<<<<< HEAD
   padding-top: 50px;
   padding-left: 20px;
   height: 700px;
   // padding: 10% 0 10% 3%;
   grid-row-gap: 30px;
   grid-column-gap: 30px;
+=======
+  margin-top: 50px;
+  height: 700px;
+  padding: 0 0 0 3%;
+  grid-row-gap: 20px;
+  grid-column-gap: 20px;
+>>>>>>> really-xxh
   .item {
     grid-column-start: 2;
     grid-column-end: 4;
