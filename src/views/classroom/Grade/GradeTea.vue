@@ -191,7 +191,7 @@ export default {
       let qaq = this.find_element(this.chart3, "xAxis");
       if (qaq) {
         let qaqs = [];
-        this.taskinfo.forEach(item => qaqs.push(item.task_name));
+        this.gradeinfo[this.select_stu].forEach(item => qaqs.push(item.task));
         // qaqs.push("dasdad");
         qaq[1][0].data = qaqs;
       }
@@ -245,7 +245,7 @@ export default {
         
         this.name.forEach(filed => {
           let qwer = this.get_score(filed, item);
-          console.log(qwer);
+          // console.log(qwer);
           if (qwer == "未提交") {
             cnt++;
           } else {
@@ -256,7 +256,7 @@ export default {
         if (num!=0)datass.push((100 * num) / cnt)
         else datass.push(0);
       });
-      console.log('qaq');
+      // console.log('qaq');
       qaq[1][0].data = datass;
     },
     init_chart2_data() {
