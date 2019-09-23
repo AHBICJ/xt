@@ -77,20 +77,39 @@
             <p class="taskTitle">添加文字：</p>
             <el-input
               type="textarea"
-              v-model="homework"
+              v-model="homework_info.content"
               :autosize="{ minRows: 3}"
-              :disabled="status=='已完成'"
+              :disabled="homework_info.status=='已完成'"
             />
           </div>
           <div class="formItem">
             <p class="taskTitle">添加图片：</p>
-            <el-upload :action="upload_api" list-type="picture-card" class="upload-image">
+            <el-upload
+              ref="image_upload"
+              :action="upload_api"
+              list-type="picture-card"
+              class="upload-image"
+              :file-list="preload.imageList"
+              :on-success="handleSuccess"
+              :on-remove="handleRemove"
+              :disabled="homework_info.status=='已完成'"
+            >
               <i class="el-icon-plus" />
             </el-upload>
           </div>
           <div class="formItem">
             <p class="taskTitle">添加附件：</p>
-            <el-upload class="upload-attch" drag action="upload_api" multiple>
+            <el-upload
+              ref="attch_upload"
+              class="upload-attach"
+              drag
+              :action="upload_api"
+              multiple
+              :file-list="preload.attachList"
+              :on-success="handleAttachSuccess"
+              :on-remove="handleAttachRemove"
+              :disabled="homework_info.status=='已完成'"
+            >
               <i class="el-icon-upload"></i>
               <div class="el-upload__text">
                 将文件拖到此处，或
@@ -100,32 +119,31 @@
           </div>
         </div>
       </div>
-      <div class="feedback">
-        <p>老师评语</p>
-        <el-input v-model="homework_info.comment" disabled />
-      </div>
     </div>
     <!-- 右侧提交 -->
     <div class="taskdetailRight">
-      <div class="top">
-        <div class="myrow">
-          <p>你的作业</p>
+      <div class="task_detail">
+        <div class="myhomework_title">
+          <p>我的任务</p>
         </div>
-        <div class="turn">
-          <div class="word">成绩/状态</div>
-          <div class="num">{{status=='已完成'?homework_info.grade:status}}</div>
+        <div class="finished" v-if="homework_info.status=='已完成'">
+          <p class="word">成绩：</p>
+          <p class="grade">{{homework_info.grade}}</p>
+          <p class="word">教师反馈：</p>
+          <p
+            class="comment"
+          >{{(homework_info.comment==null || homework_infor.comment=="")?"教师还没有评价哦~":homework_info.comment}}</p>
         </div>
-        <el-upload
-          class="upload-demo"
-          :action="uploadAddr"
-          :file-list="homework_photo"
-          :on-remove="handleRemove"
-          :on-success="getimg"
-        >
-          <el-button class="mybuttom">添加附件</el-button>
-        </el-upload>
-
-        <el-button type="primary" class="mybuttom" @click="submit_homework">完成作业</el-button>
+        <div class="assigned" v-else>
+          <p class="word">状态:</p>
+          <p class="status">{{homework_info.status}}</p>
+          <el-button
+            type="primary"
+            class="mybuttom"
+            @click="submit_homework"
+          >{{homework_info.status=='已提交'?'重新提交':'提交任务'}}</el-button>
+          <p class="info">提交任务后记得来看反馈哦~</p>
+        </div>
       </div>
     </div>
   </div>
@@ -143,11 +161,15 @@ export default {
       homework_info: {
         status: "",
         id: "",
-        attch: [],
+        attach: [],
         comment: "",
         content: "",
         grade: "",
         image_address: []
+      },
+      preload: {
+        imageList: [],
+        attachList: []
       },
       upload_api: process.env.VUE_APP_API + "/upload",
       showPreview: false,
@@ -157,7 +179,6 @@ export default {
   mixins: [Address],
   created() {
     this.id = this.$route.params.taskid || 1;
-    // this.get_task_detail();
     this.getMyTask();
   },
   methods: {
@@ -165,55 +186,80 @@ export default {
       this.showPreview = true;
       this.$refs.previewCarousel.setActiveItem(idx);
     },
-    // get_task_detail() {
-    //   let datas = { task_id: this.id };
-    //   task_detail(datas)
-    //     .then(res => {
-    //       this.share = res.data;
-    //       this.share.photo = JSON.parse(this.share.photo);
-    //       this.share.link = JSON.parse(this.share.link);
-    //     })
-    //     .catch(() => {
-    //       this.$message({
-    //         message: "请求错误",
-    //         type: "error"
-    //       });
-    //     });
-    // },
     getMyTask() {
       let datas = { task_id: this.id };
       myTask(datas).then(res => {
-        this.homework_info.status = res.data.status;
+        this.homework_info.status = res.status;
         if (res.status != "未提交") {
           this.homework_info = res.data.hw;
+          this.homework_info.status = res.status;
+          try {            
+            this.preload.imageList =JSON.parse(
+              this.homework_info.image_address
+            );
+            this.homework_info.image_address = JSON.parse(
+              this.homework_info.image_address
+            );
+          } catch {
+            this.homework_info.image_address = [];
+            this.preload.imageList =[];
+          }
+          try {
+            this.preload.attachList = JSON.parse(this.homework_info.attach);
+            this.homework_info.attach = JSON.parse(this.homework_info.attach);
+          } catch {
+            this.homework_info.attach = [];
+            this.preload.attachList=[];
+          }
         }
+        this.preload.imageList.forEach(item => {
+          item.url = process.env.VUE_APP_CDN + item.url;
+        });
+        this.preload.attachList.forEach(item => {
+          item.url = process.env.VUE_APP_CDN + item.url;
+        });
         this.share = res.data.task;
         this.share.photo = JSON.parse(this.share.photo);
         this.share.link = JSON.parse(this.share.link);
-        this.homework_info.image_address =
-          JSON.parse(this.homework_info.image_address) || [];
-        this.homework_info.attch = JSON.parse(this.homework_info.attch) || [];
       });
     },
-    getimg(res, file) {
-      this.picList.push({ name: file.name, url: res.data[0] });
+    handleSuccess(res, file) {
+      this.homework_info.image_address.push({
+        name: file.name,
+        url: res.data[0]
+      });
     },
     handleRemove(file) {
-      this.picList.splice(this.picList.indexOf(file.name), 1);
+      this.homework_info.image_address.splice(
+        this.homework_info.image_address.indexOf(file.name),
+        1
+      );
+    },
+    handleAttachSuccess(res, file) {
+      this.homework_info.attach.push({ name: file.name, url: res.data[0] });
+    },
+    handleAttachRemove(file) {
+      this.homework_info.attach.splice(
+        this.homework_info.attach.indexOf(file.name),
+        1
+      );
     },
     submit_homework() {
       let datas = {
         student_id: this.user.id,
         task_id: this.id,
-        content: this.homework,
-        image_address: JSON.stringify(this.picList)
+        content: this.homework_info.content,
+        image_address: JSON.stringify(this.homework_info.image_address),
+        attach: JSON.stringify(this.homework_info.attach)
       };
+
       submit_home(datas)
         .then(res => {
           this.$message({
             message: res.msg,
             type: "success"
           });
+          this.homework_info.status = "已提交";
         })
         .catch(error => {
           this.$message({
@@ -559,43 +605,64 @@ export default {
   .taskdetailRight {
     width: 100%;
     grid-area: right;
-    // display: flex;
-    // flex-direction: column;
-    // flex-wrap: wrap;
-    // justify-content: flex-start;
-    // width: 300px;
-    // margin-left: 20px;
-    //
     overflow: hidden;
     margin: -16px;
     padding: 16px;
-    .top {
+    .task_detail {
       box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302),
         0 2px 6px 2px rgba(60, 64, 67, 0.149);
-      border-radius: 9px;
+      border-radius: 8px;
       overflow: hidden;
-      padding: 12px 24px;
+      padding: 20px;
       background-color: #fff;
-      .myrow {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        span {
-          margin-left: 132px;
-          font-size: 14px;
-          color: var(--main-color);
+      .myhomework_title {
+        letter-spacing: 0.25px;
+        font-size: 20px;
+        font-weight: bold;
+        line-height: 25px;
+        color: var(--main-color);
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        border-bottom: 2px solid var(--main-color);
+      }
+      .finished {
+        .word {
+          color: #666;
+          font-size: 15px;
         }
-        p {
-          font-size: 18px;
+        .grade {
+          color: var(--main-color);
+          font-size: 40px;
+          text-align: center;
+          line-height: 60px;
+        }
+        .comment {
+          margin-top: 10px;
+          text-indent: 2em;
         }
       }
-      .mybuttom {
-        width: 250px;
-        height: 40px;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        margin-left: 0px;
+      .assigned {
+        .word {
+          color: #666;
+          font-size: 15px;
+        }
+        .status {
+          color: var(--main-color);
+          font-size: 26px;
+          text-align: center;
+          line-height: 46px;
+        }
+        .info {
+          color: #888;
+          font-size: 14px;
+        }
+        .mybuttom {
+          width: 250px;
+          height: 40px;
+          margin-top: 10px;
+          margin-bottom: 10px;
+          margin-left: 0px;
+        }
       }
     }
   }
@@ -631,7 +698,7 @@ export default {
         height: 142px;
       }
     }
-    .upload-attch {
+    .upload-attach {
       width: 100%;
       .el-upload {
         width: 100%;
