@@ -2,7 +2,7 @@
   <div class="share_card">
     <el-dialog title="影音预览" :visible.sync="showPreview" width="80%" top="10vh">
       <el-carousel :autoplay="false" arrow="hover" height="680px" ref="previewCarousel">
-        <el-carousel-item v-for="pho in share.photo" :key="pho.name">
+        <el-carousel-item v-for="pho in share_photo" :key="pho.name">
           <img :src="imgAddress(pho.url)" />
         </el-carousel-item>
       </el-carousel>
