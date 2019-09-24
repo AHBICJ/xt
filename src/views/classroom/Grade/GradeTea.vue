@@ -191,13 +191,14 @@ export default {
       let qaq = this.find_element(this.chart3, "xAxis");
       if (qaq) {
         let qaqs = [];
-        this.taskinfo.forEach(item => qaqs.push(item.task_name));
+        this.gradeinfo[this.select_stu].forEach(item => qaqs.push(item.task));
         // qaqs.push("dasdad");
         qaq[1][0].data = qaqs;
       }
       let temp = [];
       this.gradeinfo[this.select_stu].forEach(item => {
-        temp.push(item.grade);
+        if (item.grade) temp.push(item.grade)
+        else temp.push(0);
       });
       let emm = this.find_element(this.chart3, "series");
       emm[1][0].data = temp;
@@ -234,15 +235,16 @@ export default {
       let qaq = this.find_element(this.chart1, "angleAxis");
       let temp = [];
       this.taskinfo.forEach(item => temp.push(item.task_name));
+      
       qaq[1].data = temp;
       qaq = this.find_element(this.chart1, "series");
       let datass = [];
       this.taskinfo.forEach(item => {
         let cnt = 0;
         let num = 0;
+        
         this.name.forEach(filed => {
-          console.log(item,filed)
-          let qwer = this.get_score(filed, item).trim();
+          let qwer = this.get_score(filed, item);
           // console.log(qwer);
           if (qwer == "未提交") {
             cnt++;
@@ -251,13 +253,14 @@ export default {
             cnt++;
           }
         });
-        console.log(num,cnt);
-        datass.push((100 * num) / cnt);
+        if (num!=0)datass.push((100 * num) / cnt)
+        else datass.push(0);
       });
+      // console.log('qaq');
       qaq[1][0].data = datass;
     },
     init_chart2_data() {
-      this.dataisready = true;
+      
       // this.option[]
       let qaq = this.find_element(this.chart2, "yAxis");
       if (qaq) {
@@ -270,7 +273,6 @@ export default {
         let cnt = 0;
         this.taskinfo.forEach(filed => {
           let qwer = this.get_score(item, filed);
-          // console.log(qwer,item,filed,)
           if (qwer == "未提交") {
             cnt++;
           } else {
@@ -278,12 +280,11 @@ export default {
             cnt++;
           }
         });
-        // console.log(item,num,cnt);
-        temp.push((100 * num) / cnt);
+        if (num!=0)temp.push((100 * num) / cnt)
+        else temp.push(0);
       });
-      // console.log(temp);
+
       emm[1][0].data = temp;
-      // console.log(qaq);
     },
     find_element(chart, index) {
       return chart.find(item => item[0] == index);
@@ -296,6 +297,7 @@ export default {
           this.name = Object.keys(this.gradeinfo);
           this.init_chart1_data();
           this.init_chart2_data();
+          this.dataisready = true;
         })
         .catch(() => {});
     },

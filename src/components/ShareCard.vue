@@ -2,7 +2,7 @@
   <div class="share_card">
     <el-dialog title="影音预览" :visible.sync="showPreview" width="80%" top="10vh">
       <el-carousel :autoplay="false" arrow="hover" height="680px" ref="previewCarousel">
-        <el-carousel-item v-for="pho in share.photo" :key="pho.name">
+        <el-carousel-item v-for="pho in share_photo" :key="pho.name">
           <img :src="imgAddress(pho.url)" />
         </el-carousel-item>
       </el-carousel>
@@ -59,7 +59,7 @@
             <span>{{share.desc}}</span>
           </div>
         </div>
-        <div class="intro_right">
+        <div class="intro_right" v-if="isteacher">
           <div class="turn">
             <div class="num">0</div>
             <div class="word">已上交</div>
@@ -72,15 +72,6 @@
       </div>
       <!-- 资源 -->
       <div class="content_means">
-        <!-- dialog -->
-        <el-dialog
-          title="分享资源"
-          :visible.sync="dialogShare"
-          width="960px"
-          custom-class="dialogShare"
-        >
-          <carouselsshare :images="share"></carouselsshare>
-        </el-dialog>
         <!-- means -->
         <div class="meansBox_out">
           <div
@@ -89,7 +80,7 @@
             :key="pho.name"
             @click="handlePreview(idx)"
           >
-            <div href class="means">
+            <div class="means">
               <div class="means_pic" :style="`backgroundImage:url(${imgAddress(pho.url)})`" />
               <div class="means_title">
                 <div class="means_titleword">{{pho.name}}</div>
@@ -98,7 +89,7 @@
           </div>
           <!-- link -->
           <div class="meansBox" v-for="url in share_link" :key="url.link">
-            <div href class="means">
+            <div class="means">
               <div class="means_pic linkBG" />
               <div class="means_title">
                 <div class="means_titleword">{{url.title}}</div>
@@ -113,12 +104,10 @@
 </template>
 <script>
 import Address from "@/mixin/Address";
-import carouselsshare from "@/components/carousels-share.vue";
 export default {
   data() {
     return {
       user: this.$store.state.user,
-      dialogShare: false,
       showPreview: false,
       initialIndex: 0
     };
@@ -134,14 +123,14 @@ export default {
       return this.share.user_id == this.user.id;
       // return this.share.username==this.user.name;
     },
-    share_photo(){
-      if (typeof this.share.photo == 'string'){
+    share_photo() {
+      if (typeof this.share.photo == "string") {
         return JSON.parse(this.share.photo);
       }
       return this.share.photo;
     },
-    share_link(){
-      if (typeof this.share.link == 'string'){
+    share_link() {
+      if (typeof this.share.link == "string") {
         return JSON.parse(this.share.link);
       }
       return this.share.link;
@@ -185,10 +174,7 @@ export default {
     }
   },
   mixins: [Address],
-  props: ["share"],
-  components: {
-    carouselsshare
-  }
+  props: ["share"]
 };
 </script>
 <style lang="scss">
@@ -202,14 +188,14 @@ export default {
       max-height: 100%;
     }
   }
-}
-.el-dropdown-menu__item {
-  a {
-    color: #606266;
-  }
-  &:hover {
+  .el-dropdown-menu__item {
     a {
-      color: #e6c787;
+      color: #606266;
+    }
+    &:hover {
+      a {
+        color: #e6c787;
+      }
     }
   }
 }

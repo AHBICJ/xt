@@ -84,7 +84,7 @@ export default {
         ],
         password: [
           { required: true, message: "请输入密码", trigger: "blur" },
-          { min: 6, message: "密码长度最少为6位", trigger: "blur" }
+          { min: 4, message: "密码长度最少为4位", trigger: "blur" }
         ],
         code: [{ required: true, message: "请输入验证码", trigger: "blur", /*validator: validateCode*/ }]
       },
