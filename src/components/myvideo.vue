@@ -3,7 +3,7 @@
     <div>
       <router-link :to="'/article/775 '">
         <img
-          src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1567585273507&di=15532efd0f67262b41cb25d89fea0519&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fq_mini%2Cc_zoom%2Cw_640%2Fupload%2F20170326%2Fcefe4c71b75949cea5f967a52bcb9535_th.jpeg"
+          src="images/threephoto/ppt001.jpg"
           alt
         />
       </router-link>
@@ -11,14 +11,14 @@
     <div>
       <router-link :to="'/article/775 '">
         <img
-          src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1567585306984&di=1519866ebba9b9c5b31e9bd624b485eb&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20171015%2Fc318b1d44a5544938a7c1aeca12f075c.jpeg"
+          src="images/threephoto/ppt004.jpg"
           alt
         />
       </router-link>
     </div>
     <div>
       <img
-        src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1567585306984&di=45f808639c8ec6e3245358122c8ce20d&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20171004%2Fa515962ef4c04d08bdb3ff5a2c8b0e0c.jpeg"
+        src="images/threephoto/ppt005.jpg"
         alt
       />
     </div>
@@ -32,13 +32,13 @@
     </div>
     <div>
       <img
-        src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1567585306983&di=4e811bbcf66bde631067cb27675f8f91&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20171201%2F722c71e1355a4444a6f71aca87cd3713.jpeg"
+        src="images/threephoto/ppt003.jpg"
         alt
       />
     </div>
     <div>
       <img
-        src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1567585306983&di=41d43b4f98fa52d4503df1ebe8865109&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180608%2F4146cb180f8d49adb04466f00976b183.jpeg"
+        src="images/threephoto/ppt002.jpg"
         alt
       />
     </div>

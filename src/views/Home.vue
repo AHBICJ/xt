@@ -49,7 +49,7 @@ export default {
       cities: [],
       options: {
         // autoScrolling:false,
-        scrollingSpeed: 1000
+        scrollingSpeed: 850
       },
       slickOptions: {
         items: [],
