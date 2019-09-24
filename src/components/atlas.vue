@@ -1,5 +1,5 @@
 <template>
-  <div class="right">
+  <div class="atlas">
     <el-carousel :interval="5000" arrow="always" height="500px">
       <el-carousel-item v-for="item in photo" :key="item">
         <!-- <img :src="item" alt /> -->
@@ -31,9 +31,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.right {
-  padding: 15% 0 10% 3%;
-  margin: 0 auto;
+.atlas {
+  width: 800px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302),
+    0 2px 6px 2px rgba(60, 64, 67, 0.149),0 6px 18px 0 rgba(25, 45, 155, 0.3);
   .imgbox-city {
     height: 100%;
     overflow: hidden;

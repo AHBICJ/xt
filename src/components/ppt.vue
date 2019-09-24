@@ -1,8 +1,10 @@
 <template>
-  <div class="right">
+  <div class="ppt">
     <div class="mt150">
       <div v-for="item in photo " :key="item">
-        <router-link :to="'/article/774 '"><img :src="item" alt /> </router-link >
+        <router-link :to="'/article/774 '">
+          <img :src="item" alt />
+        </router-link>
       </div>
     </div>
     <div class="mt50">
@@ -37,9 +39,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.right {
+.ppt {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  width: 740px;
+
   .mt150 {
     padding-top: 20%;
     text-align: center;
@@ -48,9 +52,11 @@ export default {
     text-align: center;
   }
   img {
-    width: 350px;
+    width: 320px;
     height: 180px;
-    margin-bottom: 10%;
+    margin-bottom: 40px;
+    border-radius: 8px;
+    overflow: hidden;
     box-shadow: 0 6px 18px 0 rgba(25, 45, 155, 0.3);
     cursor: pointer;
   }
