@@ -68,36 +68,36 @@ export default {
           items: [
             {
               imgSrc: "images/piclistimg/sxms.png",
-              title: "绍兴：绍兴美食",
+              title: "绍兴 · 绍兴美食",
               link: "/article/770"
             },
             {
               imgSrc: "images/piclistimg/ssldsh.png",
-              title: "杭州：河上龙灯盛会",
+              title: "杭州 · 河上龙灯盛会",
               link: "article/245"
             },
             {
               imgSrc:
                 "images/piclistimg/lz.png",
-              title: "宁波：宁波梁祝传说",
+              title: "宁波 · 宁波梁祝传说",
               link: "article/700"
             },
             {
               imgSrc:
                 "images/piclistimg/tsdzmg.png",
-              title: "温州：泰顺畲族民歌",
+              title: "温州 · 泰顺畲族民歌",
               link: "article/464"
             },
             {
               imgSrc:
                 "images/piclistimg/wfzzz.png",
-              title: "嘉兴：五芳斋粽子",
+              title: "嘉兴 · 五芳斋粽子",
               link: "article/368"
             },
             {
               imgSrc:
                 "images/piclistimg/dn.png",
-              title: "金华：斗牛",
+              title: "金华 · 斗牛",
               link: "article/311"
             }
           ]
@@ -108,37 +108,37 @@ export default {
           items: [
             {
               imgSrc: "images/piclistimg/sxj.png",
-              title: "台州：神仙居",
+              title: "台州 · 神仙居",
               link: "article/818"
             },
             {
               imgSrc:
                 "images/piclistimg/ylgjz.png",
-              title: "舟山：园林古建筑",
+              title: "舟山 · 园林古建筑",
               link: "article/212"
             },
             {
               imgSrc:
                 "images/piclistimg/xkgc.png",
-              title: "丽水：西坑古村",
+              title: "丽水 · 西坑古村",
               link: "article/180"
             },
             {
               imgSrc:
                 "images/piclistimg/nbdgz.png",
-              title: "衢州：廿八都古镇",
+              title: "衢州 · 廿八都古镇",
               link: "article/254"
             },
             {
               imgSrc:
                 "images/piclistimg/lxgl.png",
-              title: "鲁迅故里",
+              title: "绍兴 · 鲁迅故里",
               link: "article/774"
             },
             {
               imgSrc:
                 "images/piclistimg/zgbgc.png",
-              title: "金华：诸葛八卦村",
+              title: "金华 · 诸葛八卦村",
               link: "article/720"
             }
           ]
@@ -149,37 +149,37 @@ export default {
           items: [
             {
               imgSrc: "images/piclistimg/casjx.png",
-              title: "杭州：淳安三脚戏",
+              title: "杭州 · 淳安三脚戏",
               link: "article/294"
             },
             {
               imgSrc:
                 "images/piclistimg/nsgdzzjy.png",
-              title: "宁波：宁式糕点制作技艺",
+              title: "宁波 · 宁式糕点制作技艺",
               link: "article/526"
             },
             {
               imgSrc:
                 "images/piclistimg/yj.png",
-              title: "绍兴：越剧文化",
+              title: "绍兴 · 越剧文化",
               link: "article/776"
             },
             {
               imgSrc:
                 "images/piclistimg/oxjy.png",
-              title: "温州：瓯绣技艺",
+              title: "温州 · 瓯绣技艺",
               link: "article/706"
             },
             {
               imgSrc:
                 "images/piclistimg/tzlt.png",
-              title: "台州：台州乱弹",
+              title: "台州 · 台州乱弹",
               link: "article/807"
             },
             {
               imgSrc:
                 "images/piclistimg/dshyszjy.png",
-              title: "舟山：岱山海盐晒制技艺",
+              title: "舟山 · 岱山海盐晒制技艺",
               link: "article/213"
             }
           ]
@@ -190,37 +190,37 @@ export default {
           items: [
             {
               imgSrc: "images/piclistimg/lx.png",
-              title: "绍兴：中国的民族魂——鲁迅",
+              title: "绍兴 · 中国的民族魂——鲁迅",
               link: "article/775"
             },
             {
               imgSrc:
                 "images/piclistimg/lbw.png",
-              title: "温州：神机妙算文成公——刘伯温",
+              title: "温州 · 神机妙算文成公——刘伯温",
               link: "http://www.ihchina.cn/character_detail/18817.html"
             },
             {
               imgSrc:
                 "images/piclistimg/ysw.png",
-              title: "丽水：江湖诗派诗人——叶绍翁",
+              title: "丽水 · 江湖诗派诗人——叶绍翁",
               link: "article/189"
             },
             {
               imgSrc:
                 "images/piclistimg/qjg.png",
-              title: "台州：抗倭名将——戚继光",
+              title: "台州 · 抗倭名将——戚继光",
               link: "article/840"
             },
             {
               imgSrc:
                 "images/piclistimg/lbw.png",
-              title: "金华：“初唐四杰”——骆宾王",
+              title: "金华 · “初唐四杰”——骆宾王",
               link: "article/722"
             },
             {
               imgSrc:
                 "images/piclistimg/jjs.png",
-              title: "宁波：民国政坛——蒋介石",
+              title: "宁波 · 民国政坛——蒋介石",
               link: "article/703"
             }
           ]
