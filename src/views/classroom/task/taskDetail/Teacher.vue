@@ -24,9 +24,26 @@
     <div class="taskdetailRight">
       <!-- <remark :taskinfo="taskinfo" :homeworkinfo="homeworkinfo" /> -->
       <div class="remark empty" v-if="studentlist.length==0">
-        <p>快让学生加入班级吧~<br>之后你可以在这里看到学生的任务<br>并对其进行评价和反馈</p>
+        <p>
+          快让学生加入班级吧~
+          <br />之后你可以在这里看到学生的任务
+          <br />并对其进行评价和反馈
+        </p>
       </div>
       <div class="remark" v-else>
+        <el-dialog
+          title="图片预览"
+          :visible.sync="showPreview"
+          width="80%"
+          top="10vh"
+          v-if="studentlist[currentStuIdx].status!='未提交'"
+        >
+          <el-carousel :autoplay="false" arrow="hover" height="680px" ref="previewCarousel">
+            <el-carousel-item v-for="pho in currentHomework.image_address" :key="pho.name">
+              <img :src="imgAddress(pho.url)" />
+            </el-carousel-item>
+          </el-carousel>
+        </el-dialog>
         <div class="mark_title">学生作业</div>
         <div class="mark_body mark_body_empty" v-if="studentlist[currentStuIdx].status=='未提交'">
           <p>该同学尚未提交作业</p>
@@ -117,7 +134,8 @@ export default {
       // task_id: 1,
       homeworkinfo: [],
       currentStuId: "",
-      currentStuIdx: 0
+      currentStuIdx: 0,
+      showPreview: false
     };
   },
   mixins: [Address],
@@ -134,16 +152,20 @@ export default {
     }
   },
   methods: {
+    handlePreview(idx) {
+      this.showPreview = true;
+      this.$refs.previewCarousel.setActiveItem(idx);
+    },
     set_score() {
       let datas = {
         homework_id: this.studentlist[this.currentStuIdx].hw.id,
         grade: this.studentlist[this.currentStuIdx].hw.grade,
-        comment: this.studentlist[this.currentStuIdx].hw.comment,
+        comment: this.studentlist[this.currentStuIdx].hw.comment
       };
       mark_score(datas)
         .then(() => {
           this.$message("评价成功");
-          this.studentlist[this.currentStuIdx].status='已完成';
+          this.studentlist[this.currentStuIdx].status = "已完成";
         })
         .catch(() => {});
     },
@@ -367,7 +389,7 @@ export default {
       align-items: center;
       justify-content: center;
       height: 760px;
-      margin-bottom: none!important;
+      margin-bottom: none !important;
       p {
         color: #666;
         text-align: center;

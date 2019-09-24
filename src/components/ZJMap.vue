@@ -594,11 +594,16 @@ export default {
     fill: url(#hover);
   }
   .content {
-    height: 800px;
-    width: 600px;
     position: absolute;
-    top: 115px;
-    left: 57.8%;
+    left: 55%;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    // height: 800px;
+    // width: 600px;
+    // position: absolute;
+    // top: 115px;
+    // left: 57.8%;
     // background-color: rgba(0, 255, 255, 0.8);
     .city_name {
       font-family: "FZQK";

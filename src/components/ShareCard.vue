@@ -420,6 +420,7 @@ export default {
       .meansBox_out {
         margin-right: -12px;
         .meansBox {
+          cursor: pointer;
           display: inline-block;
           position: relative;
           margin-bottom: 12px;

@@ -24,6 +24,7 @@
             <el-upload
               :action="upload_api"
               list-type="picture-card"
+              :file-list="form.picsToShow"
               :on-success="handleSuccess"
               :on-remove="handleRemove"
               class="upload-content"
@@ -78,7 +79,10 @@ export default {
       showShareDetail: false,
       form: {
         shareText: "",
+        // 真正上传和维护的数据
         pics: [],
+        // 需要修改和更新的 在获得数据修改这个 加上cdn前缀 之后不用管
+        picsToShow: [],
         urls: []
       },
       upload_api: process.env.VUE_APP_API + "/upload"
@@ -104,6 +108,7 @@ export default {
           this.form.shareText = "";
           this.form.pics = [];
           this.form.urls = [];
+          this.form.picsToShow = [];
         })
         .catch(() => {});
     },

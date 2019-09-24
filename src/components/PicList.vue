@@ -8,7 +8,7 @@
         <div
           class="tab-item"
           v-for="(item,idx) in this.cities[currentTypeId].items"
-          :key="item.imgSrc"
+          :key="`${item.imgSrc}${idx}`"
           v-show="idx==currentId"
           :style="{backgroundImage: 'url('+item.imgSrc+')'}"
         ></div>
@@ -20,15 +20,15 @@
           <div
             class="title-top"
             v-on:click="changetype_top()"
-            @mouseenter="hoverClass()"
-            @mouseleave="removeHoverClasss()"
+            @__mouseenter="hoverClass()"
+            @__mouseleave="removeHoverClasss()"
           ></div>
           <div class="titleword">{{cities[currentTypeId].name}}</div>
           <div
             class="title-bottom"
             v-on:click="changetype_bottom()"
-            @mouseenter="hoverClass()"
-            @mouseleave="removeHoverClasss()"
+            @__mouseenter="hoverClass()"
+            @__mouseleave="removeHoverClasss()"
           ></div>
         </div>
       </div>
@@ -36,7 +36,7 @@
         <div
           class="tab-term"
           v-for="(item,idx) in this.cities[currentTypeId].items"
-          :key="idx"
+          :key="`${item.title}${idx}`"
           :class="['t'+(idx+1),{'cur':idx==currentId}]"
           @mouseenter="currentId=idx"
         >
@@ -247,12 +247,12 @@ export default {
         this.currentTypeId = 0;
       }
     },
-    hoverClass(event) {
-      this.currentHoverCity = event.target.dataset.city;
-    },
-    removeHoverClasss() {
-      this.currentHoverCity = "";
-    }
+    // hoverClass($event) {
+    //   this.currentHoverCity = $event.target.dataset.city;
+    // },
+    // removeHoverClasss() {
+    //   this.currentHoverCity = "";
+    // }
   }
 };
 </script>
