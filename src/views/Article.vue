@@ -4,23 +4,23 @@
     <!-- dialog -->
     <el-dialog title="文章视频" :visible.sync="dialogVideo" custom-class="dialogvideo">
       <div class="look">
-        <!-- <video-player
-          class="vjs-custom-skin"
+        <video-player
+          class="video-player vjs-custom-skin"
           ref="videoPlayer"
           :options="playerOptions"
           :playsinline="true"
-          v-if="haveVideo"
+          
         ></video-player>
-        <div class="article_attention" v-else>
+        <!-- <div class="article_attention" v-else>
           <p>666该篇文章尚未添加视频，快去看看别的内容吧~</p>
-        </div>-->
+        </div> -->
 
-        <video-player
+        <!-- <video-player
           class="video-player vjs-custom-skin"
           ref="videoPlayer"
           :playsinline="true"
           :options="playerOptions"
-        ></video-player>
+        ></video-player> -->
        
       </div>
     </el-dialog>
@@ -195,7 +195,7 @@ export default {
           }
         ],
         poster:
-          "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1683376491,988265945&fm=26&gp=0.jpg", //你的封面地址
+          "", //你的封面地址
         // width: document.documentElement.clientWidth,
         notSupportedMessage: "此视频暂无法播放，请稍后再试", //允许覆盖Video.js无法播放媒体源时显示的默认信息。
         controlBar: {
@@ -250,7 +250,7 @@ export default {
       getArticle({ aricle_id: this.articleId }).then(res => {
         this.navbarOptions.cityId = res.data.city_id;
         this.article = res.data;
-        // this.playerOptions.sources[0].src = this.article.viedo;
+        this.playerOptions.sources[0].src = this.article.viedo;
         this.ppt = res.data.ppt;
       });
     },
@@ -268,7 +268,11 @@ export default {
     NavBar
   },
   computed: {
+    haveVideo() {
+      return this.article.video != null;
+    }
   }
+  
 };
 </script>
 
