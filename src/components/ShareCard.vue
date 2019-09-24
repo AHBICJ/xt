@@ -61,7 +61,7 @@
         </div>
         <div class="intro_right" v-if="isteacher">
           <div class="turn">
-            <div class="num">0</div>
+            <div class="num">{{share.commit_num}}</div>
             <div class="word">已上交</div>
           </div>
         </div>
@@ -123,14 +123,20 @@ export default {
       return this.share.user_id == this.user.id;
       // return this.share.username==this.user.name;
     },
-    share_photo() {
-      if (typeof this.share.photo == "string") {
+    share_photo(){
+      // console.log(this.share.photo);
+      if (typeof this.share.photo === 'string'){
+        if (!this.share.photo.trim()) return []
         return JSON.parse(this.share.photo);
       }
       return this.share.photo;
     },
-    share_link() {
-      if (typeof this.share.link == "string") {
+    share_link(){
+      
+      // console.log(this.share.link);
+    
+      if ((typeof this.share.link) === 'string'){
+        if (!this.share.link.trim()) return []
         return JSON.parse(this.share.link);
       }
       return this.share.link;

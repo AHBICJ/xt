@@ -9,6 +9,7 @@
           v-for="(a,idx) in studentlist"
           :key="`${a.id}${idx}`"
           @click="get_homework_detail(a.student_id)"
+          :class="{ active: a.student_id == currentStu }"
         >
           <img src="@/assets/images/tx4.png" alt />
           <p>{{a.student}}</p>
@@ -34,7 +35,8 @@ export default {
       remark: "",
       studentlist: [],
       // task_id: 1,
-      homeworkinfo: []
+      homeworkinfo: [],
+      currentStu: ""
     };
   },
   created() {
@@ -60,11 +62,12 @@ export default {
           });
         });
     },
-    get_homework_detail(student_id) {
+    get_homework_detail(student) {
       let datas = {
         task_id: this.id,
-        student_id: student_id
+        student_id: student.student_id
       };
+      this.currentStu = student.student_id;
       get_homework(datas)
         .then(res => {
           this.homeworkinfo = res.data;
@@ -136,9 +139,13 @@ export default {
       border-bottom: 1px solid var(--main-color);
       // border-left: 6px solid var(--main-color);
     }
+
     .students {
       height: 690px;
       overflow: auto;
+      .active {
+        background-color: #ffedc5d4;
+      }
       .stu {
         width: 100%;
         // height: 70px;
