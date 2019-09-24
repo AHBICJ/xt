@@ -198,11 +198,14 @@ export default {
             },
             ...res.data.topics
           ];
+          
           this.topics.forEach(topic => {
             topic.tasks.forEach(task => {
               this.taskNum++;
+              // console.log('before',task);
               task.photo = JSON.parse(task.photo);
               task.link = JSON.parse(task.link);
+              // console.log('after',task);
             });
           });
         })

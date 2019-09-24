@@ -43,10 +43,10 @@
           <!-- 资源 -->
           <div class="content_means">
             <div class="meansBox_out">
-              <div class="meansBox" v-for="item in  taskinfo.photo" :key="item">
+              <div class="meansBox" v-for="item in  compute_photo" :key="item.url">
                 <a href class="means">
                   <div class="means_pic">
-                    <img :src=" qaq + item " alt />
+                    <img :src=" $imgaddress(item.url)" alt />
                   </div>
                   <!-- <div class="means_title">
                     <div class="means_titleword">百度一下，你就知道</div>
@@ -67,20 +67,20 @@
                 <span>{{homeworkinfo.content}}</span>
               </div>
             </div>
-            <div class="intro_right">
+            <!-- <div class="intro_right">
               <div class="turn">
                 <div class="num">{{taskinfo.commit_num}}</div>
                 <div class="word">已上交</div>
               </div>
-            </div>
+            </div> -->
           </div>
           <!-- 资源 -->
           <div class="content_means">
             <div class="meansBox_out">
-              <div class="meansBox" v-for="item in  homeworkinfo.photo" :key="item">
+              <div class="meansBox" v-for="item in  compute_attach" :key="item">
                 <a href class="means">
                   <div class="means_pic">
-                    <img :src=" qaq + item " alt />
+                    <!-- <img :src=" imgAddress(item) " alt /> -->
                   </div>
                   <!-- <div class="means_title">
                     <div class="means_titleword">百度一下，你就知道</div>
@@ -129,7 +129,6 @@ export default {
     return {
       grade: "",
       remark: "",
-      qaq: process.env.VUE_APP_CDN,
       user: this.$store.state.user
     };
   },
@@ -158,6 +157,20 @@ export default {
     // haveHomeork() {
     //   return this.homeworkinfo.student == "";
     // }
+    compute_photo(){
+      if (typeof this.homeworkinfo.image_address ==='string'){
+        if (!this.homeworkinfo.image_address.trim()) return []
+        return JSON.parse(this.homeworkinfo.image_address) || []
+      }
+      return this.homeworkinfo.image_address
+    },
+    compute_attach(){
+      if (typeof this.homeworkinfo.attach ==='string'){
+        if (!this.homeworkinfo.attach.trim()) return []
+        return JSON.parse(this.homeworkinfo.attach) || []
+      }
+      return this.homeworkinfo.attach
+    }
   },
   watch:{
     homeworkinfo:{
