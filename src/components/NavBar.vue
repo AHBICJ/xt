@@ -139,8 +139,8 @@ export default {
       return this.options.shortTilte ? "浙里" : "浙里文化";
     },
     avatar() {
-      return "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png";
-      // return '/images/'+this.user.photo;
+      // return "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png";
+      return '/images/'+this.user.photo;
     }
   },
   methods: {
