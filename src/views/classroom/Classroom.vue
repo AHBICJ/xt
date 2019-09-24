@@ -81,7 +81,7 @@
     </div>
     <!-- 班级卡片 -->
     <div class="classes">
-      <card v-for="c in classrooms" :key="c.id" :classrooms="c" />
+      <card v-for="c in classes" :key="c.id" :classrooms="c" />
     </div>
     <!-- 分页 -->
     <div class="block">
@@ -93,7 +93,6 @@
             :current-page.sync="page"
             :page-size="pagenum"
             :total="total"
-            @current-change="getClassrooms()"
           ></el-pagination>
         </el-col>
       </el-row>
@@ -130,7 +129,7 @@ export default {
       value: "全部学年",
       classrooms: [],
       page: 1,
-      pagenum: 12,
+      pagenum: 8,
       totalPage: 1,
       dialogJoin: false,
       dialogCreate: false,
@@ -205,10 +204,16 @@ export default {
   },
   computed: {
     total() {
-      return this.pagenum * this.totalPage;
+      return this.classrooms.length;
     },
     uploadAddr() {
       return process.env.VUE_APP_API + "/upload";
+    },
+    classes() {
+      return this.classrooms.slice(
+        (this.page - 1) * this.pagenum,
+        this.page * this.pagenum
+      );
     }
   },
   components: {
@@ -255,8 +260,8 @@ export default {
         padding-left: 10px;
       }
       .el-dialog__headerbtn .el-dialog__close {
-        &:hover{
-        color: var(--main-color);
+        &:hover {
+          color: var(--main-color);
         }
       }
     }
