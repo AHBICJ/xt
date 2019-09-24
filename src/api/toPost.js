@@ -53,3 +53,16 @@ export function postComment(datas){
       data
     })
   }
+  
+  export function delete_task(data){
+    return request({
+      url: '/api/delete_task',
+      method:'post',
+      data
+    })
+  }
+
+  
+  
+
+  
