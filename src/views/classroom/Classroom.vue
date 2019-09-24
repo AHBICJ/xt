@@ -278,7 +278,7 @@ export default {
     height: 40px;
     border-bottom: 1px solid var(--main-color);
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     padding: 0 16px;
     display: flex;
     -webkit-flex-direction: row;

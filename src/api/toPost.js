@@ -61,8 +61,3 @@ export function postComment(datas){
       data
     })
   }
-
-  
-  
-
-  

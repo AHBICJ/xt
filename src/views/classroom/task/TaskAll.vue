@@ -230,6 +230,7 @@ export default {
           task.photo = JSON.parse(task.photo);
           task.link = JSON.parse(task.link);
           this.pushTask(task);
+          this.taskNum++;
           this.form = {
             taskTitle: "",
             taskDetail: "",
@@ -320,7 +321,6 @@ export default {
   grid-template-rows: auto auto;
   grid-template-columns: 250px 850px;
   grid-gap: 20px;
-
   .left {
     grid-area: left;
     .ClassroomLeft {

@@ -585,12 +585,13 @@ export default {
     fill: url(#notselect);
     stroke: #ffffff;
     stroke-miterlimit: 10;
+    cursor: pointer;
   }
   .path_active {
     fill: url(#selected) !important;
   }
   .path_hover {
-    fill: url(#hover) !important;
+    fill: url(#hover);
   }
   .content {
     height: 800px;

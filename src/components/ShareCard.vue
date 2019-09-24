@@ -53,7 +53,7 @@
       <div class="content_intro" v-if="istask">
         <div class="intro_left">
           <div class="intro_time">
-            <span class="taskdate">{{share.star_time}}</span>
+            <span class="taskdate">{{share.star_time}} - {{share.end_time}} </span>
           </div>
           <div class="intro_word">
             <span>{{share.desc}}</span>

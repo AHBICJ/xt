@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     get_shares(id) {
-      room_tasks({ room_id: id})
+      room_tasks({ room_id: id,task_type: "share"})
         .then(res => {
           this.shares = res.data;
           for (var i = 0; i < this.shares.length; i++){
