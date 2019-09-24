@@ -53,7 +53,7 @@
       <div class="content_intro" v-if="istask">
         <div class="intro_left">
           <div class="intro_time">
-            <span class="taskdate">{{share.star_time}} - {{share.end_time}} </span>
+            <span class="taskdate">{{share.star_time}} - {{share.end_time}}</span>
           </div>
           <div class="intro_word">
             <span>{{share.desc}}</span>
@@ -90,13 +90,13 @@
           <!-- link -->
           <div class="meansBox" v-for="url in share_link" :key="url.link">
             <a :href="$imgaddress(url.url)" target="_blank">
-            <div class="means">
-              <div class="means_pic linkBG" />
-              <div class="means_title">
-                <div class="means_titleword">{{url.title}}</div>
-                <div class="means_subtitle">{{url.url}}</div>
+              <div class="means">
+                <div class="means_pic linkBG" />
+                <div class="means_title">
+                  <div class="means_titleword">{{url.title}}</div>
+                  <div class="means_subtitle">{{url.url}}</div>
+                </div>
               </div>
-            </div>
             </a>
           </div>
         </div>
@@ -159,6 +159,9 @@ export default {
       else return;
     },
     RemoveShare() {
+      let datas = {
+        task_id: this.share.id
+      };
       this.$confirm(
         `此操作将永久删除该${this.istask ? "任务" : "分享"}?`,
         "提示",
@@ -171,11 +174,11 @@ export default {
         .then(() => {
           delete_task(datas)
             .then(() => {
+              this.$emit("shareDelete",datas.task_id);
               this.$message({
                 type: "success",
                 message: "删除成功!"
               });
-              history.go(0);
             })
             .catch(() => {});
         })
@@ -185,9 +188,6 @@ export default {
             message: "已取消删除"
           });
         });
-      let datas = {
-        task_id: this.share.id
-      };
     }
   },
   mixins: [Address],

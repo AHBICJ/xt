@@ -141,6 +141,7 @@
       >使用左侧的按钮创建专题活动吧</div>
       <task-group
         v-for="topic in whatToDisplay"
+        @taskDelete="handleDelete"
         :topic="topic"
         :key="`${currentTopicId}${topic.name}${topic.tasks.length}`"
       />
@@ -185,6 +186,13 @@ export default {
     }
   },
   methods: {
+    handleDelete(data){
+      this.topics.forEach(topic =>{
+        if (topic.id==data.topicid){
+          topic.tasks = topic.tasks.filter(x => x.id != data.taskid);
+        }
+      })
+    },
     get_tasks(id) {
       room_tasks({ room_id: id, task_type: "task" })
         .then(res => {

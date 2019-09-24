@@ -12,7 +12,7 @@
       <!-- 添加分享 -->
       <share @shareCreated="handleShareCreated" />
       <!-- 具体分享栏 -->
-      <sharecard v-for="share in shares" :share="share" :key="share.id" />
+      <sharecard v-for="share in shares" :share="share" :key="share.id" @shareDelete="handleDelete"/>
     </div>
   </div>
 </template>
@@ -36,6 +36,9 @@ export default {
     };
   },
   methods: {
+    handleDelete(id){
+      this.shares = this.shares.filter(x=>x.id!=id);
+    },
     get_shares(id) {
       room_tasks({ room_id: id,task_type: "share"})
         .then(res => {

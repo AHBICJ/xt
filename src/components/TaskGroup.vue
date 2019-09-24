@@ -4,7 +4,7 @@
     <el-collapse-transition>
       <div class="taskGroupTasks">
         <div v-if="topic.tasks.length==0 && topic.id!=-1" class="nothingHere">这个主题下还没有班级任务</div>
-        <share-card v-for="task in topic.tasks" :share="task" :key="task.id" />
+        <share-card v-for="task in topic.tasks" :share="task" :key="task.id" @shareDelete="handleDelete" />
       </div>
     </el-collapse-transition>
   </div>
@@ -16,6 +16,15 @@ export default {
   data() {
     return{
       taskNum:0,
+    }
+  },
+  methods:{
+    handleDelete(taskid){
+      let data={
+        taskid,
+        topicid:this.topic.id,
+      }
+      this.$emit("taskDelete",data);
     }
   },
   props: ["topic"],
