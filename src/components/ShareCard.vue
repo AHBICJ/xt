@@ -123,30 +123,20 @@ export default {
       return this.share.user_id == this.user.id;
       // return this.share.username==this.user.name;
     },
-<<<<<<< HEAD
     share_photo(){
       // console.log(this.share.photo);
       if (typeof this.share.photo === 'string'){
         if (!this.share.photo.trim()) return []
-=======
-    share_photo() {
-      if (typeof this.share.photo == "string") {
->>>>>>> 396fa22967308afe6e9c9c360c71d7d1b3d38def
         return JSON.parse(this.share.photo);
       }
       return this.share.photo;
     },
-<<<<<<< HEAD
     share_link(){
       
       // console.log(this.share.link);
     
       if ((typeof this.share.link) === 'string'){
         if (!this.share.link.trim()) return []
-=======
-    share_link() {
-      if (typeof this.share.link == "string") {
->>>>>>> 396fa22967308afe6e9c9c360c71d7d1b3d38def
         return JSON.parse(this.share.link);
       }
       return this.share.link;
