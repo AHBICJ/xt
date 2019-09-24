@@ -89,6 +89,7 @@
           </div>
           <!-- link -->
           <div class="meansBox" v-for="url in share_link" :key="url.link">
+            <a :href="$imgaddress(url.url)" target="_blank">
             <div class="means">
               <div class="means_pic linkBG" />
               <div class="means_title">
@@ -96,6 +97,7 @@
                 <div class="means_subtitle">{{url.url}}</div>
               </div>
             </div>
+            </a>
           </div>
         </div>
       </div>
