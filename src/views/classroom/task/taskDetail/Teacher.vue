@@ -3,9 +3,16 @@
     <div class="taskdetailLeft">
       <div class="stu_title">学生名单</div>
       <!-- <div class="stu" @click="get_homework_detail()"> -->
-        <div class="stu" v-for="a in studentlist" :key="a" @click="get_homework_detail(a.student_id)"> 
-        <img src="@/assets/images/tx4.png" alt />
-        <p>{{a.student}}</p>
+      <div class="students">
+        <div
+          class="stu"
+          v-for="(a,idx) in studentlist"
+          :key="`${a.id}${idx}`"
+          @click="get_homework_detail(a.student_id)"
+        >
+          <img src="@/assets/images/tx4.png" alt />
+          <p>{{a.student}}</p>
+        </div>
       </div>
     </div>
     <div class="taskdetailRight">
@@ -17,7 +24,7 @@
 <script>
 import remark from "@/components/remark.vue";
 import { task_detail } from "@/api/toGet";
-import { get_homework,get_homeworklist } from "@/api/toGet";
+import { get_homework, get_homeworklist } from "@/api/toGet";
 export default {
   data() {
     return {
@@ -25,7 +32,7 @@ export default {
       taskinfo: {},
       grade: "",
       remark: "",
-      studentlist:[],
+      studentlist: [],
       // task_id: 1,
       homeworkinfo: []
     };
@@ -72,9 +79,9 @@ export default {
           });
         });
     },
-        get_studentlist() {
+    get_studentlist() {
       let datas = {
-        task_id: this.id,
+        task_id: this.id
       };
       get_homeworklist(datas)
         .then(res => {
@@ -103,14 +110,13 @@ export default {
   margin-bottom: 20px;
   display: grid;
   grid-template-areas: "left right";
-  grid-template-rows: auto auto;
   grid-template-columns: 300px 800px;
+  grid-template-rows: 760px;
   grid-gap: 20px;
   box-sizing: border-box;
   .taskdetailLeft {
     position: relative;
     grid-area: left;
-    overflow: auto;
     background-color: #fff;
     border: 1px solid #dadce0;
     border-radius: 8px;
@@ -130,29 +136,33 @@ export default {
       border-bottom: 1px solid var(--main-color);
       // border-left: 6px solid var(--main-color);
     }
-    .stu {
-      width: 100%;
-      // height: 70px;
-      border-bottom: 1px solid #ccc;
-      padding: 20px;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      cursor: pointer;
-      p {
-        padding-top: 7px;
-        padding-left: 20px;
-        font-size: 14px;
+    .students {
+      height: 690px;
+      overflow: auto;
+      .stu {
+        width: 100%;
+        // height: 70px;
+        border-bottom: 1px solid #ccc;
+        padding: 20px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        cursor: pointer;
+        p {
+          padding-top: 7px;
+          padding-left: 20px;
+          font-size: 14px;
+        }
+        img {
+          width: 35px;
+          height: 35px;
+        }
+        &:hover {
+          background-color: #f9e8c3;
+        }
       }
-      img {
-        width: 35px;
-        height: 35px;
-      }
-    }
-    .stu:hover {
-      background-color: var(--main-color-hover);
     }
   }
   .taskdetailRight {
