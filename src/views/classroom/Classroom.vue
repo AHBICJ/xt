@@ -149,6 +149,7 @@ export default {
         pagenum: this.pagenum
       };
       getClassroomList(prams).then(res => {
+        res.data.myclass.reverse();
         this.classrooms = [...res.data.myclass, ...res.data.other];
         // this.totalPage = res.totalpage;
       });
@@ -164,7 +165,7 @@ export default {
       };
       create_classroom(datas)
         .then(res => {
-          this.classrooms.push(res.data);
+          this.classrooms.unshift(res.data);
           this.form.title = "";
           this.form.intro = "";
           this.form.picimg = "";
@@ -184,7 +185,7 @@ export default {
               type: "success"
             });
 
-            this.classrooms.push(res.data);
+            this.classrooms.unshift(res.data);
           }
           this.form.ma = "";
           this.dialogJoin = false;
