@@ -202,7 +202,11 @@ export default {
           this.topics.forEach(topic => {
             topic.tasks.forEach(task => {
               this.taskNum++;
+<<<<<<< HEAD
               // console.log('before',task);
+=======
+              // debugger;
+>>>>>>> 396fa22967308afe6e9c9c360c71d7d1b3d38def
               task.photo = JSON.parse(task.photo);
               task.link = JSON.parse(task.link);
               // console.log('after',task);

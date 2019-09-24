@@ -99,14 +99,14 @@ export default {
       }
     };
     const validatePass = (rule, value, callback) => {
-      if (value.length < 6 || value.length > 18) {
-        return callback(new Error("密码长度为6到18位"));
+      if (value.length < 4 || value.length > 18) {
+        return callback(new Error("密码长度为4到18位"));
       } else {
         const reg = /^[^\u4e00-\u9fa5]{0,}$/;
         if (reg.test(value)) {
           callback();
         } else {
-          return callback(new Error("密码6到18位 不含中文"));
+          return callback(new Error("密码4到18位 不含中文"));
         }
       }
     };

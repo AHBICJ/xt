@@ -4,57 +4,57 @@
     <div
       class="map_bg"
       v-show="currentCity=='hangzhou'"
-      :style="{backgroundImage: 'url('+'images/hangzhou.jpg'+')'}"
+      :style="{backgroundImage: 'url('+'images/cityBG/hangzhou.jpg'+')'}"
     />
     <div
       class="map_bg"
       v-show="currentCity=='shaoxing'"
-      :style="{backgroundImage: 'url('+'images/shaoxing.jpg'+')'}"
+      :style="{backgroundImage: 'url('+'images/cityBG/shaoxing.jpg'+')'}"
     />
     <div
       class="map_bg"
       v-show="currentCity=='ningbo'"
-      :style="{backgroundImage: 'url('+'images/ningbo.jpg'+')'}"
+      :style="{backgroundImage: 'url('+'images/cityBG/ningbo.jpg'+')'}"
     />
     <div
       class="map_bg"
       v-show="currentCity=='huzhou'"
-      :style="{backgroundImage: 'url('+'images/huzhou.jpg'+')'}"
+      :style="{backgroundImage: 'url('+'images/cityBG/huzhou.jpg'+')'}"
     />
     <div
       class="map_bg"
       v-show="currentCity=='jiaxing'"
-      :style="{backgroundImage: 'url('+'images/jiaxing.jpg'+')'}"
+      :style="{backgroundImage: 'url('+'images/cityBG/jiaxing.jpg'+')'}"
     />
     <div
       class="map_bg"
       v-show="currentCity=='quzhou'"
-      :style="{backgroundImage: 'url('+'images/quzhou.jpg'+')'}"
+      :style="{backgroundImage: 'url('+'images/cityBG/quzhou.jpg'+')'}"
     />
     <div
       class="map_bg"
       v-show="currentCity=='jinhua'"
-      :style="{backgroundImage: 'url('+'images/jinhua.jpg'+')'}"
+      :style="{backgroundImage: 'url('+'images/cityBG/jinhua.jpg'+')'}"
     />
     <div
       class="map_bg"
       v-show="currentCity=='taizhou'"
-      :style="{backgroundImage: 'url('+'images/taizhou.jpg'+')'}"
+      :style="{backgroundImage: 'url('+'images/cityBG/taizhou.jpg'+')'}"
     />
     <div
       class="map_bg"
       v-show="currentCity=='lishui'"
-      :style="{backgroundImage: 'url('+'images/lishui.jpg'+')'}"
+      :style="{backgroundImage: 'url('+'images/cityBG/lishui.jpg'+')'}"
     />
     <div
       class="map_bg"
       v-show="currentCity=='wenzhou'"
-      :style="{backgroundImage: 'url('+'images/wenzhou.jpg'+')'}"
+      :style="{backgroundImage: 'url('+'images/cityBG/wenzhou.jpg'+')'}"
     />
     <div
       class="map_bg"
       v-show="currentCity=='zhoushan'"
-      :style="{backgroundImage: 'url('+'images/zhoushan.jpg'+')'}"
+      :style="{backgroundImage: 'url('+'images/cityBG/zhoushan.jpg'+')'}"
     />
 
     <svg width="50%" height="80%" class="my_svg" viewBox="0 0 600 600">

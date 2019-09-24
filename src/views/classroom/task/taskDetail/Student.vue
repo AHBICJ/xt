@@ -1,76 +1,41 @@
 <template>
   <div class="taskdetail">
-    <el-dialog title="影音预览" :visible.sync="showPreview" width="80%" top="10vh">
-      <el-carousel :autoplay="false" arrow="hover" height="680px" ref="previewCarousel">
-        <el-carousel-item v-for="pho in share.photo" :key="pho.name">
-          <img :src="imgAddress(pho.url)" />
-        </el-carousel-item>
-      </el-carousel>
-    </el-dialog>
-    <!-- 左侧任务详情 -->
     <div class="taskdetailLeft">
-      <!-- <taskdetail-left :taskinfo = "taskinfo"/> -->
-      <div class="TaskdetailLeft">
-        <div class="task_title">
-          <h1 class="title_word">{{taskinfo.name}}</h1>
-          <div class="title_btn">
-            <div class="btnbox">
-              <span class="btn">
-                <svg viewBox="0 0 24 24" focusable="false" width="24" height="24">
-                  <path
-                    d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
-                  />
-                </svg>
-              </span>
-            </div>
+      <el-dialog title="影音预览" :visible.sync="showPreview" width="80%" top="10vh">
+        <el-carousel :autoplay="false" arrow="hover" height="680px" ref="previewCarousel">
+          <el-carousel-item v-for="pho in share.photo" :key="pho.name">
+            <img :src="imgAddress(pho.url)" />
+          </el-carousel-item>
+        </el-carousel>
+      </el-dialog>
+      <!-- 左侧任务详情 -->
+      <div class="task_card">
+        <!-- 标题 -->
+        <div class="card_title is_task_title">
+          <div class="title_pic task_pic_box">
+            <svg viewBox="0 0 24 24" focusable="false" width="24" height="24">
+              <path d="M7 15h7v2H7zm0-4h10v2H7zm0-4h10v2H7z" />
+              <path
+                d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-.14 0-.27.01-.4.04a2.008 2.008 0 0 0-1.44 1.19c-.1.23-.16.49-.16.77v14c0 .27.06.54.16.78s.25.45.43.64c.27.27.62.47 1.01.55.13.02.26.03.4.03h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7-.25c.41 0 .75.34.75.75s-.34.75-.75.75-.75-.34-.75-.75.34-.75.75-.75zM19 19H5V5h14v14z"
+              />
+            </svg>
           </div>
+          <div class="title_info task_info_detail">{{share.name}}</div>
         </div>
-        <div class="myname">
-          <img :src="`/images/` + user.photo" alt />
-          <p>{{user.name}}</p>
-        </div>
-        <div class="task_content">
+        <!-- 资源 -->
+        <div class="share_content">
           <div class="content_intro">
             <div class="intro_left">
               <div class="intro_time">
-                <span class="taskdate">{{taskinfo.star_time}}</span>
+                <span class="taskdate">{{share.star_time}} - {{share.end_time}}</span>
               </div>
               <div class="intro_word">
-                <span>{{taskinfo.desc}}</span>
-              </div>
-            </div>
-            <div class="intro_right" v-if="user.role=='student'">
-              <div class="turn">
-                <div class="word">成绩/状态</div>
-                <div class="num">{{status=='已完成'?homework_info.grade:status}}</div>
+                <span>{{share.desc}}</span>
               </div>
             </div>
           </div>
           <!-- 资源 -->
-          <!-- <div class="content_means">
-            <div class="meansBox_out" v-for="item in  taskinfo.photo" :key="item">
-              <div class="meansBox">
-                <a href class="means">
-                  <div class="means_pic">
-                    <img :src="qaq +myimg" alt />
-                  </div>
-                  <div class="means_title">
-                    <div class="means_titleword">百度一下，你就知道</div>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </div>-->
           <div class="content_means">
-            <!-- dialog -->
-            <!-- <el-dialog
-              title="分享资源"
-              :visible.sync="dialogShare"
-              width="960px"
-              custom-class="dialogShare"
-            >
-              <carouselsshare :images="share"></carouselsshare>
-            </el-dialog>-->
             <!-- means -->
             <div class="meansBox_out">
               <div
@@ -79,7 +44,7 @@
                 :key="pho.name"
                 @click="handlePreview(idx)"
               >
-                <div href class="means">
+                <div class="means">
                   <div class="means_pic" :style="`backgroundImage:url(${imgAddress(pho.url)})`" />
                   <div class="means_title">
                     <div class="means_titleword">{{pho.name}}</div>
@@ -88,7 +53,7 @@
               </div>
               <!-- link -->
               <div class="meansBox" v-for="url in share.link" :key="url.link">
-                <div href class="means">
+                <div class="means">
                   <div class="means_pic linkBG" />
                   <div class="means_title">
                     <div class="means_titleword">{{url.title}}</div>
@@ -100,74 +65,114 @@
           </div>
         </div>
       </div>
-      <share />
-      <div class="homework" v-if="user.role=='student'">
-        <div class="homework">
-          <el-form ref="form">
-            <p>我的作业</p>
+      <div class="homework">
+        <div class="homework_title">
+          <div class="home_title_pic">
+            <img :src="`/images/` + user.photo" alt />
+          </div>
+          <div class="home_title_info">{{user.name}}</div>
+        </div>
+        <div class="homework_content">
+          <div class="formItem">
+            <p class="taskTitle">添加文字：</p>
             <el-input
               type="textarea"
-              v-model="homework"
-              :autosize="{ minRows: 3, maxRows: 6}"
-              :disabled="status=='qqwqw已完成'"
-            ></el-input>
-          </el-form>
-          <!-- <p>字数限制:200</p> -->
-        </div>
-      </div>
-      <div v-if="user.role=='student'">
-        <div class="homework">
-          <el-form ref="form">
-            <p>老师评语</p>
-            <el-input v-model="homework_info.comment" disabled></el-input>
-          </el-form>
+              v-model="homework_info.content"
+              :autosize="{ minRows: 3}"
+              :disabled="homework_info.status=='已完成'"
+            />
+          </div>
+          <div class="formItem">
+            <p class="taskTitle">添加图片：</p>
+            <el-upload
+              ref="image_upload"
+              :action="upload_api"
+              list-type="picture-card"
+              class="upload-image"
+              :file-list="preload.imageList"
+              :on-success="handleSuccess"
+              :on-remove="handleRemove"
+              :disabled="homework_info.status=='已完成'"
+            >
+              <i class="el-icon-plus" />
+            </el-upload>
+          </div>
+          <div class="formItem">
+            <p class="taskTitle">添加附件：</p>
+            <el-upload
+              ref="attch_upload"
+              class="upload-attach"
+              drag
+              :action="upload_api"
+              multiple
+              :file-list="preload.attachList"
+              :on-success="handleAttachSuccess"
+              :on-remove="handleAttachRemove"
+              :disabled="homework_info.status=='已完成'"
+            >
+              <i class="el-icon-upload"></i>
+              <div class="el-upload__text">
+                将文件拖到此处，或
+                <em>点击上传</em>
+              </div>
+            </el-upload>
+          </div>
         </div>
       </div>
     </div>
     <!-- 右侧提交 -->
     <div class="taskdetailRight">
-      <div class="top">
-        <div class="myrow">
-          <p>你的作业</p>
-          <span>{{status}}</span>
+      <div class="task_detail">
+        <div class="myhomework_title">
+          <p>我的任务</p>
         </div>
-        <el-upload
-          class="upload-demo"
-          :action="uploadAddr"
-          :file-list="homework_photo"
-          :on-remove="handleRemove"
-          :on-success="getimg"
-        >
-          <el-button class="mybuttom">添加附件</el-button>
-        </el-upload>
-
-        <el-button type="warning" class="mybuttom" @click="submit_homework">完成作业</el-button>
+        <div class="finished" v-if="homework_info.status=='已完成'">
+          <p class="word">成绩：</p>
+          <p class="grade">{{homework_info.grade}}</p>
+          <p class="word">教师反馈：</p>
+          <p
+            class="comment"
+          >{{(homework_info.comment==null || homework_infor.comment=="")?"教师还没有评价哦~":homework_info.comment}}</p>
+        </div>
+        <div class="assigned" v-else>
+          <p class="word">状态:</p>
+          <p class="status">{{homework_info.status}}</p>
+          <el-button
+            type="primary"
+            class="mybuttom"
+            @click="submit_homework"
+          >{{homework_info.status=='已提交'?'重新提交':'提交任务'}}</el-button>
+          <p class="info">提交任务后记得来看反馈哦~</p>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { task_detail, myTask } from "@/api/toGet";
+import { /*task_detail,*/ myTask } from "@/api/toGet";
 import { submit_home } from "@/api/toPost";
 import Address from "@/mixin/Address";
-import Share from "@/components/Share";
 export default {
   data() {
     return {
-      homework: "",
       id: 1,
-      taskinfo: {},
-      picList: [],
-      qaq: process.env.VUE_APP_CDN,
-      status: "",
-      showPreview: false,
-      homework_info: {},
-      homework_photo: [],
-      share: {
-        link: [],
-        photo: []
+      share: {},
+      homework_info: {
+        status: "",
+        id: "",
+        attach: [],
+        comment: "",
+        content: "",
+        grade: "",
+        image_address: []
       },
+      preload: {
+        imageList: [],
+        attachList: []
+      },
+      upload_api: process.env.VUE_APP_API + "/upload",
+      showPreview: false,
       user: this.$store.state.user
     };
   },
@@ -181,41 +186,80 @@ export default {
       this.showPreview = true;
       this.$refs.previewCarousel.setActiveItem(idx);
     },
-    get_task_detail() {
+    getMyTask() {
       let datas = { task_id: this.id };
-
-      task_detail(datas)
-        .then(res => {
-          this.taskinfo = res.data;
-          this.taskinfo.photo = JSON.parse(this.taskinfo.photo);
-        })
-        .catch(() => {
-          this.$message({
-            message: "请求错误",
-            type: "error"
-          });
+      myTask(datas).then(res => {
+        this.homework_info.status = res.status;
+        if (res.status != "未提交") {
+          this.homework_info = res.data.hw;
+          this.homework_info.status = res.status;
+          try {            
+            this.preload.imageList =JSON.parse(
+              this.homework_info.image_address
+            );
+            this.homework_info.image_address = JSON.parse(
+              this.homework_info.image_address
+            );
+          } catch {
+            this.homework_info.image_address = [];
+            this.preload.imageList =[];
+          }
+          try {
+            this.preload.attachList = JSON.parse(this.homework_info.attach);
+            this.homework_info.attach = JSON.parse(this.homework_info.attach);
+          } catch {
+            this.homework_info.attach = [];
+            this.preload.attachList=[];
+          }
+        }
+        this.preload.imageList.forEach(item => {
+          item.url = process.env.VUE_APP_CDN + item.url;
         });
+        this.preload.attachList.forEach(item => {
+          item.url = process.env.VUE_APP_CDN + item.url;
+        });
+        this.share = res.data.task;
+        this.share.photo = JSON.parse(this.share.photo);
+        this.share.link = JSON.parse(this.share.link);
+      });
     },
-    //上面是获取，下面是提交
-    getimg(res, file) {
-      this.picList.push({ name: file.name, url: res.data[0] });
+    handleSuccess(res, file) {
+      this.homework_info.image_address.push({
+        name: file.name,
+        url: res.data[0]
+      });
     },
     handleRemove(file) {
-      this.picList.splice(this.picList.indexOf(file.name), 1);
+      this.homework_info.image_address.splice(
+        this.homework_info.image_address.indexOf(file.name),
+        1
+      );
+    },
+    handleAttachSuccess(res, file) {
+      this.homework_info.attach.push({ name: file.name, url: res.data[0] });
+    },
+    handleAttachRemove(file) {
+      this.homework_info.attach.splice(
+        this.homework_info.attach.indexOf(file.name),
+        1
+      );
     },
     submit_homework() {
       let datas = {
         student_id: this.user.id,
         task_id: this.id,
-        content: this.homework,
-        image_address: JSON.stringify(this.picList)
+        content: this.homework_info.content,
+        image_address: JSON.stringify(this.homework_info.image_address),
+        attach: JSON.stringify(this.homework_info.attach)
       };
+
       submit_home(datas)
         .then(res => {
           this.$message({
             message: res.msg,
             type: "success"
           });
+          this.homework_info.status = "已提交";
         })
         .catch(error => {
           this.$message({
@@ -223,27 +267,7 @@ export default {
             type: "error"
           });
         });
-    },
-    getMyTask() {
-      let datas = {
-        task_id: this.id
-      };
-      myTask(datas).then(res => {
-        this.status = res.status;
-        this.homework_info = res.data.hw;
-        this.taskinfo = res.data.task;
-        this.taskinfo.photo = JSON.parse(this.taskinfo.photo);
-        this.share.photo =
-          this.taskinfo.photo || JSON.parse(this.taskinfo.photo);
-        this.homework = res.data.hw.content || "";
-        this.share.link = JSON.parse(this.taskinfo.link) || [];
-        this.homework_photo =
-          JSON.parse(this.homework_info.image_address) || [];
-      });
     }
-  },
-  components: {
-    Share
   }
 };
 </script>
@@ -255,35 +279,77 @@ export default {
   width: 1120px;
   display: grid;
   grid-template-areas: "left right";
-  grid-template-rows: auto auto;
   grid-template-columns: 800px 300px;
   grid-gap: 20px;
-  margin-top: 30px;
   .taskdetailLeft {
     grid-area: left;
-    .TaskdetailLeft {
-      width: 100%;
-      height: auto;
+    .task_card {
       background-color: #fff;
       border: 1px solid #dadce0;
       border-radius: 8px;
-      //
       overflow: hidden;
-      padding: 0px 16px 16px 16px;
-      box-sizing: border-box;
-      .task_title {
+      margin-bottom: 20px;
+      .is_task_title {
+        border-bottom: 2px solid var(--main-color);
+        padding: 10px 20px !important;
+      }
+      .card_title {
         align-items: center;
         display: flex;
-        flex-direction: row;
-        height: 60px;
-        padding-right: 24px;
+        height: 50px;
+        padding: 10px 20px 0px;
         position: relative;
-        .title_word {
+        .title_pic {
+          display: flex;
+          flex: 0 0 auto;
+          height: 36px;
+          width: 36px;
+          justify-content: center; //水平居中
+          align-items: center; //垂直居中
+          text-align: center;
+          font-size: 16px;
+          line-height: 32px;
+          margin-right: 16px;
+          background-color: #e8710a;
+          color: #fff;
+          fill: #fff;
+          fill: currentColor;
+          border-radius: 50%;
+          img {
+            display: block;
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .title_info {
           display: flex;
           flex: 1 1 auto;
-          flex-direction: row;
           overflow: hidden;
-          font-size: 30px;
+        }
+        .share_info_detail {
+          padding-top: 2px;
+          flex-direction: column;
+          .share_name {
+            font-size: 16px;
+            line-height: 20px;
+            color: #3c4043;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            display: block;
+          }
+          .share_time {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1rem;
+            color: #5f6368;
+          }
+        }
+        .task_info_detail {
+          letter-spacing: 0.25px;
+          font-size: 20px;
+          font-weight: bold;
+          line-height: 25px;
           color: var(--main-color);
         }
         .title_btn {
@@ -319,37 +385,20 @@ export default {
               fill: currentColor;
             }
             &:hover {
-              background-color: #f9f3e5;
+              background-color: rgba(32, 33, 36, 0.039);
             }
           }
         }
       }
-      .myname {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        width: 100%;
-        height: 50px;
-        border-bottom: 1px solid var(--main-color);
-        // margin-top: 10px;
-        line-height: 50px;
-        p {
-          padding-left: 20px;
-        }
-        img {
-          display: flex;
-          justify-content: center; /* 水平居中 */
-          align-items: center;
-          width: 40px;
-          height: 40px;
-        }
-      }
 
-      .task_content {
-        padding: 16px 8px 0 8px;
+      .share_content {
+        padding: 10px 20px 0;
         width: 100%;
+        // height: 320px;
+        // overflow: auto;
         box-sizing: border-box;
         .content_intro {
+          padding-bottom: 15px;
           display: flex;
           .intro_left {
             display: flex;
@@ -407,6 +456,16 @@ export default {
                 }
               }
             }
+          }
+        }
+        .content_words {
+          flex-shrink: 12345;
+          overflow: hidden;
+          margin-bottom: 15px;
+          .mywords {
+            display: block;
+            overflow: hidden;
+            overflow-wrap: break-word;
           }
         }
         .content_means {
@@ -472,62 +531,138 @@ export default {
             }
           }
         } //content_means
-      } //.message_content
-      //
-      .homework {
+      } //.share_content
+    } //share_card
+
+    .homework {
+      border: 1px solid #dadce0;
+      border-radius: 8px;
+      overflow: hidden;
+      border-top: 1px solid #e8eaed;
+      margin-bottom: 20px;
+      background-color: #fff;
+      .homework_title {
+        align-items: center;
         display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        border-top: 1px solid #e8eaed;
-        margin-top: 20px;
-        p {
-          margin-bottom: 10px;
-          margin-top: 10px;
+        height: 50px;
+        border-bottom: 2px solid var(--main-color);
+        padding: 10px 20px !important;
+        position: relative;
+        .home_title_pic {
+          display: flex;
+          flex: 0 0 auto;
+          height: 36px;
+          width: 36px;
+          justify-content: center; //水平居中
+          align-items: center; //垂直居中
+          text-align: center;
+          font-size: 16px;
+          line-height: 32px;
+          margin-right: 16px;
+          background-color: #e8710a;
+          color: #fff;
+          fill: #fff;
+          fill: currentColor;
+          border-radius: 50%;
+          img {
+            display: block;
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .home_title_info {
+          display: flex;
+          flex: 1 1 auto;
+          overflow: hidden;
+          letter-spacing: 0.25px;
+          font-size: 20px;
+          font-weight: bold;
+          line-height: 25px;
+          color: var(--main-color);
         }
       }
+      .homework_content {
+        padding: 20px 20px 0;
+        .formItem {
+          .taskTitle {
+            margin: 0px 0 5px;
+            color: #666;
+            font-size: 15px;
+          }
+          margin-bottom: 20px;
+        }
+      }
+    }
+
+    .feedback {
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #dadce0;
+      border-radius: 8px;
+      overflow: hidden;
     }
   }
   .taskdetailRight {
     width: 100%;
     grid-area: right;
-    // display: flex;
-    // flex-direction: column;
-    // flex-wrap: wrap;
-    // justify-content: flex-start;
-    // width: 300px;
-    // margin-left: 20px;
-    //
     overflow: hidden;
     margin: -16px;
     padding: 16px;
-    .top {
+    .task_detail {
       box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302),
         0 2px 6px 2px rgba(60, 64, 67, 0.149);
-      border-radius: 9px;
+      border-radius: 8px;
       overflow: hidden;
-      padding: 12px 24px;
+      padding: 20px;
       background-color: #fff;
-      .myrow {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        span {
-          margin-left: 132px;
-          font-size: 14px;
-          color: var(--main-color);
+      .myhomework_title {
+        letter-spacing: 0.25px;
+        font-size: 20px;
+        font-weight: bold;
+        line-height: 25px;
+        color: var(--main-color);
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        border-bottom: 2px solid var(--main-color);
+      }
+      .finished {
+        .word {
+          color: #666;
+          font-size: 15px;
         }
-        p {
-          font-size: 18px;
+        .grade {
+          color: var(--main-color);
+          font-size: 40px;
+          text-align: center;
+          line-height: 60px;
+        }
+        .comment {
+          margin-top: 10px;
+          text-indent: 2em;
         }
       }
-      .mybuttom {
-        width: 250px;
-        height: 40px;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        margin-left: 0px;
+      .assigned {
+        .word {
+          color: #666;
+          font-size: 15px;
+        }
+        .status {
+          color: var(--main-color);
+          font-size: 26px;
+          text-align: center;
+          line-height: 46px;
+        }
+        .info {
+          color: #888;
+          font-size: 14px;
+        }
+        .mybuttom {
+          width: 250px;
+          height: 40px;
+          margin-top: 10px;
+          margin-bottom: 10px;
+          margin-left: 0px;
+        }
       }
     }
   }
@@ -544,14 +679,41 @@ export default {
       max-height: 100%;
     }
   }
-}
-.el-dropdown-menu__item {
-  a {
-    color: #606266;
-  }
-  &:hover {
-    a {
-      color: #e6c787;
+  .homework_content {
+    textarea {
+      resize: none;
+      padding: 10px;
+      font-size: 16px;
+      overflow-y: hidden;
+      transition: border ease-in-out 0.3s, padding ease-in-out 0.3s;
+    }
+    .upload-image {
+      margin-right: -8px;
+      ul > li {
+        width: 142px;
+        height: 142px;
+      }
+      .el-upload--picture-card {
+        width: 142px;
+        height: 142px;
+      }
+    }
+    .upload-attach {
+      width: 100%;
+      .el-upload {
+        width: 100%;
+        height: 100px;
+      }
+      .el-upload-dragger {
+        width: 100%;
+        height: 100px;
+      }
+      .el-upload-dragger .el-icon-upload {
+        font-size: 60px;
+        color: #c0c4cc;
+        margin: 10px 0 5px;
+        line-height: 50px;
+      }
     }
   }
 }

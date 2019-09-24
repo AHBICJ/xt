@@ -5,14 +5,14 @@
         <nav-bar :options="navbarOptions" />
         <slick :options="slickOptions" />
       </div>
+            <div class="section">
+        <z-j-map />
+      </div>
       <div class="section">
         <pic-list />
       </div>
       <div class="section">
         <threephoto />
-      </div>
-      <div class="section">
-        <z-j-map />
       </div>
       <div class="section fp-auto-height">
         <bottombar :options="bottombaroptions" />
