@@ -178,3 +178,7 @@
   .vjs-custom-skin > .video-js .vjs-control-bar .vjs-fullscreen-control {
     order: 6;
   }
+
+.vjs-fluid {
+    padding-top: 56.25% !important;
+}
