@@ -17,7 +17,7 @@
     <div class="messageBox">
       <p class="title">专题任务</p>
       <template v-if="topics.length>0">
-      <router-link class="mylink" to v-for="topic in topics" :key="topic.id" v-text="topic.name"></router-link>
+      <router-link class="mylink" :to="{name:'task'}" v-for="topic in topics" :key="topic.id" v-text="topic.name"></router-link>
       </template>
       <template v-else>
         <router-link class="mylink" to>当前暂无主题任务</router-link>
