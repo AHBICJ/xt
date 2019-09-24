@@ -104,6 +104,8 @@
 </template>
 <script>
 import Address from "@/mixin/Address";
+import { delete_task } from "@/api/toPost.js";
+
 export default {
   data() {
     return {
@@ -123,20 +125,19 @@ export default {
       return this.share.user_id == this.user.id;
       // return this.share.username==this.user.name;
     },
-    share_photo(){
+    share_photo() {
       // console.log(this.share.photo);
-      if (typeof this.share.photo === 'string'){
-        if (!this.share.photo.trim()) return []
+      if (typeof this.share.photo === "string") {
+        if (!this.share.photo.trim()) return [];
         return JSON.parse(this.share.photo);
       }
       return this.share.photo;
     },
-    share_link(){
-      
+    share_link() {
       // console.log(this.share.link);
-    
-      if ((typeof this.share.link) === 'string'){
-        if (!this.share.link.trim()) return []
+
+      if (typeof this.share.link === "string") {
+        if (!this.share.link.trim()) return [];
         return JSON.parse(this.share.link);
       }
       return this.share.link;
@@ -166,10 +167,15 @@ export default {
         }
       )
         .then(() => {
-          this.$message({
-            type: "success",
-            message: "删除成功!"
-          });
+          delete_task(datas)
+            .then(() => {
+              this.$message({
+                type: "success",
+                message: "删除成功!"
+              });
+              history.go(0);
+            })
+            .catch(() => {});
         })
         .catch(() => {
           this.$message({
@@ -177,6 +183,9 @@ export default {
             message: "已取消删除"
           });
         });
+      let datas = {
+        task_id: this.share.id
+      };
     }
   },
   mixins: [Address],
