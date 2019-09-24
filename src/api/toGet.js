@@ -136,3 +136,11 @@ export function myTask(data){
     params:data
   })
 }
+
+export function classAd(data){
+  return request({
+    url:"/api/classroom_ad",
+    method:"get",
+    params:data
+  })
+}

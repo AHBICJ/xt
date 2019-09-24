@@ -3,22 +3,56 @@
     <div class="messageBox">
       <div>
         <p class="title">消息提示</p>
-        <router-link class="mylink" to>老师发布了一个新的作业</router-link>
-        <router-link class="mylink" to>有15个学生提交了《乡土》</router-link>
-        <router-link to class="checkAll">查看全部</router-link>
+        <template v-if="notices.length>0">
+          
+          <router-link class="mylink" to v-for="notice in notices" :key="notice.msg" v-text="notice.msg"></router-link>
+          <router-link to class="checkAll">查看全部</router-link>
+        </template>
+        <template v-else>
+          <router-link class="mylink" to>当前暂无消息</router-link>
+        </template>
       </div>
 
     </div>
     <div class="messageBox">
       <p class="title">专题任务</p>
-      <router-link class="mylink" to>台州美食</router-link>
-      <router-link class="mylink" to>台州美食</router-link>
+      <template v-if="topics.length>0">
+      <router-link class="mylink" to v-for="topic in topics" :key="topic.id" v-text="topic.name"></router-link>
+      </template>
+      <template v-else>
+        <router-link class="mylink" to>当前暂无主题任务</router-link>
+      </template>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import {classAd} from '@/api/toGet'
+export default {
+  data(){
+    return {
+      room_id:0,
+      topics:[],
+      notices:[]
+    }
+  },
+  methods:{
+    getads(){
+      let datas={
+        room_id:this.room_id
+      }
+      classAd(datas)
+      .then(res=>{
+        this.topics = res.data.topics;
+        this.notices = res.data.notice;
+      })
+    }
+  },
+  created(){
+    this.room_id = this.$route.params.id;
+    this.getads();
+  }
+};
 </script>
 
 <style lang="scss" scoped >
