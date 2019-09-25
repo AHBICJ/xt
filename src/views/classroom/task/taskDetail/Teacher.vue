@@ -298,7 +298,7 @@ export default {
       font-size: 20px;
       color: var(--main-color);
       font-weight: bold;
-      font-family: "Courier New", Courier, monospace;
+      // font-family: "Courier New", Courier, monospace;
       padding: 20px;
       border-bottom: 1px solid var(--main-color);
       // border-left: 6px solid var(--main-color);

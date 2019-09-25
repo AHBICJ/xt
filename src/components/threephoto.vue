@@ -113,7 +113,7 @@ export default {
       font-weight: 500;
     }
     p {
-      font-family: RalewayMedium, Helvetica, sans-serif;
+      // font-family: RalewayMedium, Helvetica, sans-serif;
       font-size: 16px;
       line-height: 24px;
       padding: 5% 0;

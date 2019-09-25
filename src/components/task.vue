@@ -77,7 +77,7 @@ p {
   padding-top: 11px;
   padding-left: 5px;
   letter-spacing: 0.01785714em;
-  font-family: "Google Sans", Roboto, Arial, sans-serif;
+  // font-family: "Google Sans", Roboto, Arial, sans-serif;
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.25rem;

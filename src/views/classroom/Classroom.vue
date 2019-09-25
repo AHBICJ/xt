@@ -253,7 +253,7 @@ export default {
       .el-dialog__title {
         line-height: 24px;
         font-size: 20px;
-        font-family: "Courier New", Courier, monospace;
+        // font-family: "Courier New", Courier, monospace;
         font-weight: bold;
         border-left: 6px solid var(--main-color);
         color: var(--main-color);
@@ -293,7 +293,7 @@ export default {
       color: var(--main-color);
 
       span {
-        font-family: "Courier New", Courier, monospace;
+        // font-family: "Courier New", Courier, monospace;
         font-size: 22px;
         font-weight: bold;
         line-height: 40px;

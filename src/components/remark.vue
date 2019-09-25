@@ -303,7 +303,7 @@ export default {
             }
             .intro_time {
               letter-spacing: 0.3px;
-              font-family: Roboto, Arial, sans-serif;
+              // font-family: Roboto, Arial, sans-serif;
               font-size: 14px;
               line-height: 32px;
               color: #80868b;
@@ -332,7 +332,7 @@ export default {
               }
               .word {
                 letter-spacing: 0.3px;
-                font-family: Roboto, Arial, sans-serif;
+                // font-family: Roboto, Arial, sans-serif;
                 font-size: 12px;
                 font-weight: 400;
                 line-height: 16px;
@@ -391,7 +391,7 @@ export default {
                   overflow: hidden;
                   .means_titleword {
                     letter-spacing: 0.1px;
-                    font-family: "Google Sans", Roboto, Arial, sans-serif;
+                    // font-family: "Google Sans", Roboto, Arial, sans-serif;
                     font-size: 16px;
                     line-height: 40px;
                     color: #3c4043;

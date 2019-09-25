@@ -300,7 +300,7 @@ a {
         width: 36px;
         text-align: center;
         font-size: 30px;
-        font-family: "Courier New", Courier, monospace;
+        // font-family: "Courier New", Courier, monospace;
         font-weight: bold;
         // line-height: 1.2;
         letter-spacing: 0;

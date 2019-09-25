@@ -301,7 +301,7 @@ export default {
   .el-dialog__title {
     line-height: 24px;
     font-size: 20px;
-    font-family: "Courier New", Courier, monospace;
+    // font-family: "Courier New", Courier, monospace;
     font-weight: bold;
     color: #ddd;
     border-left: 6px solid #ddd;
@@ -363,7 +363,7 @@ img {
   min-height: 100%;
   background: url(../assets/images/BG5.png);
   .article_attention p {
-    font-family: "Courier New", Courier, monospace;
+    // font-family: "Courier New", Courier, monospace;
     font-size: 16px;
     text-align: center;
     color: #ddd;

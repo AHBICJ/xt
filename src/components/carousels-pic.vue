@@ -22,7 +22,7 @@
   background-position: 50% 50%;
 }
 .attention p {
-  font-family: "Courier New", Courier, monospace;
+  /* font-family: "Courier New", Courier, monospace; */
   font-size: 16px;
   text-align: center;
   color: #ddd;

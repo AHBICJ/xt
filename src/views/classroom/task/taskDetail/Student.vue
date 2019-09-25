@@ -132,7 +132,7 @@
           <p class="word">教师反馈：</p>
           <p
             class="comment"
-          >{{(homework_info.comment==null || homework_infor.comment=="")?"教师还没有评价哦~":homework_info.comment}}</p>
+          >{{(homework_info.comment==null || homework_info.comment=="")?"教师还没有评价哦~":homework_info.comment}}</p>
         </div>
         <div class="assigned" v-else>
           <p class="word">状态:</p>
@@ -414,7 +414,7 @@ export default {
             }
             .intro_time {
               letter-spacing: 0.3px;
-              font-family: Roboto, Arial, sans-serif;
+              // font-family: Roboto, Arial, sans-serif;
               font-size: 14px;
               line-height: 32px;
               color: #80868b;
@@ -443,7 +443,7 @@ export default {
               }
               .word {
                 letter-spacing: 0.3px;
-                font-family: Roboto, Arial, sans-serif;
+                // font-family: Roboto, Arial, sans-serif;
                 font-size: 12px;
                 font-weight: 400;
                 line-height: 16px;
