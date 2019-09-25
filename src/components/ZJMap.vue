@@ -516,7 +516,7 @@ export default {
   data() {
     return {
       currentHoverCity: "",
-      currentCity: "shaoxing",
+      currentCity: "hangzhou",
       cities: {
         hangzhou: "/city/1",
         ningbo: "/city/2",
