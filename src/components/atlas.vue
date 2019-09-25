@@ -28,6 +28,13 @@ export default {
 };
 </script>
 
+<style lang="scss">
+.atlas{
+  .el-carousel__item{
+    background-color: rgb(253,252,250);
+  }
+}
+</style>
 <style lang="scss" scoped>
 .atlas {
   width: 800px;
@@ -38,6 +45,7 @@ export default {
   .imgbox-city {
     height: 100%;
     overflow: hidden;
+    background-color: #fdfcfa;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     background-position: center center !important;

@@ -74,6 +74,14 @@ export function room_tasks(data) {
   })
 }
 
+export function room_tasks_stu(data) {
+  return request({
+    url: '/api/room_tasks_stu',
+    method: 'get',
+    params: data
+  })
+}
+
 export function get_classroom_info(data) {
   return request({
     url: '/api/get_classroom_info',

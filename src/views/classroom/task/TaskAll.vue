@@ -152,7 +152,7 @@
 <script>
 import TaskGroup from "@/components/TaskGroup.vue";
 import { create_task, createTopic } from "@/api/toPost";
-import { room_tasks } from "@/api/toGet";
+import { room_tasks,room_tasks_stu } from "@/api/toGet";
 export default {
   data() {
     return {
@@ -186,15 +186,42 @@ export default {
     }
   },
   methods: {
-    handleDelete(data){
-      this.topics.forEach(topic =>{
-        if (topic.id==data.topicid){
+    handleDelete(data) {
+      this.topics.forEach(topic => {
+        if (topic.id == data.topicid) {
           topic.tasks = topic.tasks.filter(x => x.id != data.taskid);
         }
-      })
+      });
     },
     get_tasks(id) {
-      room_tasks({ room_id: id, task_type: "task" })
+      if (this.user.role != "student") {
+        room_tasks({ room_id: id, task_type: "task" })
+          .then(res => {
+            this.taskNum = 0;
+            this.topics = [
+              {
+                id: -1,
+                name: "默认主题",
+                room_id: id,
+                tasks: res.data.default
+              },
+              ...res.data.topics
+            ];
+
+            this.topics.forEach(topic => {
+              topic.tasks.forEach(task => {
+                this.taskNum++;
+                // debugger;
+                task.photo = JSON.parse(task.photo);
+                task.link = JSON.parse(task.link);
+                // console.log('after',task);
+              });
+            });
+          })
+          .catch(() => {});
+      }
+      else{
+        room_tasks_stu({ room_id: id, task_type: "task" })
         .then(res => {
           this.taskNum = 0;
           this.topics = [
@@ -218,6 +245,7 @@ export default {
           });
         })
         .catch(() => {});
+      }
     },
     submitTask() {
       let datas = {

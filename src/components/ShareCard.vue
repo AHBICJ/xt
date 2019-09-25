@@ -59,10 +59,15 @@
             <span>{{share.desc}}</span>
           </div>
         </div>
-        <div class="intro_right" v-if="isteacher">
-          <div class="turn">
+        <div class="intro_right">
+          <div class="turn" v-if="isteacher">
             <div class="num">{{share.commit_num}}</div>
             <div class="word">已上交</div>
+          </div>
+          <div class="turn" v-else>
+            <div class="num" v-if="share.status=='已完成'">{{share.grade}}</div>
+            <div class="word" v-if="share.status=='已完成'">评分</div>
+            <div class="status" v-else>{{share.status}}</div>
           </div>
         </div>
       </div>
@@ -174,7 +179,7 @@ export default {
         .then(() => {
           delete_task(datas)
             .then(() => {
-              this.$emit("shareDelete",datas.task_id);
+              this.$emit("shareDelete", datas.task_id);
               this.$message({
                 type: "success",
                 message: "删除成功!"
@@ -396,10 +401,16 @@ export default {
             line-height: 16px;
             color: #5f6368;
           }
+          .status{
+            line-height: 60px;
+            font-size: 18px;
+            font-weight:bold;
+          }
           &:hover {
             .num,
-            .word {
-              color: var(--main-color);
+            .word,
+            .status {
+              color: var(--main-color-hover);
             }
           }
         }

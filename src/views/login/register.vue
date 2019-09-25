@@ -29,6 +29,7 @@
         v-model="loginForm.password"
         auto-complete="off"
         placeholder="请输入密码"
+        show-password
       ></el-input>
     </el-form-item>
     <el-form-item prop="password">
@@ -41,6 +42,7 @@
         v-model="loginForm.repassword"
         auto-complete="off"
         placeholder="请重复密码"
+        show-password
       ></el-input>
     </el-form-item>
     <el-form-item prop="code" class="item-vcode">
@@ -119,11 +121,11 @@ export default {
         callback();
       }
     };
-    const validateCode = (rule, value, callback) => {
-      checkCode({ vcode: this.loginForm.code }).then(res =>
-        res.data.res ? callback() : callback(new Error("请输入正确的验证码"))
-      );
-    };
+    // const validateCode = (rule, value, callback) => {
+    //   checkCode({ vcode: this.loginForm.code }).then(res =>
+    //     res.data.res ? callback() : callback(new Error("请输入正确的验证码"))
+    //   );
+    // };
     return {
       fullscreenLoading: false,
       isTeacher: false,
@@ -149,7 +151,7 @@ export default {
         repassword: [
           { required: true, validator: validateRePass, trigger: "blur" }
         ],
-        code: [{ required: true, trigger: "blur", validator: validateCode }]
+        // code: [{ required: true, trigger: "blur", validator: validateCode }]
       }
     };
   },

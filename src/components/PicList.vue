@@ -294,6 +294,8 @@ a {
       bottom: 0;
       left: 13%;
       .title-txt {
+        font-family: FZQK;
+        // color:var(--main-color);
         // writing-mode: vertical-lr;
         position: relative;
         padding: 40px 0px;
@@ -301,7 +303,7 @@ a {
         text-align: center;
         font-size: 30px;
         // font-family: "Courier New", Courier, monospace;
-        font-weight: bold;
+        // font-weight: bold;
         // line-height: 1.2;
         letter-spacing: 0;
         .titleword {
