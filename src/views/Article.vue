@@ -2,7 +2,7 @@
   <div class="article_big">
     <nav-bar :options="navbarOptions" />
     <!-- dialog -->
-    <el-dialog title="文章视频" :visible.sync="dialogVideo" custom-class="dialogvideo" @close="$refs.videoPlayer.player.pause()">
+    <el-dialog title="文章视频" :visible.sync="dialogVideo" custom-class="dialogvideo" @NO_close="$refs.videoPlayer.player.pause()">
       <div class="look">
         <video-player
           class="video-player vjs-custom-skin"
