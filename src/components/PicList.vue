@@ -276,7 +276,7 @@ a {
       left: 0;
       top: 0;
       bottom: 0;
-      right: 60%;
+      right: 55.37%;
       background-position: center;
       background-size: cover;
       background-repeat: no-repeat;
@@ -284,7 +284,7 @@ a {
   }
   .tab-bar {
     position: absolute;
-    left: 40%;
+    left: 44.63%;
     top: 0;
     bottom: 0;
     right: 0;
