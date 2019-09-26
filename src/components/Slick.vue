@@ -101,12 +101,14 @@ export default {
   }
   .slick-dots li:hover {
     opacity: 0.8;
+    cursor: pointer;
   }
   .slick-dots li.slick-active,
   .slick-dots li.slick-active:hover {
     opacity: 1;
   }
   .slick-dots button {
+    cursor: pointer;
     border: none;
     outline: none;
     margin: 0 10px;

@@ -10,7 +10,7 @@
     <div class="text mt50">
       <h2>同学</h2>
     </div>
-    <div class="list" v-for="item in members" :key="item">
+    <div class="list" v-for="(item,idx) in members" :key="`${idx}${item.photo}`">
       <img :src="`/images/` + item.photo" alt />
       <p>{{item.name}}</p>
     </div>
