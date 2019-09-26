@@ -22,14 +22,20 @@ export default {
   data() {
     return {
       photo: [
-        this.imgAddress("2022bd81-0b77-4255-9270-c045a13ded6a.jpg"),
-        this.imgAddress("d7c25b27-3d06-4dd9-b253-29ab01943f7e.jpg"),
-        this.imgAddress("e966813e-30d6-4c8c-8fa2-f846ab20498f.jpg")
+        // this.imgAddress("2022bd81-0b77-4255-9270-c045a13ded6a.jpg"),
+        // this.imgAddress("d7c25b27-3d06-4dd9-b253-29ab01943f7e.jpg"),
+        // this.imgAddress("e966813e-30d6-4c8c-8fa2-f846ab20498f.jpg")
+        "images/ppt/001.jpg",
+        "images/ppt/002.jpg",
+        "images/ppt/003.jpg",
       ],
       photo2: [
-        this.imgAddress("0fe21c13-f679-4521-954c-77c25bb5b751.jpg"),
-        this.imgAddress("48e05203-bbb6-4a97-8b9a-693f50aa7f5f.jpg"),
-        this.imgAddress("6cd3070d-6f53-45c6-9c7d-4ac525a29784.jpg")
+        // this.imgAddress("0fe21c13-f679-4521-954c-77c25bb5b751.jpg"),
+        // this.imgAddress("48e05203-bbb6-4a97-8b9a-693f50aa7f5f.jpg"),
+        // this.imgAddress("6cd3070d-6f53-45c6-9c7d-4ac525a29784.jpg")
+         "images/ppt/004.jpg",
+        "images/ppt/005.jpg",
+        "images/ppt/006.jpg",
       ]
     };
   },

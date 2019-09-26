@@ -16,10 +16,10 @@
               <i class="el-icon-plus"></i> 从未迟到
             </div>
           </div>
-          <div class="User_classroom">
+          <!-- <div class="User_classroom">
             <div class="class">班级：越剧文化01班</div>
             <div class="class">入学时间：2019年9月</div>
-          </div>
+          </div> -->
         </div>
         <div class="buttom">
           <el-tabs v-model="activeName">
